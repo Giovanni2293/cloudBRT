@@ -1,4 +1,4 @@
-#Anotaciones
+﻿#Anotaciones
 
 [28/07/2016]:[19:14]Hemos optado por cambiar el driver de la base de datos de mongodb de la version 3.2.0
 a la 2.14.0
@@ -110,3 +110,5 @@ un servicio desde una url. Ademas se modifico el servicio Dbtest para probar el 
 [24/08/2016]:[19:47]
 Se modifico el servicio que utiliza el cliente.
 [25/08/2016]:[12:10]Reestructuracion del proyecto para seguir el standard de maven.
+[26/08/2016]:[14:20]Se crea el directorio src/test/java para que se puedan hacer pruebas al codigo. Ademas
+se actualizo la documentacion con las nuevas url.
