@@ -5,17 +5,14 @@ import clasesDeUtilidad.*;
 import clasesDelBRT.*;
 
 //Buffers para lectura del contenido de fichero.
-import java.io.BufferedReader;
+
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 //import javax.print.attribute.standard.Media;
-import javax.ws.rs.GET;
+
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import javax.json.Json;
@@ -26,9 +23,6 @@ import javax.ws.rs.core.MediaType;
 import java.lang.Math;
 import java.util.ArrayList;
 
-import org.json.JSONObject;
-import org.json.JSONArray;
-import org.json.JSONException;
 
 @Path("/")
 public class DistanciaEntreCordenadas {

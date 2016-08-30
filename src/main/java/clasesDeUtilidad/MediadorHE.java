@@ -49,6 +49,7 @@ public class MediadorHE {
 		/**
 		 * Detiene la ejecucion del hilo
 		 */
+		
 		private void detener()
 		{
 		       status = false;

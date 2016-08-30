@@ -1,10 +1,10 @@
 package clientes;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
+
+
 import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.io.OutputStream;
-import java.io.StringReader;
+
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -12,8 +12,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
-import com.mongodb.util.JSON;
-import com.sun.jersey.api.JResponseAsResponse;
+
 
 
 
@@ -71,8 +70,8 @@ public void traer()
 			throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
 		}
 
-	 BufferedReader br = new BufferedReader(new InputStreamReader(
-				(conn.getInputStream())));
+	
+	
 	 jr = Json.createReader(conn.getInputStream());
 	 jo = jr.readObject();
 	 
@@ -80,7 +79,7 @@ public void traer()
 	  * String de la respuesta del servidor
 	  */
 	    respuesta=jo.toString();
-		String output1;
+	
 		System.out.println("Output from Server .... \n");
 		System.out.println(respuesta);
 		conn.disconnect();

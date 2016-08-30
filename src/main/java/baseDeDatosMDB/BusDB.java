@@ -1,10 +1,9 @@
 package baseDeDatosMDB;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
+
 import com.mongodb.DBObject;
-import com.mongodb.MongoException;
-import com.mongodb.MongoTimeoutException;
+
 
 public class BusDB {
 	

@@ -21,8 +21,7 @@ import javax.ws.rs.core.Response;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.core.MediaType;
+
 @Path("/Enviar")
 public class EnvioCoor {
 	//Declaracion de dos objetos colaboradores necesarios para iniciar el hilo y trabajar las coordenadas.

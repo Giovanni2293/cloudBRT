@@ -3,13 +3,13 @@ package baseDeDatosMDB;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import javax.swing.text.Document;
+
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoException;
+
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
@@ -32,7 +32,7 @@ public class ConectarMongo{
 	}
 
 	public DBObject consultarMDB(String DB, String Collection, BasicDBObject clave) {
-		String respuesta;
+		
 		DBCursor encontrar;
 		// Si no existe la base de datos la crea
 		db = mongo.getDB(DB);

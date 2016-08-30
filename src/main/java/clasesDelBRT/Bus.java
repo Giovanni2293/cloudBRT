@@ -3,15 +3,11 @@ package clasesDelBRT;
 import javax.json.Json;
 import javax.json.JsonObject;
 
-import org.json.JSONObject;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.util.JSON;
+
 
 import baseDeDatosMDB.BusDB;
-import baseDeDatosMDB.ConectarMongo;
+
 import clasesDeUtilidad.MensajeError;
 
 public class Bus {

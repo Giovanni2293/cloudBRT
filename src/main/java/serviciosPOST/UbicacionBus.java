@@ -10,7 +10,6 @@ import clasesDeUtilidad.*;
 import clasesDelBRT.*;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -19,10 +18,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.json.JSONObject;
+
 
 import com.mongodb.MongoException;
-import com.mongodb.MongoTimeoutException;
+
 
 import javax.json.*;
 
@@ -34,8 +33,7 @@ public class UbicacionBus {
 	private static JsonObject BusCoorProm;
     private static double sumaLat,sumaLong;
     private static int cantidad,incremento;
-    private static String placa;
-	private LecturaJson leer;
+    private LecturaJson leer;
 	private Extractor coorExtractor;
 	private Bus BusObtenido;
 	private Bus busDeWilson;

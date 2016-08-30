@@ -1,13 +1,11 @@
 package clasesDeUtilidad;
 
-import org.json.JSONObject;
-import org.json.JSONArray;
-import org.json.JSONException;
+
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+
 
 /**
  * Esta clase se encarga de leer los datos entrantes al servidor en formato Json
