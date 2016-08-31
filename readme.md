@@ -112,3 +112,5 @@ Se modifico el servicio que utiliza el cliente.
 [25/08/2016]:[12:10]Reestructuracion del proyecto para seguir el standard de maven.
 [26/08/2016]:[14:20]Se crea el directorio src/test/java para que se puedan hacer pruebas al codigo. Ademas
 se actualizo la documentacion con las nuevas url.
+[31/08/2016]:[00:02]Se creo la funcion que permite proyectar un punto sobre una recta y
+una clase para probar cosas de la base de datos.
