@@ -114,3 +114,5 @@ Se modifico el servicio que utiliza el cliente.
 se actualizo la documentacion con las nuevas url.
 [31/08/2016]:[00:02]Se creo la funcion que permite proyectar un punto sobre una recta y
 una clase para probar cosas de la base de datos.
+[31/08/2016]:[17:51]Crear un metodo que permita añadir paradas intermedias sobre rutas previamente creadas.
+[01/09/2016]:[11:35]Interacciones con la base de datos
