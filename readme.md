@@ -116,3 +116,5 @@ se actualizo la documentacion con las nuevas url.
 una clase para probar cosas de la base de datos.
 [31/08/2016]:[17:51]Crear un metodo que permita añadir paradas intermedias sobre rutas previamente creadas.
 [01/09/2016]:[11:35]Interacciones con la base de datos
+[20/09/2016]:[16:15]Correccion de un bug que impedia accesar a los servicios de forma correcta. Esto se corrigio creando dentro de la carpeta
+WebContent archivos necesarios para la configuracion de los servicios.
