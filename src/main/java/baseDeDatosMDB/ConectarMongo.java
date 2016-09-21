@@ -3,8 +3,6 @@ package baseDeDatosMDB;
 import java.net.UnknownHostException;
 import java.util.List;
 
-
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -13,7 +11,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
-public class ConectarMongo{
+public class ConectarMongo {
 	private MongoClient mongo;
 	private DBCollection Colleccion;
 	private DB db;
@@ -27,26 +25,24 @@ public class ConectarMongo{
 		} catch (UnknownHostException UKHe) {
 
 			System.out.println("Error: Base de datos desconocida");
-		} 
+		}
 
 	}
 
 	public DBObject consultarMDB(String DB, String Collection, BasicDBObject clave) {
-		
+
 		DBCursor encontrar;
 		// Si no existe la base de datos la crea
 		db = mongo.getDB(DB);
 		// Crea una tabla si no existe y agrega datos
 		Colleccion = db.getCollection(Collection);
 		encontrar = Colleccion.find(clave);
-		if (encontrar.hasNext())
-		{
-			//devuelve el objeto DBObject si el cursor tiene un elemento siguiente (analogia con null)
+		if (encontrar.hasNext()) {
+			// devuelve el objeto DBObject si el cursor tiene un elemento
+			// siguiente (analogia con null)
 			return encontrar.next();
-		}
-		else
-		{
-			//no encontro el objeto
+		} else {
+			// no encontro el objeto
 			return null;
 		}
 	}
@@ -68,7 +64,6 @@ public class ConectarMongo{
 		db = mongo.getDB(DB);
 		// Crea una tabla si no existe y agrega datos
 		Colleccion = db.getCollection(Collection);
-
 		// Dato que se desea actualizar
 		BasicDBObject ActualizarDato = new BasicDBObject();
 		ActualizarDato.append("$set", DocToChange);
@@ -78,6 +73,12 @@ public class ConectarMongo{
 
 		Colleccion.updateMulti(searchById, ActualizarDato);
 
+	}
+
+	public void eliminarMDB(String DB, String Collection, BasicDBObject clave) {
+		db = mongo.getDB(DB);
+		Colleccion = db.getCollection(Collection);
+		Colleccion.remove(clave);
 	}
 
 	/**
@@ -92,7 +93,8 @@ public class ConectarMongo{
 			System.out.println(" - " + db);
 		}
 	}
-	public void cerrarConexion(){
+
+	public void cerrarConexion() {
 		mongo.close();
 	}
 
