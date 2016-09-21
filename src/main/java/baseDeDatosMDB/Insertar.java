@@ -4,8 +4,17 @@ import java.awt.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+//librerias de Json
+import javax.json.Json;
+import javax.json.JsonObject;
+
+import org.apache.http.impl.io.SocketOutputBuffer;
+
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
 
 import clasesDeUtilidad.GeoMatematicas;
 
@@ -13,9 +22,10 @@ public class Insertar {
 	private ConectarMongo conexion;
 
 	public Insertar() {
-		//crearRuta("P3");
-		// añadirARuta("P2","Payador");
-		//añadirXPosicionARuta("P2", "Provenza",6);
+		// crearRuta("P10");
+		// añadirAlFinalDeRuta("P2", "Payador");
+		//añadirXPosicionARuta("P2", "Proveza", 3);
+		imprimirRutas();
 	}
 
 	public static void main(String[] args) {
@@ -52,6 +62,7 @@ public class Insertar {
 			data = new BasicDBObject("Nombre", nombreCap).append("Coordenada",
 					new BasicDBObject("Latitud", latitud).append("Longitud", longitud));
 			conexion.insertarMDB("GeneralBRT", "Parada", data);
+			conexion.cerrarConexion();
 		} else {
 			System.out.println("Error: El elemento ya existe en la base de datos");
 		}
@@ -77,6 +88,7 @@ public class Insertar {
 		if (consulta == null) {
 			data.append("Ruta", paradas);
 			conexion.insertarMDB("GeneralBRT", "Ruta", data);
+			conexion.cerrarConexion();
 		} else {
 			System.out.println(
 					"Error: No se puede crear la ruta " + nombreMayus + ". Esta ya existe " + "en la base de datos");
@@ -93,6 +105,7 @@ public class Insertar {
 	 */
 	public void añadirAlFinalDeRuta(String nombreRuta, String nombreParada) {
 		DBObject ruta;
+		DBObject parada;
 		ArrayList<DBObject> paradas = new ArrayList<>();
 		BasicDBObject nuevaData, dataARemplazar;
 		nuevaData = new BasicDBObject("Nombre", nombreRuta);
@@ -101,27 +114,35 @@ public class Insertar {
 		ruta = conexion.consultarMDB("GeneralBRT", "Ruta", dataARemplazar);
 		if (ruta != null) {
 			paradas = (ArrayList<DBObject>) ruta.get("Ruta");
-			paradas.add(conexion.consultarMDB("GeneralBRT", "Parada", new BasicDBObject("Nombre", nombreParada)));
-			nuevaData.append("Ruta", paradas);
-			conexion.actualizarMDB("GeneralBRT", "Ruta", nuevaData, dataARemplazar);
+			parada = conexion.consultarMDB("GeneralBRT", "Parada", new BasicDBObject("Nombre", nombreParada));
+			if (parada != null) {
+				paradas.add(parada);
+				nuevaData.append("Ruta", paradas);
+				conexion.actualizarMDB("GeneralBRT", "Ruta", nuevaData, dataARemplazar);
+				conexion.cerrarConexion();
+			} else {
+				System.out.println("Error: La parada no existe. Debe crear la parada " + nombreParada
+						+ " primero antes de añadirle elementos");
+			}
 		} else {
-			System.out.println(
-					"Error: La ruta no existe. Debe crear la ruta " + nombreRuta + " primero antes de añadirle elementos");
+			System.out.println("Error: La ruta no existe. Debe crear la ruta " + nombreRuta
+					+ " primero antes de añadirle elementos");
 		}
 	}
 
-	// public void listarParadasDeRuta(String nombreRuta)
+	
 
 	/**
-	 * Consulta una parada existente y añade la nueva parada sin reemplazar, desplazando los
-	 * demas elemententos.
-	 * Este metodo no añade al final
+	 * Consulta una parada existente y añade la nueva parada sin reemplazar,
+	 * desplazando los demas elemententos. Este metodo no añade al final
+	 * 
 	 * @param nombreRuta
 	 * @param nombreParada
 	 * @param posicion
 	 */
 	public void añadirXPosicionARuta(String nombreRuta, String nombreParada, int posicion) {
 		DBObject ruta;
+		DBObject parada;
 		posicion = posicion - 1;
 		ArrayList<DBObject> paradas = new ArrayList<>();
 		BasicDBObject nuevaData, dataARemplazar;
@@ -132,18 +153,33 @@ public class Insertar {
 		if (ruta != null) {
 			paradas = (ArrayList<DBObject>) ruta.get("Ruta");
 			if (posicion >= 0 && posicion <= paradas.size()) {
-				paradas.add(posicion,
-						conexion.consultarMDB("GeneralBRT", "Parada", new BasicDBObject("Nombre", nombreParada)));
-				nuevaData.append("Ruta", paradas);
-				conexion.actualizarMDB("GeneralBRT", "Ruta", nuevaData, dataARemplazar);
+				parada = conexion.consultarMDB("GeneralBRT", "Parada", new BasicDBObject("Nombre", nombreParada));
+				if (parada != null) {
+					paradas.add(posicion, parada);
+					nuevaData.append("Ruta", paradas);
+					conexion.actualizarMDB("GeneralBRT", "Ruta", nuevaData, dataARemplazar);
+					conexion.cerrarConexion();
+				} else {
+					System.out.println("Error: La parada no existe. Debe crear la parada " + nombreParada
+							+ " primero antes de añadirle elementos");
+				}
 			} else {
 				System.out.println("Error: Ingrese una posicion entre: 1 y " + paradas.size());
 			}
-		}
-		else
-		{
-				System.out.println("Error: La ruta " + nombreRuta + " a la que esta intentando añadir elementos no existe");
+		} else {
+			System.out.println("Error: La ruta " + nombreRuta + " a la que esta intentando añadir elementos no existe");
 		}
 	}
+	 public String imprimirRutas(){
+		 conexion = new ConectarMongo();
+		 DBCollection collection = conexion.consultarColeccion("GeneralBRT", "Ruta");
+		 DBCursor cursor = collection.find();
+		 JSON json = new JSON();
+		 String rutas = json.serialize(cursor);
+		 System.out.println(rutas);
+		 conexion.cerrarConexion();
+		 return rutas;
+		 
+	 }
 
 }

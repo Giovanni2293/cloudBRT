@@ -118,4 +118,6 @@ una clase para probar cosas de la base de datos.
 [01/09/2016]:[11:35]Interacciones con la base de datos
 [20/09/2016]:[16:15]Correccion de un bug que impedia accesar a los servicios de forma correcta. Esto se corrigio creando dentro de la carpeta
 WebContent archivos necesarios para la configuracion de los servicios.
-[20/09/2016]:[19:23]Se crearon metodos para insertar elementos en distintas posiciones o al final. Y se implemento un metodo eliminar que elimina objetos Json completos por su Nombre. Ademas se empezo a utilizar un gestor para visualisar la base de datos : https://robomongo.org/
+[20/09/2016]:[19:23]Se crearon metodos para insertar elementos en distintas posiciones o al final. Además se implementarion los metodos eliminarRuta para eliminar una ruta completa y eliminarXPosicionParada que elimina una parada de una ruta atravez de un indice llamado posicion y para concluir se implemento imprimirRutas que imprime
+las rutas con informacion detallada, sin embargo aún esta en revisión.
+Apartir de este momento se empezo a utilizar una UI llamada "Robomongo" para visualisar la base de datos MongoDB  : https://robomongo.org/

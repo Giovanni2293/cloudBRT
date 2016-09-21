@@ -47,6 +47,18 @@ public class ConectarMongo {
 		}
 	}
 
+	public DBCollection consultarColeccion(String DB, String Collection) {
+
+		DBCursor encontrar;
+		// Si no existe la base de datos la crea
+		db = mongo.getDB(DB);
+		// Crea una tabla si no existe y agrega datos
+		Colleccion = db.getCollection(Collection);
+		
+		return Colleccion;
+		
+	}
+
 	public void insertarMDB(String DB, String Collection, BasicDBObject Document) {
 
 		// Si no existe la base de datos la crea
