@@ -3,20 +3,30 @@ package baseDeDatosMDB;
 import java.net.UnknownHostException;
 import java.util.List;
 
-
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
-
+import com.mongodb.WriteResult;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
-public class ConectarMongo{
+
+/**
+ * 
+ * El proposito de esta clase es brindar la conexión con la base de datos MongoDB
+ * y brindar las transacciones basicas en la base de datos que posteriormente
+ * seran utilizadas por clases especificaran con detalle estas transacciones.
+ * 
+ * @author Carlos Andrés Pereira Grimaldo
+ * @author José Giovanni Flores Nocua
+ *
+ */
+public class ConectarMongo {
 	private MongoClient mongo;
 	private DBCollection Colleccion;
 	private DB db;
+	private final String DB = "GeneralBRT";
 
 	public ConectarMongo() {
 
@@ -27,31 +37,41 @@ public class ConectarMongo{
 		} catch (UnknownHostException UKHe) {
 
 			System.out.println("Error: Base de datos desconocida");
-		} 
+		}
 
 	}
 
 	public DBObject consultarMDB(String DB, String Collection, BasicDBObject clave) {
-		
+
 		DBCursor encontrar;
 		// Si no existe la base de datos la crea
 		db = mongo.getDB(DB);
 		// Crea una tabla si no existe y agrega datos
 		Colleccion = db.getCollection(Collection);
 		encontrar = Colleccion.find(clave);
-		if (encontrar.hasNext())
-		{
-			//devuelve el objeto DBObject si el cursor tiene un elemento siguiente (analogia con null)
+		if (encontrar.hasNext()) {
+			// devuelve el objeto DBObject si el cursor tiene un elemento
+			// siguiente (analogia con null)
 			return encontrar.next();
-		}
-		else
-		{
-			//no encontro el objeto
+		} else {
+			// no encontro el objeto
 			return null;
 		}
 	}
 
-	public void insertarMDB(String DB, String Collection, BasicDBObject Document) {
+	public synchronized DBCollection consultarColeccion(String DB, String Collection) {
+
+		DBCursor encontrar;
+		// Si no existe la base de datos la crea
+		db = mongo.getDB(DB);
+		// Crea una tabla si no existe y agrega datos
+		Colleccion = db.getCollection(Collection);
+		
+		return Colleccion;
+		
+	}
+
+	public synchronized void  insertarMDB(String DB, String Collection, BasicDBObject Document) {
 
 		// Si no existe la base de datos la crea
 		db = mongo.getDB(DB);
@@ -62,13 +82,12 @@ public class ConectarMongo{
 
 	}
 
-	public void actualizarMDB(String DB, String Collection, BasicDBObject DocToChange, BasicDBObject IdDoc) {
+	public synchronized void actualizarMDB(String DB, String Collection, BasicDBObject DocToChange, BasicDBObject IdDoc) {
 
 		// Si no existe la base de datos la crea
 		db = mongo.getDB(DB);
 		// Crea una tabla si no existe y agrega datos
 		Colleccion = db.getCollection(Collection);
-
 		// Dato que se desea actualizar
 		BasicDBObject ActualizarDato = new BasicDBObject();
 		ActualizarDato.append("$set", DocToChange);
@@ -78,6 +97,18 @@ public class ConectarMongo{
 
 		Colleccion.updateMulti(searchById, ActualizarDato);
 
+	}
+
+	public synchronized boolean eliminarMDB(String DB, String Collection, BasicDBObject clave) {
+		db = mongo.getDB(DB);
+		Colleccion = db.getCollection(Collection);
+		WriteResult resultado = Colleccion.remove(clave);
+		if (resultado.getN() == 0){
+			return false;
+		}else{
+			return true;
+		}
+		
 	}
 
 	/**
@@ -92,7 +123,8 @@ public class ConectarMongo{
 			System.out.println(" - " + db);
 		}
 	}
-	public void cerrarConexion(){
+
+	public void cerrarConexion() {
 		mongo.close();
 	}
 

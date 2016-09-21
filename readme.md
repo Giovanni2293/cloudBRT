@@ -104,15 +104,31 @@ ej. http://localhost:8080/rutasBuses/apirutas/Proximidad/estaDentro
 [24/08/2016]:[15:56]
 Se creo una documentacion inicial en excel acerca de todos los servicios implementados hasta el momento. Por el momento
 Se llevara en el excel. Mas adelante se creara una documentacion con un framework.
+
 [24/08/2016]:[19:11]
 Se implemento un nuevo paquete clientes con una clase llamada cliente que permite crear un cliente que consume
 un servicio desde una url. Ademas se modifico el servicio Dbtest para probar el funcionamiento de esta clase.
+
 [24/08/2016]:[19:47]
 Se modifico el servicio que utiliza el cliente.
+
 [25/08/2016]:[12:10]Reestructuracion del proyecto para seguir el standard de maven.
+
 [26/08/2016]:[14:20]Se crea el directorio src/test/java para que se puedan hacer pruebas al codigo. Ademas
 se actualizo la documentacion con las nuevas url.
-[31/08/2016]:[00:02]Se creo la funcion que permite proyectar un punto sobre una recta y
-una clase para probar cosas de la base de datos.
+
+[31/08/2016]:[00:02]Se creo la funcion que permite proyectar un punto sobre una recta y una clase para probar cosas de la base de datos.
+
 [31/08/2016]:[17:51]Crear un metodo que permita añadir paradas intermedias sobre rutas previamente creadas.
+
 [01/09/2016]:[11:35]Interacciones con la base de datos
+
+[20/09/2016]:[16:15]Correccion de un bug que impedia accesar a los servicios de forma correcta. Esto se corrigio creando dentro de la carpeta WebContent archivos necesarios para la configuracion de los servicios. 
+
+[20/09/2016]:[19:23]Se crearon metodos para insertar elementos en distintas posiciones o al final. Además se implementarion los metodos eliminarRuta para eliminar una ruta completa y eliminarXPosicionParada que elimina una parada de una ruta atravez de un indice llamado posicion y para concluir se implemento imprimirRutas que imprime
+las rutas con informacion detallada, sin embargo aún esta en revisión.
+Apartir de este momento se empezo a utilizar una UI llamada "Robomongo" para visualisar la base de datos MongoDB  : https://robomongo.org/
+
+[21/09/2016]:[15:10] Se agrego el metodo eliminarParada.
+Se realizo cambios den los metodos eliminarRuta y paradas para que retornen un mensaje que avise si pudo ser eliminado.
+Se ha añadido una nueva clase de utilidad llamada FormtearDatos, para tratar las entradas de usuario.
