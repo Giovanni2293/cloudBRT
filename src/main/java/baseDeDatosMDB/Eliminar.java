@@ -12,7 +12,7 @@ public class Eliminar {
 	public static void main(String[] args) {
 
 		Eliminar e = new Eliminar();
-		e.eliminarXPosicionParada("P2", 1);
+		e.eliminarParada("Lagos");;
 		System.out.println("Eliminar");
 	}
 	
@@ -20,9 +20,32 @@ private ConectarMongo conexion;
 
 
 	public void eliminarRuta(String ruta) {
+		boolean elimino;
 		conexion = new ConectarMongo();
 		BasicDBObject rutaAEliminar = new BasicDBObject("Nombre",ruta);
-		conexion.eliminarMDB("GeneralBRT","Ruta",rutaAEliminar);
+		elimino = conexion.eliminarMDB("GeneralBRT","Ruta",rutaAEliminar);
+		
+		if (elimino == true){
+			System.out.println("Se ha eliminado la ruta " + ruta );
+		}else{
+			System.out.println("No se ha podido eliminar la ruta " + ruta +" Por que  no existe en"
+					+ "la base de datos ");
+		}
+		conexion.cerrarConexion();
+		
+	}
+	public void eliminarParada(String parada) {
+		boolean elimino;
+		
+		conexion = new ConectarMongo();
+		BasicDBObject rutaAEliminar = new BasicDBObject("Nombre",parada);
+		elimino = conexion.eliminarMDB("GeneralBRT","Parada",rutaAEliminar);
+		if (elimino == true){
+			System.out.println("Se ha eliminado la parada " + parada );
+		}else{
+			System.out.println("No se ha podido eliminar la parada " + parada +" Por que  no existe en"
+					+ "la base de datos ");
+		}
 		conexion.cerrarConexion();
 		
 	}

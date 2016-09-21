@@ -7,14 +7,26 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
-
+import com.mongodb.WriteResult;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
+
+/**
+ * 
+ * El proposito de esta clase es brindar la conexión con la base de datos MongoDB
+ * y brindar las transacciones basicas en la base de datos que posteriormente
+ * seran utilizadas por clases especificaran con detalle estas transacciones.
+ * 
+ * @author Carlos Andrés Pereira Grimaldo
+ * @author José Giovanni Flores Nocua
+ *
+ */
 public class ConectarMongo {
 	private MongoClient mongo;
 	private DBCollection Colleccion;
 	private DB db;
+	private final String DB = "GeneralBRT";
 
 	public ConectarMongo() {
 
@@ -47,7 +59,7 @@ public class ConectarMongo {
 		}
 	}
 
-	public DBCollection consultarColeccion(String DB, String Collection) {
+	public synchronized DBCollection consultarColeccion(String DB, String Collection) {
 
 		DBCursor encontrar;
 		// Si no existe la base de datos la crea
@@ -59,7 +71,7 @@ public class ConectarMongo {
 		
 	}
 
-	public void insertarMDB(String DB, String Collection, BasicDBObject Document) {
+	public synchronized void  insertarMDB(String DB, String Collection, BasicDBObject Document) {
 
 		// Si no existe la base de datos la crea
 		db = mongo.getDB(DB);
@@ -70,7 +82,7 @@ public class ConectarMongo {
 
 	}
 
-	public void actualizarMDB(String DB, String Collection, BasicDBObject DocToChange, BasicDBObject IdDoc) {
+	public synchronized void actualizarMDB(String DB, String Collection, BasicDBObject DocToChange, BasicDBObject IdDoc) {
 
 		// Si no existe la base de datos la crea
 		db = mongo.getDB(DB);
@@ -87,10 +99,16 @@ public class ConectarMongo {
 
 	}
 
-	public void eliminarMDB(String DB, String Collection, BasicDBObject clave) {
+	public synchronized boolean eliminarMDB(String DB, String Collection, BasicDBObject clave) {
 		db = mongo.getDB(DB);
 		Colleccion = db.getCollection(Collection);
-		Colleccion.remove(clave);
+		WriteResult resultado = Colleccion.remove(clave);
+		if (resultado.getN() == 0){
+			return false;
+		}else{
+			return true;
+		}
+		
 	}
 
 	/**

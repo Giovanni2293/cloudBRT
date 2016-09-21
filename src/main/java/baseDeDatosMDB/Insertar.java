@@ -25,7 +25,7 @@ public class Insertar {
 		// crearRuta("P10");
 		// añadirAlFinalDeRuta("P2", "Payador");
 		//añadirXPosicionARuta("P2", "Proveza", 3);
-		imprimirRutas();
+		añadirParada("Lagos", 7.066805, -73.099890);
 	}
 
 	public static void main(String[] args) {
@@ -49,7 +49,7 @@ public class Insertar {
 	 * @param latitud
 	 * @param longitud
 	 */
-	public void insertarParada(String nombre, double latitud, double longitud) {
+	public void añadirParada(String nombre, double latitud, double longitud) {
 		DBObject prueba;
 		String nombreCap;
 		BasicDBObject data;
