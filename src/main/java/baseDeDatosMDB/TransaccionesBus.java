@@ -2,13 +2,16 @@ package baseDeDatosMDB;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-
+/**
+ * El fin de esta clase es otorgar transacciones consernientes a un bus
+ * 
+ * @author Carlos Andrés Pereira Grimaldo
+ *
+ */
 public class TransaccionesBus {
 
 	private static ConectarMongo mongo;
 	private static final String nombreColeccion = "Bus";
-	
-	
 
 	public static boolean crearBus(String Placa, int Capacidad, String TipoBus, boolean Estado) {
 		Placa = Placa.toUpperCase();
@@ -31,9 +34,10 @@ public class TransaccionesBus {
 			return true;
 		} else {
 			System.out.println("Error: El Bus con placa: " + Placa + " ya existe en la base de datos");
-			mongo.cerrarConexion();
-			return false;
+
 		}
+		mongo.cerrarConexion();
+		return false;
 	}
 
 	public static boolean modificarEstado(String Placa, Boolean Estado) {
@@ -46,16 +50,16 @@ public class TransaccionesBus {
 		if (Bus != null) {
 			nuevaData = new BasicDBObject("Placa", Placa).append("Capacidad", (int) Bus.get("Capacidad"))
 					.append("TipoBus", (String) Bus.get("TipoBus")).append("Estado", Estado);
-			mongo.actualizarMDB("Bus", nuevaData, dataAReemplazar);
+			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
 			mongo.cerrarConexion();
 			return true;
 		} else {
 			System.out.println("Error: No se encontro el bus con placa: " + Placa + "  en la base de datos");
-			mongo.cerrarConexion();
-			return false;
-		}
 
-		
+		}
+		mongo.cerrarConexion();
+		return false;
+
 	}
 
 	public static boolean eliminar(String Placa) {
@@ -72,12 +76,14 @@ public class TransaccionesBus {
 		mongo.cerrarConexion();
 		if (elimino == true) {
 			System.out.println("Se ha eliminado el bus con placa " + Placa);
+					
 			return true;
 		} else {
 			System.out.println("Error: No se ha podido eliminar el bus con placa " + Placa + " Por que  no existe en"
 					+ "la base de datos ");
 			return false;
 		}
+		
 
 	}
 

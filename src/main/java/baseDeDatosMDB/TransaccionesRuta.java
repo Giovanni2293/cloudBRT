@@ -7,6 +7,14 @@ import com.mongodb.DBObject;
 
 import clasesDeUtilidad.FormatearDatos;
 
+
+/**
+ * El fin de esta clase es otorgar transacciones consernientes a una Ruta
+ * 
+ * @author Carlos Andrés Pereira Grimaldo
+ * @author Jose Giovanni Florez Nocua
+ *
+ */
 public class TransaccionesRuta {
 
 	private static ConectarMongo mongo;
@@ -36,9 +44,10 @@ public class TransaccionesRuta {
 		} else {
 			System.out.println(
 					"Error: No se puede crear la ruta " + nombreMayus + ". Esta ya existe " + "en la base de datos");
-			mongo.cerrarConexion();
-			return false;
+			
 		}
+		mongo.cerrarConexion();
+		return false;
 	}
 
 	public static boolean añadirXPosicionARuta(String nombreRuta, String nombreParada, int posicion) {
@@ -66,19 +75,18 @@ public class TransaccionesRuta {
 				} else {
 					System.out.println("Error: La parada no existe. Debe crear la parada " + nombreParada
 							+ " primero antes de añadirle elementos");
-					mongo.cerrarConexion();
-					return false;
+					
 				}
 			} else {
 				System.out.println("Error: Ingrese una posicion entre: 1 y " + paradas.size());
-				mongo.cerrarConexion();
-				return false;
+				
 			}
 		} else {
 			System.out.println("Error: La ruta " + nombreRuta + " a la que esta intentando añadir elementos no existe");
-			mongo.cerrarConexion();
-			return false;
+			
 		}
+		mongo.cerrarConexion();
+		return false;
 	}
 
 	public static boolean añadirAlFinalDeRuta(String nombreRuta, String nombreParada) {
@@ -153,14 +161,14 @@ public class TransaccionesRuta {
 				return true;
 			} else {
 				System.out.println("Error: Ingrese una posicion entre: 1 y " + paradas.size());
-				mongo.cerrarConexion();
-				return false;
+				
 			}
 		} else {
 			System.out.println("Error: La para " + nombreRuta + " a la que esta intentando acceder no existe");
-			mongo.cerrarConexion();
-			return false;
+			
 		}
+		mongo.cerrarConexion();
+		return false;
 	}
 	
 	public static boolean reemplazarParadaDeRuta(String nombreRuta, String nombreParada, int posicion){

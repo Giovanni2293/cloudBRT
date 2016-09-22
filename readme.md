@@ -94,11 +94,12 @@ Se implemento la funcionalidad para determinar si un bus se encuentra fuera o de
 Para lograrlo se creo una clase de utilidad que contiene el radio de la circunferencia y calcula si el punto (bus) esta fuera o dentro
 de este radio.
 Se creo un nuevo servicio que hace uso de la funcionalidad descrita anteriormente. El formato es:
+```[JSON]
 {
     "coordenada1" : {"latitud":"7.137157","longitud":"-73.122247"},
     "coordenada2" : {"latitud":"7.136681","longitud":"-73.122551"}
 }
-
+```
 y la URI del servicio es: http://localhost:8080/NOMBREDEPROYECTO/apirutas/Proximidad/estaDentro
 ej. http://localhost:8080/rutasBuses/apirutas/Proximidad/estaDentro
 [24/08/2016]:[15:56]
@@ -139,5 +140,11 @@ se hizo refactor a conectarmongo para que las transacciones basicas no soliciten
 se creo Transacciones Bus y TransaccionesRutas son clases con metodos estaticos que se encargan de manejar las operaciones validas que se le pueden aplicar a un bus y una ruta en una base de datos.
 En las clasesDelBRT se agrigo la clase paradas.
 en baseDeDatosMDB se agregaron ParadaDB y RutaDB para ser utilizadas de la misma manera que BusDB.
+
+[21/09/2016]:[20:44]
+Se eliminaron las clases Eliminar y Insertar.
+Se implemento la clase TransaccionParada.
+Se creo otro metodo a FormatearDatos.
+Se creo una clase main para probar cambios en las clases y nuevas clases antes de ponerlas a interactuar con otras.
 
 
