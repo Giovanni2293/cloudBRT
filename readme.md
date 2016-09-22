@@ -264,9 +264,9 @@ Clases que se eliminaron:
 
 ####Tareas Pendientes
 
-	* Crear servicios que retorne una Ruta, una Parada y Un Bus con toda su información estatica.
-	* Crear servicios que retorne todas las Rutas, Paradas y Buses con la informacion estatica de cada uno de ellos.
-	* Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
+	Crear servicios que retorne una Ruta, una Parada y Un Bus con toda su información estatica.
+	Crear servicios que retorne todas las Rutas, Paradas y Buses con la informacion estatica de cada uno de ellos.
+	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 	
 
 
