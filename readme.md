@@ -94,7 +94,7 @@ Se implemento la funcionalidad para determinar si un bus se encuentra fuera o de
 Para lograrlo se creo una clase de utilidad que contiene el radio de la circunferencia y calcula si el punto (bus) esta fuera o dentro
 de este radio.
 Se creo un nuevo servicio que hace uso de la funcionalidad descrita anteriormente. El formato es:
-```[JSON]
+```json
 {
     "coordenada1" : {"latitud":"7.137157","longitud":"-73.122247"},
     "coordenada2" : {"latitud":"7.136681","longitud":"-73.122551"}
