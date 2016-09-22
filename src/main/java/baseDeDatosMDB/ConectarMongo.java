@@ -19,7 +19,7 @@ import com.mongodb.DBObject;
  * seran utilizadas por clases especificaran con detalle estas transacciones.
  * 
  * @author Carlos Andrés Pereira Grimaldo
- * @author José Giovanni Flores Nocua
+ * @author José Giovanni Florez Nocua
  *
  */
 public class ConectarMongo {

@@ -9,6 +9,7 @@ import clasesDeUtilidad.FormatearDatos;
  * El fin de esta clase es otorgar transacciones consernientes a una Parada
  * 
  * @author Carlos Andrés Pereira Grimaldo
+ * @author Jose Giovanni Florez Nocua
  *
  */
 public class TransaccionesParada {
