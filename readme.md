@@ -17,17 +17,16 @@ Hemos optado por cambiar el driver de la base de datos de mongodb de la versión
 
 * Se implementaron los métodos cerrarConexion(), actualizaMDB, insertarMDB y consultarMDB, donde los 3 últimos son transacciones simuladas con mongo para parecerse a las bases de datos relacionales.
 
-Cuando se hace una consulta utilizando un objeto DBCursor los elementos lo almacena desde cero, pero en la posición cero esta vacía, es por esto que siempre que se vaya leer una variable se requiere comenzar aplicando el método 
-Next() al objeto DBCursor y posteriormente el método get(String Key), esta esta cadena de métodos retorna un objeto tipo Object casteable u otro DBCursor, ahora bien una vez utilizado el Next() para leer los elementos del mismo documento se debe usar objeto.curr().get(String Key).
+* Cuando se hace una consulta utilizando un objeto DBCursor, los elementos lo almacena desde cero, pero en la posición cero esta vacía, es por esto que siempre que se vaya leer una variable se requiere comenzar aplicando el método Next() al objeto DBCursor y posteriormente el método get(String Key); esta esta cadena de métodos retorna un objeto tipo Object casteable u otro DBCursor, ahora bien una vez utilizado el Next() para leer los elementos del mismo documento se debe usar objeto.curr().get(String Key).
 
-Queda pendiente hacer resistente a fallos todas las Clases implementadas y Documentar las clases restantes y nuevas.
+* Queda pendiente hacer resistente a fallos todas las Clases implementadas y documentar las clases restantes y nuevas.
 
-El Bus ahora tiene la capacidad de crear un Objeto Json de sí mismo y actualizarlo con el método actualizarJsonBus()en caso de que reciba modificaciones.
+* El Bus ahora tiene la capacidad de crear un Objeto Json de sí mismo y actualizarlo con el método actualizarJsonBus(), en caso de que reciba modificaciones.
 
-UbicacionBus ya no retorna un String con formato Json con las coordenadas promedio, ahora retorna un String con formato Json con la información del bus obtenida en el post y consultada en la base de datos.
+* UbicacionBus ya no retorna un String con formato Json con las coordenadas promedio, ahora retorna un String con formato Json con la información del bus obtenida en el post y consultada en la base de datos.
 
-Se modificó el formato de envió de ubicacionBus por el siguiente:
-
+* Se modificó el formato de envió de ubicacionBus por el siguiente:
+```javascript
 {
   	"placa": "ZOE 101",
 	 	"coordenada":{
@@ -36,10 +35,11 @@ Se modificó el formato de envió de ubicacionBus por el siguiente:
 			}
   	
 }
-
+```
 Teniendo en cuenta que la placa debe existir en la base de datos para no lanzar una excepción.
 
-RECORDATORIO: Cuando se haga un CLONE al repositorio, CAMBIAR el nombre WebServicesTest por rutasBuses
+##RECORDATORIO: 
+- Cuando se haga un CLONE al repositorio, CAMBIAR el nombre WebServicesTest por rutasBuses
 
 
 [30/07/2016]:[14:26] Se añade un servicio post de prueba para Wilson testear la galileo.
