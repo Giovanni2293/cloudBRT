@@ -28,7 +28,7 @@ Hemos optado por cambiar el driver de la base de datos de mongodb de la versión
 * UbicacionBus ya no retorna un String con formato Json con las coordenadas promedio, ahora retorna un String con formato Json con la información del bus obtenida en el post y consultada en la base de datos.
 
 * Se modificó el formato de envió de ubicacionBus por el siguiente:
-```javascript
+```json
 {
   	"placa": "ZOE 101",
 	 	"coordenada":{
@@ -45,9 +45,13 @@ Teniendo en cuenta que la placa debe existir en la base de datos para no lanzar 
 	- Cuando se haga un CLONE al repositorio, CAMBIAR el nombre WebServicesTest por rutasBuses
 
 
-[30/07/2016]:[14:26] Se añade un servicio post de prueba para Wilson testear la galileo.
+####[30/07/2016]:[14:26]
 
-[06/08/2016]:[11:00] El bus ahora solo crea un objeto json si se lo piden y se modificó el método consultarMDB para que este devuelva un objeto DBOBject y no un apuntador. Esto con finalidad de facilitar el código y evitar confusiones con el método .next() también para identificar cuando el objeto que quiere consultar no está en la base de datos. Además se creó la clase BusDB que es la clase que se encargara de hacer interactuar el bus con la base de datos.
+Se añade un servicio post de prueba para Wilson testear la galileo.
+
+####[06/08/2016]:[11:00]
+
+El bus ahora solo crea un objeto json si se lo piden y se modificó el método consultarMDB para que este devuelva un objeto DBOBject y no un apuntador. Esto con finalidad de facilitar el código y evitar confusiones con el método .next() también para identificar cuando el objeto que quiere consultar no está en la base de datos. Además se creó la clase BusDB que es la clase que se encargara de hacer interactuar el bus con la base de datos.
 
 Clases que se modificaron:
 
@@ -64,7 +68,8 @@ Hacer refactor para trabajar con la librería (https://json-processing-spec.java
 Se creó el paquete baseDeDatosMDB para colocar las clases que intervienen con la base de datos y se movió 
 BusDB y ConectarMongo
 
-[06/08/2016]:[18:00]
+####[06/08/2016]:[18:00]
+
 -Se creó la clase BusDB que es la encargada de obtener los valores de la base de datos del bus.
 -Se removió la excepción de MongoTimeOut de Conectar mongo y se creara el try catch solo cuando se invoque el servicio que la lance.
 -Se removió el método existe() de BusDB y su funcionalidad se delegó a valoresBaseDatos().
@@ -79,11 +84,14 @@ MensajeError
 
 Tareas Pendientes:
 Implementar querys en BusDB
-[23/08/2016]:[23:21]
+
+####[23/08/2016]:[23:21]
+
 Se implementó la funcionalidad para determinar si un bus se encuentra fuera o dentro de una estación (área circular)
 Para lograrlo se creó una clase de utilidad que contiene el radio de la circunferencia y calcula si el punto (bus) esta fuera o dentro de este radio.
 Se creó un nuevo servicio que hace uso de la funcionalidad descrita anteriormente. El formato es:
-```[JSON]
+
+```json
 {
     "coordenada1" : {"latitud":"7.137157","longitud":"-73.122247"},
     "coordenada2" : {"latitud":"7.136681","longitud":"-73.122551"}
@@ -91,43 +99,66 @@ Se creó un nuevo servicio que hace uso de la funcionalidad descrita anteriormen
 ```
 Y la URI del servicio es: http://localhost:8080/NOMBREDEPROYECTO/apirutas/Proximidad/estaDentro
 Ej. http://localhost:8080/rutasBuses/apirutas/Proximidad/estaDentro
-[24/08/2016]:[15:56]
+
+####[24/08/2016]:[15:56]
+
 Se creó una documentación inicial en Excel acerca de todos los servicios implementados hasta el momento. Por el momento
 Se llevara en el Excel. Más adelante se creara una documentación con un framework.
 
-[24/08/2016]:[19:11]
+####[24/08/2016]:[19:11]
+
 Se implementó un nuevo paquete clientes con una clase llamada cliente que permite crear un cliente que consume un servicio desde una url. Además se modificó el servicio Dbtest para probar el funcionamiento de esta clase.
 
-[24/08/2016]:[19:47]
+####[24/08/2016]:[19:47]
+
 Se modificó el servicio que utiliza el cliente.
 
-[25/08/2016]:[12:10]Reestructuración del proyecto para seguir el estándar de maven.
+####[25/08/2016]:[12:10]
 
-[26/08/2016]:[14:20]Se crea el directorio src/test/java para que se puedan hacer pruebas al código. Además se actualizo la documentación con las nuevas url.
+Reestructuración del proyecto para seguir el estándar de maven.
 
-[31/08/2016]:[00:02]Se creó la función que permite proyectar un punto sobre una recta y una clase para probar cosas de la base de datos.
+####[26/08/2016]:[14:20]
 
-[31/08/2016]:[17:51]Crear un método que permita añadir paradas intermedias sobre rutas previamente creadas.
+Se crea el directorio src/test/java para que se puedan hacer pruebas al código. Además se actualizo la documentación con las nuevas url.
 
-[01/09/2016]:[11:35]Interacciones con la base de datos
+#### [31/08/2016]:[00:02]
 
-[20/09/2016]:[16:15]Corrección de un bug que impedía el acceso a los servicios de forma correcta. Esto se corrigió creando dentro de la carpeta WebContent archivos necesarios para la configuración de los servicios. 
+Se creó la función que permite proyectar un punto sobre una recta y una clase para probar cosas de la base de datos.
 
-[20/09/2016]:[19:23]Se crearon métodos para insertar elementos en distintas posiciones o al final. Además se implementaron los métodos eliminarRuta para eliminar una ruta completa y eliminarXPosicionParada que elimina una parada de una ruta por medio de un índice llamado posición y para concluir se implementó imprimirRutas que imprime las rutas con información detallada, sin embargo aún está en revisión.
+####[31/08/2016]:[17:51]
+
+Crear un método que permita añadir paradas intermedias sobre rutas previamente creadas.
+
+####[01/09/2016]:[11:35]
+
+Interacciones con la base de datos
+
+####[20/09/2016]:[16:15]
+
+Corrección de un bug que impedía el acceso a los servicios de forma correcta. Esto se corrigió creando dentro de la carpeta WebContent archivos necesarios para la configuración de los servicios. 
+
+####[20/09/2016]:[19:23]
+
+Se crearon métodos para insertar elementos en distintas posiciones o al final. Además se implementaron los métodos eliminarRuta para eliminar una ruta completa y eliminarXPosicionParada que elimina una parada de una ruta por medio de un índice llamado posición y para concluir se implementó imprimirRutas que imprime las rutas con información detallada, sin embargo aún está en revisión.
 A partir de este momento se empezó a utilizar una UI llamada "Robomongo" para visualizar la base de datos MongoDB  : https://robomongo.org/
 
-[21/09/2016]:[15:10] Se agregó el método eliminarParada.
+####[21/09/2016]:[15:10] 
+
+Se agregó el método eliminarParada.
 Se realizó cambios den los métodos eliminarRuta y paradas para que retornen un mensaje que avise si pudo ser eliminado.
 Se ha añadido una nueva clase de utilidad llamada FormtearDatos, para tratar las entradas de usuario.
 
-[21/09/2016]:[19:33] Se corrigió la documentación ahora la placa no lleva espacios.
+####[21/09/2016]:[19:33]
+
+Se corrigió la documentación ahora la placa no lleva espacios.
 En bus DB se corrigió el casteo doble de double a int, ahora solo se hace el casteo a int, esto gracias a que logramos insertar enteros en la base de datos.
 Se hizo refactor a ConectarMongo para que las transacciones básicas no soliciten la base de datos, el nombre de la base de datos GeneralBRT está definido en conectar mongo como final.
 Se creó Transacciones Bus y TransaccionesRutas son clases con métodos estáticos que se encargan de manejar las operaciones validas que se le pueden aplicar a un bus y una ruta en una base de datos.
 En las clasesDelBRT se agregó la clase paradas.
 En baseDeDatosMDB se agregaron ParadaDB y RutaDB para ser utilizadas de la misma manera que BusDB.
 
-[21/09/2016]:[20:44]
+####[21/09/2016]:[20:44]
+
 Se eliminaron las clases Eliminar e Insertar.
 Se implementó la clase TransaccionParada.
 Se creó otro método a FormatearDatos.
