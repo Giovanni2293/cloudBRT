@@ -4,10 +4,10 @@
 
 Hemos optado por cambiar el driver de la base de datos de mongodb de la versión 3.2.0 a la 2.14.0 razones:
 
-	- Se genera una excepción en la versión 3.2.0 llamada MongoSocketOpenException cuando se intenta
-	  utilizar la conexión con la base de datos estando esta desconectada,Esta excepción no la pudimos capturar.
-	- La versión 2.14 viene de la versión 2.11 y de esta se encuentra mayor información sobre su 
-	  implementación que la 3.2.0.
+	Se genera una excepción en la versión 3.2.0 llamada MongoSocketOpenException cuando se intenta
+	utilizar la conexión con la base de datos estando esta desconectada,Esta excepción no la pudimos capturar.
+	La versión 2.14 viene de la versión 2.11 y de esta se encuentra mayor información sobre su 
+	implementación que la 3.2.0.
 
 ####[29/07/2016]:[0:11]
 
@@ -59,10 +59,10 @@ BusDB y ConectarMongo
 
 Clases que se modificaron:
 
-	-BusDB
-	-ConectarMongo
-	-Bus
-	-UbicacionBus
+	BusDB
+	ConectarMongo
+	Bus
+	UbicacionBus
 
 ####Tareas pendientes:
 
@@ -77,20 +77,23 @@ Clases que se modificaron:
 
 ####[06/08/2016]:[18:00]
 
--Se creó la clase BusDB que es la encargada de obtener los valores de la base de datos del bus.
--Se removió la excepción de MongoTimeOut de Conectar mongo y se creara el try catch solo cuando se invoque el servicio que la lance.
--Se removió el método existe() de BusDB y su funcionalidad se delegó a valoresBaseDatos().
+* Se creó la clase BusDB que es la encargada de obtener los valores de la base de datos del bus.
+
+* Se removió la excepción de MongoTimeOut de Conectar mongo y se creara el try catch solo cuando se invoque el servicio que la lance.
+
+* Se removió el método existe() de BusDB y su funcionalidad se delegó a valoresBaseDatos().
 
 Clases que se modificaron:
 
-BusDB
-ConectarMongo
-Bus
-UbicacionBus
-MensajeError
+	BusDB
+	ConectarMongo
+	Bus
+	UbicacionBus
+	MensajeError
 
-Tareas Pendientes:
-Implementar querys en BusDB
+####Tareas Pendientes:
+
+	Implementar querys en BusDB
 
 ####[23/08/2016]:[23:21]
 
