@@ -291,7 +291,7 @@ Clases que se eliminaron:
 	
 ####[22/09/2016]:[18:42]
 
-* Se modificaron todas las url para que sus iniciales sean en minuscula.( ver documentacion.xlsx)
+* Se modificaron todas las url para que sus iniciales sean en minuscula.( ver documentacion.xlsx )
 * Se implemento el servicio http://localhost:8080/cloudBRT/api/rutas/consultar.
 * Se agrego un path a DistanciaEntreCoordenadas (/distancia).
 * Se crearon las clases PostServicioBus, PostServicioParada, PostServicioRuta encargadas de interactuar con la base de datos
