@@ -297,6 +297,7 @@ Clases que se eliminaron:
 * Se crearon las clases PostServicioBus, PostServicioParada, PostServicioRuta encargadas de interactuar con la base de datos
 mediante POST.
 * Se elimino la clase Dbtest con la cual se probaba un cliente.
+* Se modifico el extractor para que cuando digite la plata en minuscula el servidor siempre la tome en mayuscula.
 
 Clases que se Crearon:
 
@@ -311,6 +312,7 @@ Clases que se Modificaron:
 	Test
 	DistanciaEntreCoordenadas
 	Proximidad
+	Extractor
 	
 Clases que se Eliminaron:
 
