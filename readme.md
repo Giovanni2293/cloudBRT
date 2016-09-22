@@ -68,7 +68,9 @@ Clases que se modificaron:
 
 	Implementar la clase BusDB.
 	
-	Hacer refactor para trabajar esta [librería](https://json-processing-spec.java.net/nonav/releases/1.0/fcs/javadocs/index.html "libreria")
+	Hacer refactor para trabajar esta 
+	
+[librería](https://json-processing-spec.java.net/nonav/releases/1.0/fcs/javadocs/index.html "libreria")
 
 
 
