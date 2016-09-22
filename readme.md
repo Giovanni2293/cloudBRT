@@ -38,8 +38,9 @@ Hemos optado por cambiar el driver de la base de datos de mongodb de la versión
 ```
 Teniendo en cuenta que la placa debe existir en la base de datos para no lanzar una excepción.
 
-###RECORDATORIO: 
-- Cuando se haga un CLONE al repositorio, CAMBIAR el nombre WebServicesTest por rutasBuses
+####RECORDATORIO: 
+
+	- Cuando se haga un CLONE al repositorio, CAMBIAR el nombre WebServicesTest por rutasBuses
 
 
 [30/07/2016]:[14:26] Se añade un servicio post de prueba para Wilson testear la galileo.
