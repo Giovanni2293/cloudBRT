@@ -4,10 +4,9 @@
 
 Hemos optado por cambiar el driver de la base de datos de mongodb de la versión 3.2.0 a la 2.14.0 razones:
 
-	Se genera una excepción en la versión 3.2.0 llamada MongoSocketOpenException cuando se intenta
-	utilizar la conexión con la base de datos estando esta desconectada,Esta excepción no la pudimos capturar.
-	La versión 2.14 viene de la versión 2.11 y de esta se encuentra mayor información sobre su 
-	implementación que la 3.2.0.
+	Se genera una excepción en la versión 3.2.0 llamada MongoSocketOpenException cuando se intenta	utilizar la conexión con la base de datos estando esta desconectada,Esta excepción no la pudimos capturar.
+	
+	La versión 2.14 viene de la versión 2.11 y de esta se encuentra mayor información sobre su implementación que la 3.2.0.
 
 ####[29/07/2016]:[0:11]
 
@@ -97,9 +96,8 @@ Clases que se modificaron:
 
 ####[23/08/2016]:[23:21]
 
-Se implementó la funcionalidad para determinar si un bus se encuentra fuera o dentro de una estación (área circular)
-Para lograrlo se creó una clase de utilidad que contiene el radio de la circunferencia y calcula si el punto (bus) esta fuera o dentro de este radio.
-Se creó un nuevo servicio que hace uso de la funcionalidad descrita anteriormente. El formato es:
+* Se implementó la funcionalidad para determinar si un bus se encuentra dentro o fuera de una estación (área circular), Para lograrlo se creó una clase de utilidad que contiene el radio de la circunferencia y calcula si el punto (bus) esta dentro o fuera de este radio.
+* Se creó un nuevo servicio que hace uso de la funcionalidad descrita anteriormente. El formato es:
 
 ```json
 {
@@ -107,50 +105,91 @@ Se creó un nuevo servicio que hace uso de la funcionalidad descrita anteriormen
     "coordenada2" : {"latitud":"7.136681","longitud":"-73.122551"}
 }
 ```
-Y la URI del servicio es: http://localhost:8080/NOMBREDEPROYECTO/apirutas/Proximidad/estaDentro
+Y la URI del servicio es: http://localhost:8080/NOMBREDEPROYECTO/CARPETADELWEBXML/Proximidad/estaDentro
 Ej. http://localhost:8080/rutasBuses/apirutas/Proximidad/estaDentro
+
+Se crearon las siguientes Clases:
+
+	AreaEstacion (Clase de Utilidad)
+	Proximidad (Servicio)
 
 ####[24/08/2016]:[15:56]
 
-Se creó una documentación inicial en Excel acerca de todos los servicios implementados hasta el momento. Por el momento
+* Se creó una documentación inicial en Excel acerca de todos los servicios implementados hasta el momento. Por el momento
 Se llevara en el Excel. Más adelante se creara una documentación con un framework.
 
 ####[24/08/2016]:[19:11]
 
-Se implementó un nuevo paquete clientes con una clase llamada cliente que permite crear un cliente que consume un servicio desde una url. Además se modificó el servicio Dbtest para probar el funcionamiento de esta clase.
+* Se implementó un nuevo paquete clientes con una clase llamada cliente que permite crear un cliente que consume un servicio desde una url. Además se modificó el servicio Dbtest para probar el funcionamiento de esta clase.
+
+Clases que se modificaron:
+	
+	Dbtest (Servicio)
+
+Clases que se crearon:
+
+	HTTPClient ( Junto con su paquete Clientes)
 
 ####[24/08/2016]:[19:47]
 
-Se modificó el servicio que utiliza el cliente.
+* Se modificó el servicio que utiliza el cliente.
 
 ####[25/08/2016]:[12:10]
 
-Reestructuración del proyecto para seguir el estándar de maven.
+* Reestructuración del proyecto para seguir el estándar de maven.
 
 ####[26/08/2016]:[14:20]
 
-Se crea el directorio src/test/java para que se puedan hacer pruebas al código. Además se actualizo la documentación con las nuevas url.
+* Se crea el directorio src/test/java para que se puedan hacer pruebas al código. Además se actualizo la documentación con las nuevas url.
+
+####AVISO
+
+	Angel, En este directorio es donde usted puede crear las clases para hacer pruebas.
 
 #### [31/08/2016]:[00:02]
 
-Se creó la función que permite proyectar un punto sobre una recta y una clase para probar cosas de la base de datos.
+* Se creó la función que permite proyectar un punto sobre una recta y una clase para probar cosas de la base de datos.
+
+Clases que se crearon:
+
+	Geomatematicas (Clase de Utilidad)
+	Insertar (BaseDeDatosMongoDB)
 
 ####[31/08/2016]:[17:51]
 
-Crear un método que permita añadir paradas intermedias sobre rutas previamente creadas.
+####Tareas Pendientes:
+
+	Crear un método que permita añadir paradas intermedias sobre rutas previamente creadas.
 
 ####[01/09/2016]:[11:35]
 
-Interacciones con la base de datos
+* Interacciones con la base de datos dentro de la clase Insertar.
 
 ####[20/09/2016]:[16:15]
 
-Corrección de un bug que impedía el acceso a los servicios de forma correcta. Esto se corrigió creando dentro de la carpeta WebContent archivos necesarios para la configuración de los servicios. 
+* Corrección de un bug que impedía el acceso a los servicios de forma correcta. Esto se corrigió creando dentro de la carpeta WebContent archivos necesarios para la configuración de los servicios, gracias a una consulta de angel y la ayuda del profesor Gabriel.
 
 ####[20/09/2016]:[19:23]
 
-Se crearon métodos para insertar elementos en distintas posiciones o al final. Además se implementaron los métodos eliminarRuta para eliminar una ruta completa y eliminarXPosicionParada que elimina una parada de una ruta por medio de un índice llamado posición y para concluir se implementó imprimirRutas que imprime las rutas con información detallada, sin embargo aún está en revisión.
-A partir de este momento se empezó a utilizar una UI llamada "Robomongo" para visualizar la base de datos MongoDB  : https://robomongo.org/
+* Se crearon métodos para insertar elementos en distintas posiciones o al final.
+
+* Se implementaron los métodos eliminarRuta para eliminar una ruta completa y eliminarXPosicionParada, esta ultima elimina una parada de una ruta por medio de un índice llamado posición.
+
+* Se implementó imprimirRutas que imprime las rutas con información detallada, sin embargo aún está en revisión.
+
+* A partir de este momento se empezó a utilizar una UI llamada [Robomongo](https://robomongo.org/ "Link de la pagina oficial de Robomongo") para visualizar la base de datos MongoDB.
+
+Clases que se crearon:
+
+	Eliminar
+
+Clases que se modificaron:
+
+	insertar
+	
+####Tareas Pendientes:
+
+	Implementar un metodo para listar los contenidos de la base de datos.	
 
 ####[21/09/2016]:[15:10] 
 
