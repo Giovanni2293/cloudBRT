@@ -10,11 +10,11 @@ import javax.ws.rs.core.Response;
 
 /**
  * Clase que permitira interactuar con las paradas a partir de peticiones GET Permitiendo
- * obtener y eliminar Paradas en una base de datos.
+ * consultar y eliminar Paradas en una base de datos.
  * @author Jose Giovanni Florez Nocua
  * @author Carlos Andrés Pereira Grimaldo
  */
-@Path("/Paradas")
+@Path("/paradas")
 public class GetServicioParada {
 	private JsonObject respuesta;
 	
@@ -23,7 +23,7 @@ public class GetServicioParada {
 	 * en un arreglo incluido dentro de un objeto de tipo Json
 	 * @return Response respuesta del servicio
 	 */
-	@Path("/Obtener")
+	@Path("/consultar")
 	@GET
 	@Produces("application/json")
 	public Response obtenerParadas() {
@@ -36,7 +36,7 @@ public class GetServicioParada {
 	 * en un objeto de tipo Json
 	 * @return Response respuesta del servicio
 	 */
-	@Path("Obtener/{nombreParada}")
+	@Path("consultar/{nombreParada}")
 	@GET
 	@Produces("application/json")
 	public Response obtenerParada(@PathParam("nombreParada") String nombreParada) {

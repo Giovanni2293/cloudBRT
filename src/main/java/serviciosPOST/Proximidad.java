@@ -17,7 +17,7 @@ import clasesDeUtilidad.Extractor;
 import clasesDeUtilidad.LecturaJson;
 import clasesDelBRT.Coordenadas;
 
-@Path("/Proximidad")
+@Path("/proximidad")
 public class Proximidad {
 	
 	private Extractor coorExtractor;

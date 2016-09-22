@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response;
 import javax.json.Json;
 import javax.json.JsonObject;
 
-@Path("/Enviar")
+@Path("/enviar")
 public class EnvioCoor {
 	//Declaracion de dos objetos colaboradores necesarios para iniciar el hilo y trabajar las coordenadas.
     private MediadorHE r;
@@ -62,7 +62,7 @@ public class EnvioCoor {
      * Este servicio se encarga de brindar la Ubicacion que es proporcionada por los buses.
      * @return Response String que almacena el promedio de ubicacion del bus.
      */
-    @Path("/WilsonPosi")
+    @Path("/wilsonPosi")
    	@GET
    	@Produces("application/json")
    	public  Response wilson() {

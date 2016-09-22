@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 
 /**
  * Clase que permitira interactuar con los buses a partir de peticiones GET Permitiendo
- * obtener y eliminar Buses en una base de datos.
+ * consultar y eliminar Buses en una base de datos.
  * @author Jose Giovanni Florez Nocua
  * @author Carlos Andrés Pereira Grimaldo
  */
@@ -23,10 +23,13 @@ public class GetServicioBus {
 	 * en un arreglo incluido dentro de un objeto de tipo Json
 	 * @return Response respuesta del servicio
 	 */
-	@Path("/Obtener")
+	@Path("/Consultar")
 	@GET
 	@Produces("application/json")
 	public Response obtenerBuses() {
+		
+		
+		
 		respuesta = Json.createObjectBuilder().add("Flota Buses", "TODOS LOS BUSES").build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
@@ -36,7 +39,7 @@ public class GetServicioBus {
 	 * en un objeto de tipo Json
 	 * @return Response respuesta del servicio
 	 */
-	@Path("Obtener/{placaBus}")
+	@Path("Consultar/{placaBus}")
 	@GET
 	@Produces("application/json")
 	public Response obtenerBus(@PathParam("placaBus") String placaBus) {

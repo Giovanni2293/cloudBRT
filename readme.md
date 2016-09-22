@@ -288,5 +288,37 @@ Clases que se eliminaron:
 	Implementar los cascarones de los servicios para la obtencion de informacion tanto para bus, parada y ruta.
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 	Documentar los nuevos servicios que se implementen.
+	
+####[22/09/2016]:[18:42]
 
+* Se modificaron todas las url para que sus iniciales sean en minuscula.
+* Se implemento el servicio http://localhost:8080/cloudBRT/api/rutas/consultar.
+* Se agrego un path a DistanciaEntreCoordenadas (/distancia).
+* Se crearon las clases PostServicioBus, PostServicioParada, PostServicioRuta encargadas de interactuar con la base de datos
+mediante POST.
+* Se elimino la clase Dbtest con la cual se probaba un cliente.
+
+Clases que se Crearon:
+
+	PostServicioBus
+	PostServicioParada
+	PostServicioRuta
+	
+Clases que se Modificaron:
+
+	EnvioCoor
+	GetServicioRuta
+	Test
+	DistanciaEntreCoordenadas
+	Proximidad
+	
+Clases que se Eliminaron:
+
+	Dbtest
+	
+####Tareas Pendientes
+
+	Implementar los cascarones de los servicios para la obtencion de informacion tanto para bus y parada.
+	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
+	Documentar los nuevos servicios que se implementen.
 

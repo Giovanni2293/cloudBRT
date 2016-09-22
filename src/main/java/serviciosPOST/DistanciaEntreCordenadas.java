@@ -24,7 +24,7 @@ import java.lang.Math;
 import java.util.ArrayList;
 
 
-@Path("/")
+@Path("/distancia")
 public class DistanciaEntreCordenadas {
 	//private String ruta;
 	private Extractor coorExtractor;
