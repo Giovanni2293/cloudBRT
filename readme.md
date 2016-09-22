@@ -1,4 +1,4 @@
-﻿﻿#Anotaciones
+#Anotaciones
 
 ####[28/07/2016]:[19:14]
 
@@ -38,7 +38,7 @@ Hemos optado por cambiar el driver de la base de datos de mongodb de la versión
 ```
 Teniendo en cuenta que la placa debe existir en la base de datos para no lanzar una excepción.
 
-##RECORDATORIO: 
+###RECORDATORIO: 
 - Cuando se haga un CLONE al repositorio, CAMBIAR el nombre WebServicesTest por rutasBuses
 
 
