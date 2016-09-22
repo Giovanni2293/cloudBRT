@@ -5,8 +5,9 @@
 Hemos optado por cambiar el driver de la base de datos de mongodb de la versión 3.2.0 a la 2.14.0 razones:
 
 	- Se genera una excepción en la versión 3.2.0 llamada MongoSocketOpenException cuando se intenta
-	utilizar la conexión con la base de datos estando esta desconectada,Esta excepción no la pudimos capturar.
-	- La versión 2.14 viene de la versión 2.11 y de esta se encuentra mayor información sobre su implementación que la 3.2.0.
+	  utilizar la conexión con la base de datos estando esta desconectada,Esta excepción no la pudimos capturar.
+	- La versión 2.14 viene de la versión 2.11 y de esta se encuentra mayor información sobre su 
+	  implementación que la 3.2.0.
 
 ####[29/07/2016]:[0:11]
 
