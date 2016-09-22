@@ -19,7 +19,7 @@ Hemos optado por cambiar el driver de la base de datos de mongodb de la versión
 
 * Se implementaron los métodos cerrarConexion(), actualizaMDB, insertarMDB y consultarMDB, donde los 3 últimos son transacciones simuladas con mongo para parecerse a las bases de datos relacionales.
 
-* Cuando se hace una consulta utilizando un objeto DBCursor, los elementos lo almacena desde cero, pero en la posición cero esta vacía, es por esto que siempre que se vaya leer una variable se requiere comenzar aplicando el método Next() al objeto DBCursor y posteriormente el método get(String Key); esta esta cadena de métodos retorna un objeto tipo Object casteable u otro DBCursor, ahora bien una vez utilizado el Next() para leer los elementos del mismo documento se debe usar objeto.curr().get(String Key).
+* Cuando se hace una consulta utilizando un objeto DBCursor, los elementos lo almacena desde cero, pero en la posición cero esta vacía, es por esto que siempre que se vaya leer una variable se requiere comenzar aplicando el método next() al objeto DBCursor y posteriormente el método get(String Key); esta esta cadena de métodos retorna un objeto tipo Object casteable u otro DBCursor, ahora bien una vez utilizado el next() para leer los elementos del mismo documento se debe usar objeto.curr().get(String Key).
 
 * Queda pendiente hacer resistente a fallos todas las Clases implementadas y documentar las clases restantes y nuevas.
 
@@ -34,8 +34,7 @@ Hemos optado por cambiar el driver de la base de datos de mongodb de la versión
 	 	"coordenada":{
     		"latitud": "7.113633",
 		"longitud":"-73.114842"
-			}
-  	
+		}
 }
 ```
 Teniendo en cuenta que la placa debe existir en la base de datos para no lanzar una excepción.
@@ -47,26 +46,31 @@ Teniendo en cuenta que la placa debe existir en la base de datos para no lanzar 
 
 ####[30/07/2016]:[14:26]
 
-Se añade un servicio post de prueba para Wilson testear la galileo.
+* Se añade un servicio post de prueba para Wilson testear la galileo.
 
 ####[06/08/2016]:[11:00]
 
-El bus ahora solo crea un objeto json si se lo piden y se modificó el método consultarMDB para que este devuelva un objeto DBOBject y no un apuntador. Esto con finalidad de facilitar el código y evitar confusiones con el método .next() también para identificar cuando el objeto que quiere consultar no está en la base de datos. Además se creó la clase BusDB que es la clase que se encargara de hacer interactuar el bus con la base de datos.
+* El bus ahora solo crea un objeto json si se lo piden y se modificó el método consultarMDB para que este devuelva un objeto DBOBject y no un apuntador. Esto con finalidad de facilitar el código y evitar confusiones con el método .next(), también para identificar cuando el objeto que quiere consultar no está en la base de datos.
+
+* Se creó la clase BusDB que es la clase que se encargara de hacer interactuar el bus con la base de datos.
+
+* Se creó el paquete baseDeDatosMDB para colocar las clases que intervienen con la base de datos y se movió 
+BusDB y ConectarMongo
 
 Clases que se modificaron:
 
-BusDB
-ConectarMongo
-Bus
-UbicacionBus
+	-BusDB
+	-ConectarMongo
+	-Bus
+	-UbicacionBus
 
-Tareas pendientes:
+####Tareas pendientes:
 
-Implementar la clase BusDB.
-Hacer refactor para trabajar con la librería (https://json-processing-spec.java.net/nonav/releases/1.0/fcs/javadocs/index.html)
+	Implementar la clase BusDB.
+	
+	Hacer refactor para trabajar con la librería (https://json-processing-spec.java.net/nonav/releases/1.0/fcs/javadocs/index.html)
 
-Se creó el paquete baseDeDatosMDB para colocar las clases que intervienen con la base de datos y se movió 
-BusDB y ConectarMongo
+
 
 ####[06/08/2016]:[18:00]
 
