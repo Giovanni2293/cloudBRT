@@ -1,4 +1,4 @@
-package cloudBRT;
+package AndresGiovanni;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -14,7 +14,7 @@ import baseDeDatosMDB.ConectarMongo;
  * @author Jose Giovanni Flores Nocua
  *
  */
-public class ClasesDePruebaCloud {
+public class Test {
 	private ConectarMongo conexion;
 	public static void main(String[] args) {
 		

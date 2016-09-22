@@ -1,4 +1,4 @@
-#Anotaciones
+﻿#Anotaciones
 
 ####[28/07/2016]:[19:14]
 
@@ -267,9 +267,17 @@ Clases que se eliminaron:
 	Crear servicios que retorne una Ruta, una Parada y Un Bus con toda su información estatica.
 	Crear servicios que retorne todas las Rutas, Paradas y Buses con la informacion estatica de cada uno de ellos.
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
+
+
+####[21/09/2016]:[23:19]
 	
+* Se crearon dos nuevos directorios que contendran las clases de prueba de Angel, Andres y Giovanni.
 
+* Se modifico el nombre de la clase de pruebas de ClasesDePruebaCloud a Test (Sujeto a futuros cambios).
 
+* Se movio la clase Test a src/test/java/AndresGiovanni.
+
+* se movio la clase ClasesDePruebaAca a src/test/java/Angel.
 
 
 
