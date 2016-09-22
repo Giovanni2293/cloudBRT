@@ -40,7 +40,7 @@ Teniendo en cuenta que la placa debe existir en la base de datos para no lanzar 
 
 ####RECORDATORIO: 
 
-	- Cuando se haga un CLONE al repositorio, CAMBIAR el nombre WebServicesTest por rutasBuses
+	Cuando se haga un CLONE al repositorio, CAMBIAR el nombre WebServicesTest por rutasBuses
 
 
 ####[30/07/2016]:[14:26]
@@ -185,7 +185,7 @@ Clases que se crearon:
 
 Clases que se modificaron:
 
-	insertar
+	Insertar
 	
 ####Tareas Pendientes:
 
@@ -193,25 +193,84 @@ Clases que se modificaron:
 
 ####[21/09/2016]:[15:10] 
 
-Se agregó el método eliminarParada.
-Se realizó cambios den los métodos eliminarRuta y paradas para que retornen un mensaje que avise si pudo ser eliminado.
-Se ha añadido una nueva clase de utilidad llamada FormtearDatos, para tratar las entradas de usuario.
+* Se agregó el método eliminarParada.
+
+* Se realizó cambios den los métodos eliminarRuta y paradas para que retornen un mensaje que avise si pudo ser eliminado.
+
+* Se ha añadido una nueva clase de utilidad llamada FormtearDatos, para tratar las entradas de usuario.
+
+Clases que se Crearon:
+
+	FormatearDatos (Clase de Utilidad)
+
+Clases que se modificaron
+	
+	Eliminar
+
 
 ####[21/09/2016]:[19:33]
 
-Se corrigió la documentación ahora la placa no lleva espacios.
-En bus DB se corrigió el casteo doble de double a int, ahora solo se hace el casteo a int, esto gracias a que logramos insertar enteros en la base de datos.
-Se hizo refactor a ConectarMongo para que las transacciones básicas no soliciten la base de datos, el nombre de la base de datos GeneralBRT está definido en conectar mongo como final.
-Se creó Transacciones Bus y TransaccionesRutas son clases con métodos estáticos que se encargan de manejar las operaciones validas que se le pueden aplicar a un bus y una ruta en una base de datos.
-En las clasesDelBRT se agregó la clase paradas.
-En baseDeDatosMDB se agregaron ParadaDB y RutaDB para ser utilizadas de la misma manera que BusDB.
+* Se corrigió la documentación ahora la placa no lleva espacios.
+
+* En BusDB se corrigió el casteo doble de double a int, ahora solo se hace el casteo a int, esto gracias a que logramos insertar enteros en la base de datos.
+
+* Se hizo refactor a ConectarMongo para que las transacciones básicas no soliciten la base de datos, el nombre de la base de datos GeneralBRT está definido en conectar mongo como final.
+
+* Se creó TransaccionesBus y TransaccionesRutas son clases con métodos estáticos que se encargan de manejar las operaciones validas que se le pueden aplicar a un bus y una ruta en una base de datos.
+
+* En las clasesDelBRT se agregó la clase paradas.
+
+* En baseDeDatosMDB se agregaron ParadaDB y RutaDB para ser utilizadas de la misma manera que BusDB.
+
+Clases que se crearon:
+
+	TransaccionesBus (Clase de Base de Datos)
+	TransaccionesRutas  (Clase de Base de Datos)
+	ParadaDB  (Clase de Base de Datos)
+	RutaDB  (Clase de Base de Datos)
+	Paradas (Clase del BRT)
+	
+Clases que se modificaron:
+	
+	Eliminar
+	BusDB
+	ConectarMongo
+	
 
 ####[21/09/2016]:[20:44]
 
-Se eliminaron las clases Eliminar e Insertar.
-Se implementó la clase TransaccionParada.
-Se creó otro método a FormatearDatos.
-Se creó una clase main para probar cambios en las clases y nuevas clases antes de ponerlas a interactuar con otras.
+* Se eliminaron las clases Eliminar e Insertar, debido a que sus metodos fueron llevados a las clases de transacciones.
+
+* Se creo la clase TransaccionesParada.
+
+* Se creó otro método a FormatearDatos, el cual hace que una oración tenga mayuscala inicial por cada palabra.
+
+* Se creó una clase main para probar cambios en las clases y nuevas clases antes de ponerlas a interactuar con otras.
+
+Clases que se crearon:
+
+	TransaccionesParada	
+	ClasesDePruebaCloud
+
+Clases que se Modificaron:
+
+	FormatearDatos
+
+Clases que se eliminaron:
+	
+	Insertar
+	Eliminar
+
+
+####Tareas Pendientes
+
+	* Crear servicios que retorne una Ruta, una Parada y Un Bus con toda su información estatica.
+	* Crear servicios que retorne todas las Rutas, Paradas y Buses con la informacion estatica de cada uno de ellos.
+	* Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
+	
+
+
+
 
 
 
