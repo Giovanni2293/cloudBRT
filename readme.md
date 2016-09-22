@@ -132,3 +132,12 @@ Apartir de este momento se empezo a utilizar una UI llamada "Robomongo" para vis
 [21/09/2016]:[15:10] Se agrego el metodo eliminarParada.
 Se realizo cambios den los metodos eliminarRuta y paradas para que retornen un mensaje que avise si pudo ser eliminado.
 Se ha añadido una nueva clase de utilidad llamada FormtearDatos, para tratar las entradas de usuario.
+
+[21/09/2016]:[19:33] Se corrigio la documentación ahora la placa no lleva espacios.
+En bus DB se corrigio el casteo doble de double a int, ahora solo se hace el casteo a int, esto gracias a que logramos insertar enteros en la base de datos.
+se hizo refactor a conectarmongo para que las transacciones basicas no soliciten la base de datos, el nombre de la base de datos GeneralBRT esta definida en conectar mongo como final.
+se creo Transacciones Bus y TransaccionesRutas son clases con metodos estaticos que se encargan de manejar las operaciones validas que se le pueden aplicar a un bus y una ruta en una base de datos.
+En las clasesDelBRT se agrigo la clase paradas.
+en baseDeDatosMDB se agregaron ParadaDB y RutaDB para ser utilizadas de la misma manera que BusDB.
+
+

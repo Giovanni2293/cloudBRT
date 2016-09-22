@@ -11,28 +11,29 @@ public class BusDB {
 	private int capacidad;
 	private String tipoBus;
 	private boolean estado;
-	private String nombreBaseDatos;
+
 	private String nombreColeccion;
 	private ConectarMongo mongo;
 	private DBObject datos;
 	
 	public BusDB(String placa)
 	{
-		this.nombreBaseDatos="GeneralBRT";
+		
 		this.nombreColeccion="Bus";
-		mongo = new ConectarMongo();
 		this.placa = new BasicDBObject("Placa",placa);
 	}
 
-	public Boolean valoresBaseDatos()
+	public boolean valoresBaseDatos()
 	{
-		datos = mongo.consultarMDB(nombreBaseDatos,nombreColeccion,placa);
+		mongo = new ConectarMongo();
+		datos = mongo.consultarMDB(nombreColeccion,placa);
 		if (datos!=null)
 		{
-			double castInt =(double) datos.get("Capacidad");
-			capacidad = (int) castInt;
+			
+			capacidad = (int) datos.get("Capacidad");
 			tipoBus = (String) datos.get("TipoBus");
 			estado = (boolean) datos.get("Estado");
+			mongo.cerrarConexion();
 			return true; 
 		}
 		else
@@ -41,7 +42,7 @@ public class BusDB {
 		}
 	}
 
-
+	
 
 	public int getCapacidad() {
 		return capacidad;

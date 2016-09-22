@@ -23,7 +23,7 @@ private ConectarMongo conexion;
 		boolean elimino;
 		conexion = new ConectarMongo();
 		BasicDBObject rutaAEliminar = new BasicDBObject("Nombre",ruta);
-		elimino = conexion.eliminarMDB("GeneralBRT","Ruta",rutaAEliminar);
+		elimino = conexion.eliminarMDB("Ruta",rutaAEliminar);
 		
 		if (elimino == true){
 			System.out.println("Se ha eliminado la ruta " + ruta );
@@ -39,7 +39,7 @@ private ConectarMongo conexion;
 		
 		conexion = new ConectarMongo();
 		BasicDBObject rutaAEliminar = new BasicDBObject("Nombre",parada);
-		elimino = conexion.eliminarMDB("GeneralBRT","Parada",rutaAEliminar);
+		elimino = conexion.eliminarMDB("Parada",rutaAEliminar);
 		if (elimino == true){
 			System.out.println("Se ha eliminado la parada " + parada );
 		}else{
@@ -49,8 +49,13 @@ private ConectarMongo conexion;
 		conexion.cerrarConexion();
 		
 	}
-	
-	public void eliminarXPosicionParada(String nombreRuta, int posicion) {
+	/**
+	 * Este metodo remueve una parada de una ruta utilizando la posicion en la que se encuentra
+	 * la parada que desea remover.
+	 * @param nombreRuta
+	 * @param posicion
+	 */
+	public void removerParadaDeRuta(String nombreRuta, int posicion) {
 		DBObject ruta;
 		posicion = posicion - 1;
 		ArrayList<DBObject> paradas = new ArrayList<>();
@@ -58,14 +63,14 @@ private ConectarMongo conexion;
 		nuevaData = new BasicDBObject("Nombre", nombreRuta);
 		dataARemplazar = new BasicDBObject("Nombre", nombreRuta);
 		conexion = new ConectarMongo();
-		ruta = conexion.consultarMDB("GeneralBRT", "Ruta", dataARemplazar);
+		ruta = conexion.consultarMDB("Ruta", dataARemplazar);
 		if (ruta != null) {
 			paradas = (ArrayList<DBObject>) ruta.get("Ruta");
 			if (posicion >= 0 && posicion <= paradas.size()) {
 									
 					paradas.remove(posicion);
 					nuevaData.append("Ruta", paradas);
-					conexion.actualizarMDB("GeneralBRT", "Ruta", nuevaData, dataARemplazar);
+					conexion.actualizarMDB("Ruta", nuevaData, dataARemplazar);
 					conexion.cerrarConexion();
 				} 
 			 else {

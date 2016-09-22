@@ -41,7 +41,7 @@ public class ConectarMongo {
 
 	}
 
-	public DBObject consultarMDB(String DB, String Collection, BasicDBObject clave) {
+	public DBObject consultarMDB(String Collection, BasicDBObject clave) {
 
 		DBCursor encontrar;
 		// Si no existe la base de datos la crea
@@ -59,7 +59,7 @@ public class ConectarMongo {
 		}
 	}
 
-	public synchronized DBCollection consultarColeccion(String DB, String Collection) {
+	public synchronized DBCollection consultarColeccion(String Collection) {
 
 		DBCursor encontrar;
 		// Si no existe la base de datos la crea
@@ -71,7 +71,7 @@ public class ConectarMongo {
 		
 	}
 
-	public synchronized void  insertarMDB(String DB, String Collection, BasicDBObject Document) {
+	public synchronized void  insertarMDB(String Collection, BasicDBObject Document) {
 
 		// Si no existe la base de datos la crea
 		db = mongo.getDB(DB);
@@ -82,7 +82,7 @@ public class ConectarMongo {
 
 	}
 
-	public synchronized void actualizarMDB(String DB, String Collection, BasicDBObject DocToChange, BasicDBObject IdDoc) {
+	public synchronized void actualizarMDB(String Collection, BasicDBObject DocToChange, BasicDBObject IdDoc) {
 
 		// Si no existe la base de datos la crea
 		db = mongo.getDB(DB);
@@ -99,7 +99,7 @@ public class ConectarMongo {
 
 	}
 
-	public synchronized boolean eliminarMDB(String DB, String Collection, BasicDBObject clave) {
+	public synchronized boolean eliminarMDB(String Collection, BasicDBObject clave) {
 		db = mongo.getDB(DB);
 		Colleccion = db.getCollection(Collection);
 		WriteResult resultado = Colleccion.remove(clave);
