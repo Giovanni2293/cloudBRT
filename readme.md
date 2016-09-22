@@ -279,7 +279,14 @@ Clases que se eliminaron:
 
 * se movio la clase ClasesDePruebaAca a src/test/java/Angel.
 
+####[22/09/2016]:[03:53]
 
+* Se crearon las clases GetServicioBus, GetServicioRuta, GetServicioParada y se implementaron los cascarones de los servicios de obtencion con y sin parametros encargados de recibir informacion desde la base de datos.
 
+####Tareas Pendientes
+
+	Implementar los cascarones de los servicios para la obtencion de informacion tanto para bus, parada y ruta.
+	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
+	Documentar los nuevos servicios que se implementen.
 
 
