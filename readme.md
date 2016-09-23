@@ -327,6 +327,9 @@ Clases que se Eliminaron:
 ####[22/09/2016]:[19:43]
 
 * Se implementaron los servicios que permiten listar todos los Buses(GetServicioBus) y todas las Paradas(GetServicioParada)
+
+* Se recompilo el War 
+
 Clases que se Modificaron:
 
 	GetServicioBus
