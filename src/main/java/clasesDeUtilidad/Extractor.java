@@ -62,7 +62,7 @@ public class Extractor {
 		JSONObject coordenada;
 		jsonToObject = new JSONObject(stringToObject);
 		nombres = JSONObject.getNames(jsonToObject);
-		String placa = jsonToObject.getString("placa");
+		String placa = jsonToObject.getString("placa").toUpperCase();
 		coordenada = jsonToObject.getJSONObject("coordenada");
 		Coordenadas C1 = new Coordenadas();
 		C1.setLatitud(coordenada.getDouble("latitud"));

@@ -291,12 +291,13 @@ Clases que se eliminaron:
 	
 ####[22/09/2016]:[18:42]
 
-* Se modificaron todas las url para que sus iniciales sean en minuscula.
+* Se modificaron todas las url para que sus iniciales sean en minuscula.( ver documentacion.xlsx )
 * Se implemento el servicio http://localhost:8080/cloudBRT/api/rutas/consultar.
 * Se agrego un path a DistanciaEntreCoordenadas (/distancia).
 * Se crearon las clases PostServicioBus, PostServicioParada, PostServicioRuta encargadas de interactuar con la base de datos
 mediante POST.
 * Se elimino la clase Dbtest con la cual se probaba un cliente.
+* Se modifico el extractor para que cuando digite la plata en minuscula el servidor siempre la tome en mayuscula.
 
 Clases que se Crearon:
 
@@ -311,6 +312,7 @@ Clases que se Modificaron:
 	Test
 	DistanciaEntreCoordenadas
 	Proximidad
+	Extractor
 	
 Clases que se Eliminaron:
 
