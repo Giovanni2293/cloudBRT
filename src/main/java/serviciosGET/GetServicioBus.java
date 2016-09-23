@@ -15,8 +15,11 @@ import javax.ws.rs.core.Response;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 import baseDeDatosMDB.ConectarMongo;
+import clasesDeUtilidad.FormatearDatos;
+import clasesDeUtilidad.MensajeError;
 
 /**
  * Clase que permitira interactuar con los buses a partir de peticiones GET
@@ -38,7 +41,7 @@ public class GetServicioBus {
 	 */
 	@Path("/consultar")
 	@GET
-	@Produces("application/json")
+	@Produces("application/json;charset=UTF-8")
 	public Response obtenerBuses() {
 		ConectarMongo conexion = new ConectarMongo();
 		DBCollection collection = conexion.consultarColeccion("Bus");
@@ -68,9 +71,29 @@ public class GetServicioBus {
 	 */
 	@Path("consultar/{placaBus}")
 	@GET
-	@Produces("application/json")
+	@Produces("application/json;charset=UTF-8")
 	public Response obtenerBus(@PathParam("placaBus") String placaBus) {
-		respuesta = Json.createObjectBuilder().add("Bus Parametrizada", placaBus).build();
+		ConectarMongo conexion = new ConectarMongo();
+		//placaBus = FormatearDatos.ArreglarCharset(placaBus);(correccion de charset)
+		System.out.println(placaBus);
+		placaBus=placaBus.toUpperCase();
+		JsonObject respuesta;
+		DBObject json = null;
+		BasicDBObject dbo = new BasicDBObject();
+		json = conexion.consultarMDB("Bus", new BasicDBObject("Placa",placaBus));
+		if (json!=null)
+		{
+		dbo.append("Placa", json.get("Placa"));
+		dbo.append("Capacidad", json.get("Capacidad"));
+		dbo.append("TipoBus", json.get("TipoBus"));
+		dbo.append("Estado",json.get("Estado"));
+		JsonReader jsonReader = Json.createReader(new StringReader(dbo.toString()));
+		respuesta = jsonReader.readObject();
+		}
+		else
+		{
+			respuesta = MensajeError.noEncontroElElemento("bus",placaBus);
+		}
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
 }

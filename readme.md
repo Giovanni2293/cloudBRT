@@ -340,3 +340,26 @@ Clases que se Modificaron:
 
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 	Documentar los nuevos servicios que se implementen.
+	
+####[22/09/2016]:[02:40]
+
+* Se creo un nuevo metodo en MensajeError (noEncontroElElemento) que avisa cuando se produce un error
+al no encontrar un elemento generando un json de respuesta.
+
+* Se especifico el charset de respuesta a todos los servicios como UTF-8.
+
+* Se implementaron los servicios de consulta especificando mediante parametros en las 3 clases (Bus,Parada,Ruta)
+
+####Tareas Pendientes
+
+	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
+	Documentar los nuevos servicios que se implementen.
+	CORREGIR EL BUG DEL CHARSET(PRIORIDAD)
+	Crear la documentacion de los nuevos servicios
+	
+Clases que se Modificaron:
+
+	GetServicioBus
+	GetServicioParada
+	GetServicioRuta
+	MensajeError

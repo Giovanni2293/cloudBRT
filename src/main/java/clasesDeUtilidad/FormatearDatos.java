@@ -1,5 +1,7 @@
 package clasesDeUtilidad;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.StringTokenizer;
 
 /**
@@ -34,11 +36,21 @@ public class FormatearDatos {
 	 */
 	public static String mayusInicialMulti(String frase){
 		StringTokenizer st = new StringTokenizer(frase, " ");
-		String result ="";;
+		String result ="";
 		while (st.hasMoreElements()) {
 			result += mayusInicial(st.nextElement().toString())+" ";
 		}
+		StringBuilder borrar = new StringBuilder(result);
+		borrar.deleteCharAt(result.length()-1);
+		result = borrar.toString();
+
 		return result;
+	}
+	
+	public static String ArreglarCharset(String corrupto)
+	{
+		 byte[] bytes = corrupto.getBytes();
+		 return new String(bytes, StandardCharsets.ISO_8859_1);
 	}
 	
 }

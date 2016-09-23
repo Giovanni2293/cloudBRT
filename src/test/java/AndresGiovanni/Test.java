@@ -17,6 +17,7 @@ import com.mongodb.util.JSON;
 
 import baseDeDatosMDB.ConectarMongo;
 import baseDeDatosMDB.TransaccionesRuta;
+import clasesDeUtilidad.FormatearDatos;
 /**
  * Esta es una clase que utilizaremos para probar el codigo antes de utilizarlo con
  * otras clases.
@@ -39,8 +40,10 @@ public class Test {
 		//TransaccionesRuta.añadirAlFinalDeRuta("T3", "Provenza");
 		//TransaccionesParada.crearParada("Parque estacion uiS", 7.137213,  -73.122289);
 		//TransaccionesParada.eliminarParada("Parque estacion uis");
-		Test t = new Test();
-		t.imprimirRutas();
+		//Test t = new Test();
+		//t.imprimirRutas();
+	       System.out.println(FormatearDatos.ArreglarCharset("Ã±"));
+		//System.out.println(FormatearDatos.mayusInicialMulti("Parque Estacion Uis"));
 		//FormatearDatos.mayusInicialMulti("lagos");
 		//TransaccionesRuta.crearRuta("T3");
 	}
@@ -78,4 +81,6 @@ public class Test {
 		 return null;
 		 
 	 }
+	 
+	 
 }
