@@ -1,12 +1,22 @@
 package serviciosGET;
 
+import java.io.StringReader;
+import java.util.ArrayList;
+
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+
+import baseDeDatosMDB.ConectarMongo;
 
 /**
  * Clase que permitira interactuar con las paradas a partir de peticiones GET Permitiendo
@@ -27,8 +37,21 @@ public class GetServicioParada {
 	@GET
 	@Produces("application/json")
 	public Response obtenerParadas() {
-		respuesta = Json.createObjectBuilder().add("Paradas", "TODAS LAS PARADAS").build();
-		return Response.status(200).entity(respuesta.toString()).build();
+		ConectarMongo conexion = new ConectarMongo();
+		 DBCollection collection = conexion.consultarColeccion("Parada");
+		 DBCursor cursor = collection.find();
+		 ArrayList<BasicDBObject> paradas = new ArrayList<>();
+		 while (cursor.hasNext()) {
+      	 BasicDBObject obj = (BasicDBObject) cursor.next();
+      	 BasicDBObject bso = new BasicDBObject();
+      	 bso.append("Nombre",obj.get("Nombre"));
+      	 bso.append("Coordenada",obj.get("Coordenada"));
+      	 paradas.add(bso);
+		}
+		 BasicDBObject data = new BasicDBObject("Paradas",paradas);
+		 JsonReader jsonReader = Json.createReader(new StringReader(data.toString()));
+		 JsonObject json = jsonReader.readObject();
+		return Response.status(200).entity(json.toString()).build();
 	}
 
 	/**

@@ -322,3 +322,16 @@ Clases que se Eliminaron:
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 	Documentar los nuevos servicios que se implementen.
 
+####[22/09/2016]:[19:43]
+
+* Se implementaron los servicios que permiten listar todos los Buses(GetServicioBus) y todas las Paradas(GetServicioParada)
+Clases que se Modificaron:
+
+	GetServicioBus
+	GetServicioParada
+	documentacion
+
+####Tareas Pendientes
+
+	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
+	Documentar los nuevos servicios que se implementen.
