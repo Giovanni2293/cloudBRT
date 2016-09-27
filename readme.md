@@ -294,8 +294,7 @@ Clases que se eliminaron:
 * Se modificaron todas las url para que sus iniciales sean en minuscula.( ver documentacion.xlsx )
 * Se implemento el servicio http://localhost:8080/cloudBRT/api/rutas/consultar.
 * Se agrego un path a DistanciaEntreCoordenadas (/distancia).
-* Se crearon las clases PostServicioBus, PostServicioParada, PostServicioRuta encargadas de interactuar con la base de datos
-mediante POST.
+* Se crearon las clases PostServicioBus, PostServicioParada, PostServicioRuta encargadas de interactuar con la base de datos mediante POST.
 * Se elimino la clase Dbtest con la cual se probaba un cliente.
 * Se modifico el extractor para que cuando digite la plata en minuscula el servidor siempre la tome en mayuscula.
 
@@ -343,8 +342,7 @@ Clases que se Modificaron:
 	
 ####[22/09/2016]:[02:40]
 
-* Se creo un nuevo metodo en MensajeError (noEncontroElElemento) que avisa cuando se produce un error
-al no encontrar un elemento generando un json de respuesta.
+* Se creo un nuevo metodo en MensajeError (noEncontroElElemento) que avisa cuando se produce un error al no encontrar un elemento generando un json de respuesta.
 
 * Se especifico el charset de respuesta a todos los servicios como UTF-8.
 
@@ -363,3 +361,8 @@ Clases que se Modificaron:
 	GetServicioParada
 	GetServicioRuta
 	MensajeError
+	
+####[26/09/2016]:[07:05]
+
+* Se cambiaron los nombres de los paquetes
+
