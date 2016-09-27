@@ -1,4 +1,4 @@
-package AndresGiovanni;
+package andresgiovanni;
 
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.util.JSON;
 
-import baseDeDatosMDB.ConectarMongo;
-import baseDeDatosMDB.TransaccionesRuta;
-import clasesDeUtilidad.FormatearDatos;
+import db.ConectarMongo;
+import db.TransaccionesRuta;
+import utilidad.FormatearDatos;
 /**
  * Esta es una clase que utilizaremos para probar el codigo antes de utilizarlo con
  * otras clases.

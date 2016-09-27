@@ -1,4 +1,4 @@
-package Angel;
+package angel;
 
 public class ClasesDePruebaACA {
 
