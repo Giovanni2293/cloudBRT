@@ -371,11 +371,13 @@ Clases que se Modificaron:
 * Se omitio el error del charset y decidimos no utilizar caracteres especiales en lugar dejamos, Placa, Nombre y Clave como llaves para Bus, Ruta y Parada respectivamente,los cuales se usaran para identificarlos y no usaran caracteres epeciales.
 * Se añadio un atributo llamado clave para las paradas y se modifico tanto TransaccionesParada como Transaccionesruta para que la base de datos tenga el atributo clave para paradas.
 * Se borro el charset en los produces.
-* Apartir de ahora se añadira una actualización de la base de datos para que los demas hagan pruebas, solo sera la data y sera almacenada en un fichero llamado db.raru
+* Apartir de ahora se añadira una actualización de la base de datos para que los demas hagan pruebas, solo sera la data y sera almacenada en un fichero llamado db.rar
+
 Clases que se Modificaron:
 
 	GetServicioBus
-	GetServicioParadaa	GetServicioRuta
+	GetServicioParadaa
+	GetServicioRuta
 	TransaccionesParada
 	TransaccionesRutaa
 	
