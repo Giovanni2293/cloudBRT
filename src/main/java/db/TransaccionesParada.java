@@ -25,17 +25,18 @@ public class TransaccionesParada {
 	 * @param latitud
 	 * @param longitud
 	 */
-	public static boolean crearParada(String nombre, double latitud, double longitud) {
-		String nombreCap;
+	public static boolean crearParada(String clave , String nombre, double latitud, double longitud) {
+		
 		DBObject consulta;		
 		BasicDBObject data;
-		nombreCap = FormatearDatos.mayusInicialMulti(nombre);
+		clave = clave.toUpperCase();
+		nombre = FormatearDatos.mayusInicialMulti(nombre);
 		mongo = new ConectarMongo();
-		data = new BasicDBObject("Nombre", nombreCap);
+		data = new BasicDBObject("Clave", clave);
 		consulta = mongo.consultarMDB(nombreColeccion, data);
 		if (consulta == null) {
 
-			data = new BasicDBObject("Nombre", nombreCap).append("Coordenada",
+			data = new BasicDBObject("Clave", clave).append("Nombre", nombre).append("Coordenada",
 					new BasicDBObject("Latitud", latitud).append("Longitud", longitud));
 			mongo.insertarMDB(nombreColeccion, data);
 			mongo.cerrarConexion();
@@ -47,10 +48,10 @@ public class TransaccionesParada {
 	}
 	public static boolean eliminarParada(String parada) {
 		boolean elimino;
-		parada = FormatearDatos.mayusInicialMulti(parada);
+		parada = parada.toUpperCase();
 		mongo = new ConectarMongo();
-		BasicDBObject rutaAEliminar = new BasicDBObject("Nombre",parada);
-		elimino = mongo.eliminarMDB(nombreColeccion,rutaAEliminar);
+		BasicDBObject paradaAEliminar = new BasicDBObject("Clave",parada);
+		elimino = mongo.eliminarMDB(nombreColeccion,paradaAEliminar);
 		if (elimino == true){
 			System.out.println("Se ha eliminado la parada " + parada );
 		}else{

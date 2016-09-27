@@ -45,7 +45,7 @@ public class GetServicioRuta {
 	 */
 	@Path("/consultar")
 	@GET
-	@Produces("application/json;charset=UTF-8")
+	@Produces("application/json")
 	public Response obtenerRutas() {
 		ConectarMongo conexion = new ConectarMongo();
 		DBCollection collection = conexion.consultarColeccion("Ruta");
@@ -82,7 +82,7 @@ public class GetServicioRuta {
 	 */
 	@Path("consultar/{nombreRuta}")
 	@GET
-	@Produces("application/json;charset=UTF-8")
+	@Produces("application/json")
 	public Response obtenerRuta(@PathParam("nombreRuta") String nombreRuta) {
 		ConectarMongo conexion = new ConectarMongo();
 		JsonObject respuesta;

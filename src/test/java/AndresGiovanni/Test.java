@@ -16,6 +16,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.util.JSON;
 
 import db.ConectarMongo;
+import db.TransaccionesParada;
 import db.TransaccionesRuta;
 import utilidad.FormatearDatos;
 /**
@@ -36,16 +37,17 @@ public class Test {
 		//Bus.crearBus("XB536a", 50, "Padron", false);
 		//Bus.eliminar(Placa)
 		//modificarEstado("XB536a", false);
-		//TransaccionesRuta.reemplazarParadaDeRuta("P2", "Lagos", 4);
-		//TransaccionesRuta.añadirAlFinalDeRuta("T3", "Provenza");
-		//TransaccionesParada.crearParada("Parque estacion uiS", 7.137213,  -73.122289);
-		//TransaccionesParada.eliminarParada("Parque estacion uis");
+		//TransaccionesRuta.reemplazarParadaDeRuta("P2", "ST1", 4);
+		//TransaccionesRuta.añadirAlFinalDeRuta("P2", "ST5");
+		//TransaccionesParada.crearParada("ST3", "cañaveral", 7.137213,  -73.122289);
+		//TransaccionesParada.eliminarParada("ST3");
 		//Test t = new Test();
 		//t.imprimirRutas();
-	       System.out.println(FormatearDatos.ArreglarCharset("Ã±"));
+	    // System.out.println(FormatearDatos.ArreglarCharset("Ã±"));
 		//System.out.println(FormatearDatos.mayusInicialMulti("Parque Estacion Uis"));
 		//FormatearDatos.mayusInicialMulti("lagos");
 		//TransaccionesRuta.crearRuta("T3");
+		//TransaccionesRuta.removerParadaDeRuta("P2", 	4	);
 	}
 	
 	

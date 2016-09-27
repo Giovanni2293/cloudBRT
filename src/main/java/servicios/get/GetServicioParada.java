@@ -42,7 +42,7 @@ public class GetServicioParada {
 	 */
 	@Path("/consultar")
 	@GET
-	@Produces("application/json;charset=UTF-8")
+	@Produces("application/json")
 	public Response obtenerParadas() {
 		ConectarMongo conexion = new ConectarMongo();
 		DBCollection collection = conexion.consultarColeccion("Parada");
@@ -67,17 +67,18 @@ public class GetServicioParada {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("consultar/{nombreParada}")
+	@Path("consultar/{claveParada}")
 	@GET
-	@Produces("application/json;charset=UTF-8")
-	public Response obtenerParada(@PathParam("nombreParada") String nombreParada) {
+	@Produces("application/json")
+	public Response obtenerParada(@PathParam("claveParada") String claveParada) {
 		ConectarMongo conexion = new ConectarMongo();
-		//nombreParada=FormatearDatos.mayusInicialMulti(nombreParada);
+		claveParada = claveParada.toUpperCase() ;
 		JsonObject respuesta;
 		DBObject json = null;
 		BasicDBObject dbo = new BasicDBObject();
-		json = conexion.consultarMDB("Parada", new BasicDBObject("Nombre", nombreParada));
+		json = conexion.consultarMDB("Parada", new BasicDBObject("Clave", claveParada));
 		if (json != null) {
+			dbo.append("Clave", claveParada);
 			dbo.append("Nombre", json.get("Nombre"));
 			dbo.append("Coordenada", json.get("Coordenada"));
 			JsonReader jsonReader = Json.createReader(new StringReader(dbo.toString()));
@@ -85,7 +86,7 @@ public class GetServicioParada {
 		}
 		else
 		{
-			respuesta = MensajeError.noEncontroElElemento("parada",nombreParada);
+			respuesta = MensajeError.noEncontroElElemento("parada",claveParada);
 		}
 		return Response.status(200).entity(respuesta.toString()).build();
 	}

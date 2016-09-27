@@ -351,8 +351,11 @@ Clases que se Modificaron:
 ####Tareas Pendientes
 
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
+	
 	Documentar los nuevos servicios que se implementen.
+	
 	CORREGIR EL BUG DEL CHARSET(PRIORIDAD)
+	
 	Crear la documentacion de los nuevos servicios
 	
 Clases que se Modificaron:
@@ -365,4 +368,22 @@ Clases que se Modificaron:
 ####[26/09/2016]:[07:05]
 
 * Se cambiaron los nombres de los paquetes
+* Se omitio el error del charset y decidimos no utilizar caracteres especiales en lugar dejamos, Placa, Nombre y Clave como llaves para Bus, Ruta y Parada respectivamente,los cuales se usaran para identificarlos y no usaran caracteres epeciales.
+* Se añadio un atributo llamado clave para las paradas y se modifico tanto TransaccionesParada como Transaccionesruta para que la base de datos tenga el atributo clave para paradas.
+* Se borro el charset en los produces.
+* Apartir de ahora se añadira una actualización de la base de datos para que los demas hagan pruebas, solo sera la data y sera almacenada en un fichero llamado db.raru
+Clases que se Modificaron:
 
+	GetServicioBus
+	GetServicioParadaa	GetServicioRuta
+	TransaccionesParada
+	TransaccionesRutaa
+	
+####Tareas Pendientes
+
+	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
+	Documentar los nuevos servicios que se implementen.
+	Crear la documentacion de los nuevos servicio
+	
+	Modificar eliminar parada para que cuando se borre una parada tambien elimine la asignación a la rutas
+	

@@ -41,7 +41,7 @@ public class GetServicioBus {
 	 */
 	@Path("/consultar")
 	@GET
-	@Produces("application/json;charset=UTF-8")
+	@Produces("application/json")
 	public Response obtenerBuses() {
 		ConectarMongo conexion = new ConectarMongo();
 		DBCollection collection = conexion.consultarColeccion("Bus");
@@ -71,7 +71,7 @@ public class GetServicioBus {
 	 */
 	@Path("consultar/{placaBus}")
 	@GET
-	@Produces("application/json;charset=UTF-8")
+	@Produces("application/json")
 	public Response obtenerBus(@PathParam("placaBus") String placaBus) {
 		ConectarMongo conexion = new ConectarMongo();
 		//placaBus = FormatearDatos.ArreglarCharset(placaBus);(correccion de charset)

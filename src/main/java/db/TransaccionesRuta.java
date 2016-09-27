@@ -50,10 +50,10 @@ public class TransaccionesRuta {
 		return false;
 	}
 
-	public static boolean añadirXPosicionARuta(String nombreRuta, String nombreParada, int posicion) {
+	public static boolean añadirXPosicionARuta(String nombreRuta, String clave, int posicion) {
 		DBObject ruta;
 		DBObject parada;
-		nombreParada = FormatearDatos.mayusInicial(nombreParada);
+		clave = clave.toUpperCase();
 		nombreRuta = nombreRuta.toUpperCase();
 		posicion = posicion - 1;
 		ArrayList<DBObject> paradas = new ArrayList<>();
@@ -65,7 +65,7 @@ public class TransaccionesRuta {
 		if (ruta != null) {
 			paradas = (ArrayList<DBObject>) ruta.get(nombreColeccion);
 			if (posicion >= 0 && posicion <= paradas.size()) {
-				parada = mongo.consultarMDB("Parada", new BasicDBObject("Nombre", nombreParada));
+				parada = mongo.consultarMDB("Parada", new BasicDBObject("Clave", clave));
 				if (parada != null) {
 					paradas.add(posicion, parada);
 					nuevaData.append(nombreColeccion, paradas);
@@ -73,7 +73,7 @@ public class TransaccionesRuta {
 					mongo.cerrarConexion();
 					return true;
 				} else {
-					System.out.println("Error: La parada no existe. Debe crear la parada " + nombreParada
+					System.out.println("Error: La parada no existe. Debe crear la parada " + clave
 							+ " primero antes de añadirle elementos");
 					
 				}
@@ -89,9 +89,11 @@ public class TransaccionesRuta {
 		return false;
 	}
 
-	public static boolean añadirAlFinalDeRuta(String nombreRuta, String nombreParada) {
+	public static boolean añadirAlFinalDeRuta(String nombreRuta, String clave) {
 		DBObject ruta;
 		DBObject parada;
+		nombreRuta =nombreRuta.toUpperCase();
+		clave = clave.toUpperCase();
 		ArrayList<DBObject> paradas = new ArrayList<>();
 		BasicDBObject nuevaData, dataARemplazar;
 		nuevaData = new BasicDBObject("Nombre", nombreRuta);
@@ -100,7 +102,7 @@ public class TransaccionesRuta {
 		ruta = mongo.consultarMDB(nombreColeccion, dataARemplazar);
 		if (ruta != null) {
 			paradas = (ArrayList<DBObject>) ruta.get(nombreColeccion);
-			parada = mongo.consultarMDB("Parada", new BasicDBObject("Nombre", nombreParada));
+			parada = mongo.consultarMDB("Parada", new BasicDBObject("Clave", clave));
 			if (parada != null) {
 				paradas.add(parada);
 				nuevaData.append(nombreColeccion, paradas);
@@ -108,7 +110,7 @@ public class TransaccionesRuta {
 				mongo.cerrarConexion();
 				return true;
 			} else {
-				System.out.println("Error: La parada no existe. Debe crear la parada " + nombreParada
+				System.out.println("Error: La parada no existe. Debe crear la parada " + clave
 						+ " primero antes de añadirle elementos");
 				
 				
@@ -125,6 +127,7 @@ public class TransaccionesRuta {
 	
 	public static boolean eliminarRuta(String ruta) {
 		boolean elimino;
+		ruta = ruta.toUpperCase();
 		mongo = new ConectarMongo();
 		BasicDBObject rutaAEliminar = new BasicDBObject("Nombre", ruta);
 		elimino = mongo.eliminarMDB(nombreColeccion, rutaAEliminar);
@@ -143,6 +146,7 @@ public class TransaccionesRuta {
 
 	public static boolean removerParadaDeRuta(String nombreRuta, int posicion) {
 		DBObject ruta;
+		nombreRuta = nombreRuta.toUpperCase();
 		posicion = posicion - 1;
 		ArrayList<DBObject> paradas = new ArrayList<>();
 		BasicDBObject nuevaData, dataARemplazar;
@@ -164,17 +168,17 @@ public class TransaccionesRuta {
 				
 			}
 		} else {
-			System.out.println("Error: La para " + nombreRuta + " a la que esta intentando acceder no existe");
+			System.out.println("Error: La parada " + nombreRuta + " a la que esta intentando acceder no existe");
 			
 		}
 		mongo.cerrarConexion();
 		return false;
 	}
 	
-	public static boolean reemplazarParadaDeRuta(String nombreRuta, String nombreParada, int posicion){
+	public static boolean reemplazarParadaDeRuta(String nombreRuta, String clave, int posicion){
 		boolean estado1,estado2;
 		
-		estado1 = añadirXPosicionARuta(nombreRuta, nombreParada, posicion);
+		estado1 = añadirXPosicionARuta(nombreRuta, clave, posicion);
 		if(estado1 == true){
 			System.out.println("se añadio");
 		estado2 = removerParadaDeRuta(nombreRuta, posicion+1);
