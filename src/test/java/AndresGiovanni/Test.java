@@ -2,6 +2,7 @@ package andresgiovanni;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -17,6 +18,7 @@ import com.mongodb.util.JSON;
 
 import db.ConectarMongo;
 import db.TransaccionesParada;
+import db.TransaccionesRecorrido;
 import db.TransaccionesRuta;
 import utilidad.FormatearDatos;
 /**
@@ -48,6 +50,9 @@ public class Test {
 		//FormatearDatos.mayusInicialMulti("lagos");
 		//TransaccionesRuta.crearRuta("T3");
 		//TransaccionesRuta.removerParadaDeRuta("P2", 	4	);
+		//TransaccionesRecorrido.crearRecorrido("hola", "P2");
+		System.out.println(FormatearDatos.formatoDeMinutos(0.21666666666));
+		
 	}
 	
 	

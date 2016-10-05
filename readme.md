@@ -386,6 +386,5 @@ Clases que se Modificaron:
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 	Documentar los nuevos servicios que se implementen.
 	Crear la documentacion de los nuevos servicio
-	
 	Modificar eliminar parada para que cuando se borre una parada tambien elimine la asignación a la rutas
 	

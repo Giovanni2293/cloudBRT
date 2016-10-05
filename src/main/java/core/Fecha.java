@@ -12,11 +12,12 @@ import java.text.SimpleDateFormat;
 public class Fecha {
 
 	private String fecha;//cadena que contendra la fecha 
+	private static Fecha fechaClass;
 	
 	/**
 	 *Constructor sin parametros donde se define el formato y se construye la fecha 
 	 */
-	public Fecha()
+	private Fecha()
 	{
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	    Date date = new Date();
@@ -30,5 +31,12 @@ public class Fecha {
 	public String getFecha()
 	{
 		return fecha;
+	}
+	
+	public static Fecha getFechaClass(){
+		if(fechaClass == null){
+			fechaClass = new Fecha();
+		}
+		return fechaClass;
 	}
 }

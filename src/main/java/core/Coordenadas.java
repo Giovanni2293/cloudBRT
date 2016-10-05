@@ -1,5 +1,7 @@
 package core;
 
+import javax.json.Json;
+
 /**
  * Una Clase sencilla que se encarga de manejar coordenadas
  * 
@@ -16,6 +18,13 @@ public class Coordenadas {
 		
 		latitud = 0;
 		longitud = 0;
+	}
+
+	public Coordenadas(double latitud, double longitud)
+	{
+		
+		this.latitud = latitud;
+		this.longitud = longitud;
 	}
 
 	/**
@@ -50,6 +59,15 @@ public class Coordenadas {
 		this.longitud = longitud;
 	}
 	
+	public String toString(){
+		String cadena;
+		
+		cadena = Json.createObjectBuilder().add("Coordenada", Json.createObjectBuilder()
+				.add("Latitud", latitud).add("Longitud", longitud)).build().toString();
+		
+		
+		return cadena;
+	}
 	
 	
 }

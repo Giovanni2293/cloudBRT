@@ -80,6 +80,21 @@ public  class GeoMatematicas {
 		
 	}
 	
+	/**
+	 * Retorna el tiempo que se demora de recorrer una distancia a cierta velocidad
+	 * en segundos.
+	 * @param dist
+	 * @param vel
+	 * @return
+	 */
 	
-
+	public static double hallarTiempo(double dist, double vel){
+		double tiempo;
+		dist = dist/1000;
+		tiempo = dist/vel;
+		
+		return tiempo;
+	}
+	
+	
 }

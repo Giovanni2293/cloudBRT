@@ -53,4 +53,25 @@ public class FormatearDatos {
 		 return new String(bytes, StandardCharsets.ISO_8859_1);
 	}
 	
+	public static double hoursToSeconds(double hour){
+		hour = hour * 3600;
+		return hour;
+	}
+
+	public static double hoursToMinutes(double hour){
+		hour = hour * 60;
+		return hour;
+	}
+	
+	public static String formatoDeMinutos(double hora){
+		String formato;
+		double tiempo = hoursToSeconds(hora);
+		int minutos = (int) (tiempo / 60) ;
+		int segundos =  (int) (tiempo%60);
+		
+		formato = ""+minutos + ":" +segundos;
+		
+		return formato;
+		
+	}
 }
