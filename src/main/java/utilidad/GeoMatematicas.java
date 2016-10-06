@@ -90,7 +90,6 @@ public  class GeoMatematicas {
 	
 	public static double hallarTiempo(double dist, double vel){
 		double tiempo;
-		dist = dist/1000;
 		tiempo = dist/vel;
 		
 		return tiempo;

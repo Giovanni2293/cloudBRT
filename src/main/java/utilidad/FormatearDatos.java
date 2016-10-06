@@ -17,6 +17,7 @@ import java.util.StringTokenizer;
  */
 public class FormatearDatos {
 
+	private static final double factorDeConversionKmhToMs=0.277778;
 	/**
 	 * Coloca una unica mayuscula inicial el resto de caracteres en minuscula
 	 * @param original
@@ -63,13 +64,27 @@ public class FormatearDatos {
 		return hour;
 	}
 	
-	public static String formatoDeMinutos(double hora){
+	public static double kmxhTomxs(double velocidad){
+		return factorDeConversionKmhToMs*velocidad;
+	}
+	
+	public static String formatoDeMinutos(double tiempo){
 		String formato;
-		double tiempo = hoursToSeconds(hora);
-		int minutos = (int) (tiempo / 60) ;
-		int segundos =  (int) (tiempo%60);
+		String horasS,minutosS,segundosS;
+		int horas = (int) (tiempo / 3600);
+		int minutos = (int) ((tiempo % 3600) / 60 ) ;
+		int segundos =  (int) (tiempo % 60);
 		
-		formato = ""+minutos + ":" +segundos;
+		if (horas<=9)horasS="0"+horas;
+		else horasS=""+horas;
+		
+		if (minutos<=9)minutosS="0"+minutos;
+		else minutosS=""+minutos;
+		
+		if (segundos<=9)segundosS="0"+segundos;
+		else segundosS=""+segundos;
+		
+		formato = "" + horasS +":" + minutosS + ":" +segundosS;
 		
 		return formato;
 		

@@ -17,7 +17,7 @@ public class TransaccionesRecorrido {
 	private static ConectarMongo mongo;
 	private static final String nombreColeccion = "Recorrido";
 	private static final String colleccionRuta = "Ruta";
-	private static double velMed = 35; //KM/h
+	private static double velMed = FormatearDatos.kmxhTomxs(35); //Metros por segundo
 	
 public static boolean crearRecorrido(String clave , String ruta) {
 		
@@ -49,8 +49,7 @@ public static boolean crearRecorrido(String clave , String ruta) {
 			temp = (BasicDBObject)actual.get("Coordenada");
 			coorAct =new Coordenadas((double) temp.getDouble("Latitud"), (double) temp.getDouble("Longitud"));
 			tiempo = GeoMatematicas.hallarTiempo(GeoMatematicas.calcDistancia(coorAnt, coorAct), velMed);
-			tiempo = FormatearDatos.hoursToMinutes(tiempo);
-			recorrido.put(actual.getString("Clave"),""+tiempo);
+			recorrido.put(actual.getString("Clave"),""+FormatearDatos.formatoDeMinutos(tiempo));
 			anterior = paradas.get(i);
 		}
 		

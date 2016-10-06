@@ -51,7 +51,7 @@ public class Test {
 		//TransaccionesRuta.crearRuta("T3");
 		//TransaccionesRuta.removerParadaDeRuta("P2", 	4	);
 		//TransaccionesRecorrido.crearRecorrido("hola", "P2");
-		//System.out.println(FormatearDatos.formatoDeMinutos());		
+		System.out.println(FormatearDatos.formatoDeMinutos(3821));		
 	}
 	
 	
