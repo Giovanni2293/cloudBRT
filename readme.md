@@ -388,3 +388,33 @@ Clases que se Modificaron:
 	Crear la documentacion de los nuevos servicio
 	Modificar eliminar parada para que cuando se borre una parada tambien elimine la asignación a la rutas
 	
+####[05/10/2016]:[22:18]
+
+* Se creo un metodo toString en la clase coordenadas que permite devolver una representacion Json de si mismo en String.
+* Fecha ahora se crea mediante un Singleton.
+* Se empezo a implementar el metodo para crear recorridos de la clase TransaccionesRecorrido.
+* Se definieron las velocidades en metros sobre segundo.
+* Se crearon nuevos metodos en la clase FormatearDatos para convertir desde horas a minutos y/o segundos y convertir velocidades
+  desde kilometros por hora a metros por segundo.
+* en la clase GeoMatematicas se creo un metodo "hallarTiempo" que permite calcular cuanto tiempo tarda a una velocidad determinada
+  recorrer una distancia.
+* Se creo un nuevo constructor con parametros para Coordenadas.
+
+Clases que se Modificaron:
+
+	TransaccionesRecorrido
+	Coordenadas
+	Fecha
+	GeoMatematicas
+	FormatearDatos
+	
+####Tareas Pendientes
+
+	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
+	Documentar los nuevos servicios que se implementen.
+	Modificar eliminar parada para que cuando se borre una parada tambien elimine la asignación a la rutas y de recorridos
+	Colocar una etiqueta de hora de recepcion de un json.
+	
+	
+	
+	
