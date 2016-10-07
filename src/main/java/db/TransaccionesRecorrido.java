@@ -2,6 +2,7 @@ package db;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.StringTokenizer;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.FormAction;
 
@@ -17,70 +18,102 @@ public class TransaccionesRecorrido {
 	private static ConectarMongo mongo;
 	private static final String nombreColeccion = "Recorrido";
 	private static final String colleccionRuta = "Ruta";
-	private static double velMed = FormatearDatos.kmxhTomxs(35); //Metros por segundo
+	private static String horaInicial;
+	private static String horaFinal;
 	
-public static boolean crearRecorrido(String clave , String ruta) {
-		
-		DBObject consulta, consultarRuta;		
-		BasicDBObject data , rutaDB, anterior, actual;
-		int cantParadas;
+	private static double velMed = FormatearDatos.kmxhTomxs(35); // Metros por
+																	// segundo parametro en kmxh
+
+	public static boolean crearRecorridoAutomatico(String clave, String ruta,String horaDePartida) {
+
+		DBObject consultaRecorrido, consultarRuta;
+		BasicDBObject data, rutaDB;
 		clave = clave.toUpperCase();
 		ruta = ruta.toUpperCase();
 		mongo = new ConectarMongo();
 		data = new BasicDBObject("Clave", clave);
-		rutaDB =  new BasicDBObject("Nombre", ruta);
-		LinkedHashMap<String, String> recorrido = new LinkedHashMap<>();
+		rutaDB = new BasicDBObject("Nombre", ruta);
 		consultarRuta = mongo.consultarMDB(colleccionRuta, rutaDB);
-		ArrayList<BasicDBObject> paradas = new ArrayList<>();
-		paradas = (ArrayList<BasicDBObject>) consultarRuta.get("Ruta");
-		cantParadas = paradas.size();
-		anterior = paradas.get(0);
-		recorrido.put(anterior.getString("Clave"), "0");
-		Coordenadas coorAnt,coorAct;
-		double tiempo = 0;
-		coorAnt = null;
-		coorAct = null;
-		for(int i = 1; i<cantParadas ; i++){
-			
-			BasicDBObject temp;
-			actual = paradas.get(i);
-			temp = (BasicDBObject)anterior.get("Coordenada");
-			coorAnt = new Coordenadas((double) temp.getDouble("Latitud"), (double) temp.getDouble("Longitud"));
-			temp = (BasicDBObject)actual.get("Coordenada");
-			coorAct =new Coordenadas((double) temp.getDouble("Latitud"), (double) temp.getDouble("Longitud"));
-			tiempo = GeoMatematicas.hallarTiempo(GeoMatematicas.calcDistancia(coorAnt, coorAct), velMed);
-			recorrido.put(actual.getString("Clave"),""+FormatearDatos.formatoDeMinutos(tiempo));
-			anterior = paradas.get(i);
-		}
-		
-	
-		System.out.println(recorrido);
-		return true;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*
-		
-		
-		consulta = mongo.consultarMDB(nombreColeccion, data);		
-		if (consulta == null) {
+		consultaRecorrido = mongo.consultarMDB(nombreColeccion, data);
+		if (consultaRecorrido == null) {
+			if (consultarRuta != null) {
+				data.append("Ruta", ruta);
+				data.append("HoraPartida",horaDePartida);
+				data.append("Horario",construirHorario(consultarRuta,horaDePartida));
+				System.out.println(data.toString());
 
-			data.append(nombreColeccion, recorrido );
-			mongo.insertarMDB(nombreColeccion, data);
-			mongo.cerrarConexion();
-			return true;
+				mongo.insertarMDB(nombreColeccion, data);
+				mongo.cerrarConexion();
+				return true;
+			} else {
+				System.out.println("Error: No se le puede crear un recorrido a una ruta inexistente");
+			}
 		} else {
 			System.out.println("Error: El elemento ya existe en la base de datos");
 		}
-		return false;*/
+		mongo.cerrarConexion();
+		return false;
 	}
 	
+	/**
+	 * Se encarga de hacer una estimacion del tiempo que se tarda un bus al desplazarse entre dos paradas.
+	 * @return {@link LinkedHashMap} devuelve el mapa de datos ordenado que contiene la pareja {parada,tiempo}
+	 */
+	private static LinkedHashMap<String,String> construirHorario(DBObject consultarRuta,String horaDePartida)
+	{
+		int cantParadas;
+		String horaAcumulada=horaDePartida;
+		BasicDBObject anterior, actual;
+		horaInicial = horaDePartida;
+		LinkedHashMap<String, String> recorrido = new LinkedHashMap<>();
+		ArrayList<BasicDBObject> paradas = new ArrayList<>();
+		
+		paradas = (ArrayList<BasicDBObject>) consultarRuta.get("Ruta");
+		cantParadas = paradas.size();
+		anterior = paradas.get(0);
+		recorrido.put(anterior.getString("Clave"), horaDePartida);
+		Coordenadas coorAnt, coorAct;
+		double tiempo = 0;
+		coorAnt = null;
+		coorAct = null;
+		for (int i = 1; i < cantParadas; i++) {
+			BasicDBObject temp;
+			actual = paradas.get(i);
+			temp = (BasicDBObject) anterior.get("Coordenada");
+			coorAnt = new Coordenadas((double) temp.getDouble("Latitud"), (double) temp.getDouble("Longitud"));
+			temp = (BasicDBObject) actual.get("Coordenada");
+			coorAct = new Coordenadas((double) temp.getDouble("Latitud"), (double) temp.getDouble("Longitud"));
+			tiempo = GeoMatematicas.hallarTiempo(GeoMatematicas.calcDistancia(coorAnt, coorAct), velMed);
+			System.out.println("Tiempo: " + tiempo);
+			tiempo = tiempo + removerFormatoDeTiempo(horaAcumulada);
+			horaAcumulada = FormatearDatos.formatoDeTiempo(tiempo);
+			recorrido.put(actual.getString("Clave"), "" + horaAcumulada);
+			anterior = paradas.get(i);
+		}
+		
+		horaFinal = horaAcumulada;
+		
+		return recorrido;
+		
+	}
+	
+	public static double removerFormatoDeTiempo(String hora)
+	{
+		String horaT,minT,segT;
+		int horaI,minI,segI;
+		int segundos;
+		StringTokenizer st = new StringTokenizer(hora,":");
+		horaT = st.nextToken();
+		minT = st.nextToken();
+		segT = st.nextToken();
+		horaI = (int)Double.parseDouble(horaT);
+		minI = (int)Double.parseDouble(minT);
+		segI = (int)Double.parseDouble(segT);
+		
+		segundos = horaI*3600+minI*60+segI;
+		System.out.println("Hora:"+horaI+" Minutos:"+minI+" Segundos:"+segI+" En segundos="+segundos);
+		return segundos;
+		
+	}
+
 }

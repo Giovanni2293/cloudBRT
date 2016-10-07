@@ -193,4 +193,28 @@ public class TransaccionesRuta {
 			
 		return estado1 ;
 	}
+	
+	public static boolean eliminarParadas(String nombre)
+	{
+		String nombreMayus;
+		nombreMayus = nombre.toUpperCase();
+		DBObject consulta;
+		BasicDBObject dataNueva,dataAnterior;
+		mongo = new ConectarMongo();
+		dataNueva = new BasicDBObject("Nombre", nombreMayus);
+		dataAnterior = new BasicDBObject("Nombre",nombreMayus);
+		consulta = mongo.consultarMDB(nombreColeccion, dataNueva);
+		ArrayList<BasicDBObject> paradas = new ArrayList<>();
+		if (consulta != null) {
+			dataNueva.append(nombreColeccion, paradas);
+			mongo.actualizarMDB(nombreColeccion, dataNueva , dataAnterior);
+			mongo.cerrarConexion();
+			return true;
+		} else {
+			System.out.println(
+					"Error: No se puede eliminar las paradas de la ruta " + nombreMayus + ". Ruta inexistente en la base de datos");
+		}
+		mongo.cerrarConexion();
+		return false;
+	}
 }

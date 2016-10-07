@@ -68,12 +68,14 @@ public class FormatearDatos {
 		return factorDeConversionKmhToMs*velocidad;
 	}
 	
-	public static String formatoDeMinutos(double tiempo){
+	public static String formatoDeTiempo(double tiempo){
 		String formato;
 		String horasS,minutosS,segundosS;
 		int horas = (int) (tiempo / 3600);
 		int minutos = (int) ((tiempo % 3600) / 60 ) ;
 		int segundos =  (int) (tiempo % 60);
+		
+		if (horas==24)horas = 0;
 		
 		if (horas<=9)horasS="0"+horas;
 		else horasS=""+horas;
