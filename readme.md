@@ -421,6 +421,7 @@ Clases que se Modificaron:
 * En la clase TransaccionesRecorrido se creo un metodo que permite generar un recorrido con unas horas de forma automatica apoyandose en metodos asistentes como construirHorario (Genera un linkedhashmap de paradas y horas) y removerFormatoDeTiempo (convierte una hora dada en formato de string 24 horas ej: 03:00:20 a segundos contados a partir de 00:00:00)
 * Se creo un metodo en la clase TransaccionesRuta "eliminarParadas" que permite eliminar todas las paradas de una ruta
 * Se creo un metodo en la clase FormatoDatos "formatoDeTiempo". Este permite recibir una hora dada en segundos y convertirla al formato 24 horas en String ej 3600 lo convierte a 01:00:00
+* Se agrego la nueva version de la base de datos con las nuevas paradas y un recorrido de prueba"
 	
 Clases que se Modificaron:
 
