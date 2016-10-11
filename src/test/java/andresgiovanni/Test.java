@@ -47,7 +47,8 @@ public class Test {
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST3");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST4");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST5");*/
-		TransaccionesRecorrido.crearRecorridoAutomatico("hola","T3", "23:54:59");
+		//TransaccionesRecorrido.crearRecorridoAutomatico("hola","T3", "23:54:59");
+		//TransaccionesRecorrido.editarHoraRecorrido("HOLA","ST3","00:02:54","00:02:52");
 		//TransaccionesRuta.eliminarParadas("P2");
 		/*TransaccionesParada.crearParada("ST1", "EST. TEMPRANA",7.002608, -73.055068);
 		TransaccionesParada.crearParada("ST2", "EST. ESPANOLITA", 7.017099, -73.057545);
