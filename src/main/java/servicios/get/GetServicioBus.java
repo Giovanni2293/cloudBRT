@@ -18,6 +18,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 import db.ConectarMongo;
+import db.TransaccionesBus;
 import utilidad.FormatearDatos;
 import utilidad.MensajeError;
 
@@ -28,7 +29,7 @@ import utilidad.MensajeError;
  * @author Jose Giovanni Florez Nocua
  * @author Carlos Andrés Pereira Grimaldo
  */
-@Path("/buses")
+@Path("/get/buses")
 public class GetServicioBus {
 	private JsonObject respuesta;
 
@@ -60,7 +61,6 @@ public class GetServicioBus {
 		JsonReader jsonReader = Json.createReader(new StringReader(data.toString()));
 		JsonObject json = jsonReader.readObject();
 		return Response.status(200).entity(json.toString()).build();
-
 	}
 
 	/**
@@ -96,4 +96,38 @@ public class GetServicioBus {
 		}
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
+	
+	/**
+	 * Servicio que permite eliminar un bus en especifico utilizando su placa y devuelve
+	 * como resultado si fue satisfactoria o no la tarea
+	 * @param placaBus
+	 * @return {@link Boolean}
+	 */
+	@Path("/eliminar/{placaBus}")
+	@GET
+	@Produces("application/json")
+	public Response eliminarBuses(@PathParam("placaBus") String placaBus) {
+		boolean progreso;
+		progreso=TransaccionesBus.eliminar(placaBus);
+		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
+	}
+	
+	/**
+	 * Servicio que permite modificar el estado de un bus. True (Bus funcional) False (Bus no funcional) y 
+	 * devuelve como resultado si fue satisfactoria o no la tarea.
+	 * @param placaBus
+	 * @param estado
+	 * @return {@link Boolean}
+	 */
+	@Path("/modificar/{placaBus},{estado}")
+	@GET
+	@Produces("application/json")
+	public Response modificarEstado(@PathParam("placaBus") String placaBus,@PathParam("estado") boolean estado) {
+		boolean progreso = TransaccionesBus.modificarEstado(placaBus, estado);
+		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
+	}
+	
+	
 }

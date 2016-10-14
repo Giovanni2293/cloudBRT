@@ -19,6 +19,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 import db.ConectarMongo;
+import db.TransaccionesBus;
+import db.TransaccionesParada;
 import utilidad.FormatearDatos;
 import utilidad.MensajeError;
 
@@ -29,7 +31,7 @@ import utilidad.MensajeError;
  * @author Jose Giovanni Florez Nocua
  * @author Carlos Andrés Pereira Grimaldo
  */
-@Path("/paradas")
+@Path("/get/paradas")
 public class GetServicioParada {
 	private JsonObject respuesta;
 
@@ -73,7 +75,6 @@ public class GetServicioParada {
 	public Response obtenerParada(@PathParam("claveParada") String claveParada) {
 		ConectarMongo conexion = new ConectarMongo();
 		claveParada = claveParada.toUpperCase() ;
-		JsonObject respuesta;
 		DBObject json = null;
 		BasicDBObject dbo = new BasicDBObject();
 		json = conexion.consultarMDB("Parada", new BasicDBObject("Clave", claveParada));
@@ -88,6 +89,22 @@ public class GetServicioParada {
 		{
 			respuesta = MensajeError.noEncontroElElemento("parada",claveParada);
 		}
+		return Response.status(200).entity(respuesta.toString()).build();
+	}
+	
+	/**
+	 * Servicio que permite eliminar una parada mediante su clave. Devuelve si la tarea fue satisfactoria o 
+	 * no.
+	 * @param clave
+	 * @return {@link Boolean}
+	 */
+	@Path("/eliminar/{clave}")
+	@GET
+	@Produces("application/json")
+	public Response eliminarBuses(@PathParam("clave") String clave) {
+		boolean progreso;
+		progreso=TransaccionesParada.eliminarParada(clave);
+		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
 }

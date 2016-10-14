@@ -22,6 +22,8 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 import db.ConectarMongo;
+import db.TransaccionesParada;
+import db.TransaccionesRuta;
 import utilidad.MensajeError;
 
 /**
@@ -32,7 +34,7 @@ import utilidad.MensajeError;
  * @author Jose Giovanni Florez Nocua
  * @author Carlos Andrés Pereira Grimaldo
  */
-@Path("/rutas")
+@Path("/get/rutas")
 public class GetServicioRuta {
 	private JsonObject respuesta;
 
@@ -111,5 +113,91 @@ public class GetServicioRuta {
 		}
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
+	
+	/**
+	 * Elimina todas las paradas de una ruta existente. La ruta tiene que existir
+	 * para poder efectuarse la tarea. Finalmente devuelve si fue o no satisfactoria la tarea
+	 * @param nombre
+	 * @return
+	 */
+	@Path("/remover/paradas/{nombre}")
+	@GET
+	@Produces("application/json")
+	public Response eliminarParadasDeRuta(@PathParam("nombre") String nombre) {
+		boolean progreso;
+		progreso=TransaccionesRuta.eliminarParadas(nombre);
+		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
+	}
+	
+	/**
+	 * Remueve una parada de una ruta dando una posicion.
+	 * @param nombreRuta
+	 * @param posicion
+	 * @return {@link Response}
+	 */
+	@Path("/remover/paradas/{nombreRuta},{posicion}")
+	@GET
+	@Produces("application/json")
+	public Response eliminarParadaEspecificaDeRuta(@PathParam("nombreRuta") String nombreRuta,@PathParam("posicion") int posicion) {
+		boolean progreso;
+		progreso=TransaccionesRuta.removerParadaDeRuta(nombreRuta, posicion);
+		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
+	}
+	
+	/**
+	 * Elimina una ruta por completo
+	 * @param nombreRuta
+	 * @return {@link Response}
+	 */
+	@Path("/eliminar/{nombreRuta}")
+	@GET
+	@Produces("application/json")
+	public Response eliminarRuta(@PathParam("nombreRuta") String nombreRuta) {
+		boolean progreso;
+		progreso=TransaccionesRuta.eliminarRuta(nombreRuta);
+		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
+	}
+	
+	/**
+	 * Agrega una parada al final de una ruta especificada en la url.
+	 * @param nombreRuta
+	 * @param clave
+	 * @return {@link Response}
+	 */
+	@Path("/agregar/paradas/{nombreRuta},{clave}")
+	@GET
+	@Produces("application/json")
+	public Response agregarParadasAlFinal(@PathParam("nombreRuta") String nombreRuta,@PathParam("clave") String clave) {
+		boolean progreso;
+		progreso=TransaccionesRuta.añadirAlFinalDeRuta(nombreRuta, clave);
+		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
+	}
+	
+	/**
+	 * Crea una nueva ruta sin paradas
+	 * @param nombreRuta
+	 * @return {@link Response}
+	 */
+	@Path("/crear/{nombreRuta}")
+	@GET
+	@Produces("application/json")
+	public Response crearRuta(@PathParam("nombreRuta") String nombreRuta) {
+		boolean progreso;
+		progreso=TransaccionesRuta.crearRuta(nombreRuta);
+		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
+	}
+	
+	
+	
+
+	
+	
+	
+	
 
 }
