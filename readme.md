@@ -437,7 +437,7 @@ Clases que se Modificaron:
 	Modificar eliminar parada para que cuando se borre una parada tambien elimine la asignación a la rutas y de recorridos
 	Colocar una etiqueta de hora de recepcion de un json.
 	
-####[06/10/2016]:[23:31]
+####[14/10/2016]:[17:19]
 
 * Se crearon las Api en las 6 clases tanto get como post para agregar, editar, eliminar y reemplazar valores de la base de datos.
 * Se actualizo la documentacion de la api con los servicios actuales
