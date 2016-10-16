@@ -13,15 +13,21 @@ public class Fecha {
 
 	private String fecha;//cadena que contendra la fecha 
 	private static Fecha fechaClass;
+	private String ymd;
 	
 	/**
 	 *Constructor sin parametros donde se define el formato y se construye la fecha 
 	 */
 	private Fecha()
 	{
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	    Date date = new Date();
 		fecha=dateFormat.format(date);
+		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+		Date date2 = new Date();
+		ymd = dateFormat2.format(date2);
+		
 	}
 	
 	/**
@@ -29,8 +35,12 @@ public class Fecha {
 	 * @return fecha
 	 */
 	public String getFecha()
-	{
+	{	fechaClass = new Fecha();
 		return fecha;
+	}
+	public String getSoloYMD()
+	{
+		return ymd;
 	}
 	
 	public static Fecha getFechaClass(){

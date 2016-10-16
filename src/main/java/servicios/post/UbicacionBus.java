@@ -8,6 +8,10 @@ package servicios.post;
 import core.*;
 import utilidad.*;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.ws.rs.Consumes;
@@ -17,99 +21,60 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
-
-import com.mongodb.MongoException;
-
-
 import javax.json.*;
 
-
-@Path("/ubicacion")
+@Path("/colector")
 public class UbicacionBus {
-	
-	private static String BusProm;
-	private static JsonObject BusCoorProm;
-    private static double sumaLat,sumaLong;
-    private static int cantidad,incremento;
-    private LecturaJson leer;
-	private Extractor coorExtractor;
-	private Bus BusObtenido;
-	private Bus busDeWilson;
-    
-	/**
-	 * Servicio encargado de recibir los valores mediante post e ir llevando la sumatoria para calcular el
-	 * promedio cada 10 valores
-	 * @param incomingData Datos de entrada mediante post
-	 * @return promedio posicion promedio
-	 */
-	@Path("/promedio10")
+
+	@Path("/buses")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String promedio10(InputStream incomingData) {
-		leer = new LecturaJson(incomingData);
-		coorExtractor = new Extractor();
-		BusObtenido = coorExtractor.extractBus(leer.getLectura());
-		incremento++;
-		cantidad=10;
-        sumaLat = BusObtenido.getCoor().getLatitud()+sumaLat;
-        sumaLong = BusObtenido.getCoor().getLongitud()+sumaLong;
-       
-		if (incremento == 10) {
-			double promLat;
-			double promLong;
+	public Response recibirBus(InputStream incomingData) {
+		JsonObject entrada;
+		JsonObject salida;
+		FileWriter escritor;
+		BufferedWriter buffer;
 
-			
-			promLat = sumaLat / cantidad;
-			promLong = sumaLong / cantidad;
-
-
-			System.out.println(promLat);
-			System.out.println(promLong);
-			BusObtenido.getCoor().setLatitud(promLat);
-			BusObtenido.getCoor().setLongitud(promLong);
-			BusObtenido.actualizarBusDesdeBD();
-			BusCoorProm = BusObtenido.getJsonBus();
-			BusProm=BusCoorProm.toString();
-			promLat = 0;
-			promLong = 0;
-			sumaLong=0;
-			sumaLat=0;
-			incremento=0;
-			return BusProm;
+		JsonReader jsonReader = Json.createReader(incomingData);
+		entrada = jsonReader.readObject();
+		
+		String locatefile = "../../historico/";
+		String filename = entrada.getString("placa") + "-" + Fecha.getFechaClass().getSoloYMD()+".txt";
+		System.out.println(filename);
+		String uri = locatefile + filename;
+		File folder = new File(locatefile);
+		if (!folder.exists()){ 
+			folder.mkdirs();
 		}
-
-		return null;
-	}
-	
-	/**
-	 * Metodo que lee un post y construye un objeto bus con fines de que wilson pruebe
-	 * @param incomingData
-	 */
-	@Path("/envioWilson")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response wilson(InputStream incomingData) {
-		leer = new LecturaJson(incomingData);
-		coorExtractor = new Extractor();
+		String v = entrada.toString();
+		
+		
+		salida = Json.createObjectBuilder().add("placa", entrada.get("placa"))
+				.add("tde", entrada.get("tde"))
+				.add("tdr", Fecha.getFechaClass().getFecha())
+				.add("coordenada", entrada.get("coordenada")).build();
+		
 		try {
-			busDeWilson = coorExtractor.extractBus(leer.getLectura());
-			return Response.status(200).entity(busDeWilson.getJsonBus().toString()).build();
-		} catch (MongoException e) {
-			// TODO: handle exception
-			JsonObject timeout = MensajeError.servicioCaido();
-			return Response.status(200).entity(timeout.toString()).build();
+			escritor = new FileWriter(uri, true);
+			buffer = new BufferedWriter(escritor);
+			buffer.write(salida.toString() + "\n");
+			buffer.close();
+
+		} catch (IOException e) {
+			System.out.println("IO Exception ;v");
 		}
-		}
-	
-	
-    /**
-     * Devuelve la posicion promedio actual
-     * @return promedio
-     */
-	public static String getBusProm() {
-		return BusProm;
+
+		return Response.status(200).entity(salida.toString()).build();
+
+		/*
+		 * StringTokenizer tokenizer = new StringTokenizer(v, ",");
+		 * 
+		 * v = tokenizer.nextToken() + ", \"tdr\":" + "\"" +
+		 * Fecha.getFechaClass().getFecha()+ "\",";
+		 * while(tokenizer.hasMoreTokens()){ v +="," + tokenizer.nextToken() ; }
+		 */
 	}
+
+	
 }

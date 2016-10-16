@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 import javax.json.Json;
 import javax.json.JsonObject;
 
-@Path("/enviar")
+@Path("/consultar")
 public class EnvioCoor {
 	//Declaracion de dos objetos colaboradores necesarios para iniciar el hilo y trabajar las coordenadas.
     private MediadorHE r;
@@ -67,8 +67,9 @@ public class EnvioCoor {
    	@Produces("application/json")
    	public  Response wilson() {
        	       
-   		String result = UbicacionBus.getBusProm();
-   		return Response.status(200).entity(result).build();
+   		//String result = UbicacionBus.getBusProm();
+    	String result = "hi";
+   		return Response.status(200).entity(result.toString()).build();
    	}
 
   }
