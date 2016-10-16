@@ -21,35 +21,35 @@ import db.TransaccionesBus;
  */
 @Path("/post/buses")
 public class PostServicioBus {
-private JsonObject respuesta;
-	
-    /**
-     * Crea un nuevo bus mediante un json enviado por POST
-     * @param incomingData
-     * @return {@link Response}
-     */
+	private JsonObject respuesta;
+
+	/**
+	 * Crea un nuevo bus mediante un json enviado por POST
+	 * 
+	 * @param incomingData
+	 * @return {@link Response}
+	 */
 	@Path("/crear")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response crearBus(InputStream incomingData) {
 		JsonObject entrada;
-		String placa,tipoBus; 
-		int capacidad; 
-		boolean estado,progreso;
+		String placa, tipoBus;
+		int capacidad;
+		boolean estado, progreso;
 		JsonReader jsonReader = Json.createReader(incomingData);
 		entrada = jsonReader.readObject();
-		
-	    placa = entrada.getString("Placa");
-	    capacidad = entrada.getInt("Capacidad");
-	    tipoBus = entrada.getString("TipoBus");
-	    estado = Boolean.parseBoolean(entrada.getString("Estado"));
-	    
-	    progreso=TransaccionesBus.crearBus(placa, capacidad, tipoBus, estado);
-	    respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
-	    System.out.println("Placa:"+placa+" Capacidad:"+capacidad+" TipoBus:"+tipoBus+" Estado:"+estado);
+
+		placa = entrada.getString("Placa");
+		capacidad = entrada.getInt("Capacidad");
+		tipoBus = entrada.getString("TipoBus");
+		estado = Boolean.parseBoolean(entrada.getString("Estado"));
+
+		progreso = TransaccionesBus.crearBus(placa, capacidad, tipoBus, estado);
+		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+		System.out.println("Placa:" + placa + " Capacidad:" + capacidad + " TipoBus:" + tipoBus + " Estado:" + estado);
 		return Response.status(200).entity(respuesta.toString()).build();
-		
-		
+
 	}
 }

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.swing.text.html.HTMLDocument.HTMLReader.FormAction;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -19,9 +18,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 import db.ConectarMongo;
-import db.TransaccionesBus;
 import db.TransaccionesParada;
-import utilidad.FormatearDatos;
 import utilidad.MensajeError;
 
 /**
@@ -101,7 +98,7 @@ public class GetServicioParada {
 	@Path("/eliminar/{clave}")
 	@GET
 	@Produces("application/json")
-	public Response eliminarBuses(@PathParam("clave") String clave) {
+	public Response eliminarParada(@PathParam("clave") String clave) {
 		boolean progreso;
 		progreso=TransaccionesParada.eliminarParada(clave);
 		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();

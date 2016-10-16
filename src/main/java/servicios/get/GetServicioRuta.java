@@ -2,8 +2,7 @@ package servicios.get;
 
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
+
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -14,7 +13,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import org.bson.BSONObject;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -22,7 +20,6 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 import db.ConectarMongo;
-import db.TransaccionesParada;
 import db.TransaccionesRuta;
 import utilidad.MensajeError;
 
