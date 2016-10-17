@@ -471,6 +471,7 @@ obtener datos del hashmap del horario por sus indices.
 * Se creo una clase llamada parque automotor que contiene todos los buses del sistema y sus ultimo valor de coordeanadas recibido desde
 el servicio de obtencion de datos. Se implemento con singleton. Esta contiene un metodo para acceder a un bus en especifico.
 * Se creo la clase itinerario que se encargara de relacionar: conductor,recorrido y bus.
+* Se agrego una coordeanda a la consulta de los buses. Esta tiene la ultima coordenada que llega desde el servicio post de wilson para ese bus.
 
 Clases que se modificaron:
 
@@ -481,6 +482,7 @@ Clases que se modificaron:
 	Ruta
 	TransaccionesRecorrido
 	UbicacionBus
+	getServicioBus
 
 Clases que se crearon:
 

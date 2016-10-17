@@ -17,6 +17,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
+import core.ParqueAutomotor;
 import db.ConectarMongo;
 import db.TransaccionesBus;
 import utilidad.MensajeError;
@@ -54,6 +55,7 @@ public class GetServicioBus {
 			bso.append("Capacidad", obj.get("Capacidad"));
 			bso.append("TipoBus", obj.get("TipoBus"));
 			bso.append("Estado", obj.get("Estado"));
+			bso.append("Coordenada",ParqueAutomotor.getParque().encontrarBus(obj.getString("Placa")).getJsonBus().getJsonObject("coordenada").toString());
 			buses.add(bso);
 		}
 		BasicDBObject data = new BasicDBObject("Buses", buses);
@@ -86,6 +88,7 @@ public class GetServicioBus {
 		dbo.append("Capacidad", json.get("Capacidad"));
 		dbo.append("TipoBus", json.get("TipoBus"));
 		dbo.append("Estado",json.get("Estado"));
+		dbo.append("Coordenada",ParqueAutomotor.getParque().encontrarBus(placaBus).getJsonBus().getJsonObject("coordenada").toString());
 		JsonReader jsonReader = Json.createReader(new StringReader(dbo.toString()));
 		respuesta = jsonReader.readObject();
 		}
