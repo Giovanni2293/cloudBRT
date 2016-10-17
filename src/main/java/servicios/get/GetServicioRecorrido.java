@@ -20,7 +20,7 @@ import com.mongodb.DBObject;
 import db.ConectarMongo;
 import utilidad.MensajeError;
 
-@Path("/get/recorridos")
+@Path("get/recorridos")
 public class GetServicioRecorrido {
 
 	private JsonObject respuesta;

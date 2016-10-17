@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 
 import db.TransaccionesRecorrido;
 
-@Path("/post/recorrido")
+@Path("post/recorrido")
 public class PostServicioRecorrido {
 
 	private JsonObject respuesta;

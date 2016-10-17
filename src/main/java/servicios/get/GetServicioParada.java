@@ -28,7 +28,7 @@ import utilidad.MensajeError;
  * @author Jose Giovanni Florez Nocua
  * @author Carlos Andrés Pereira Grimaldo
  */
-@Path("/get/paradas")
+@Path("get/paradas")
 public class GetServicioParada {
 	private JsonObject respuesta;
 

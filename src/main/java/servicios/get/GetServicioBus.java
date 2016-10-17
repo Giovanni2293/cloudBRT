@@ -29,7 +29,7 @@ import utilidad.MensajeError;
  * @author Jose Giovanni Florez Nocua
  * @author Carlos Andrés Pereira Grimaldo
  */
-@Path("/get/buses")
+@Path("get/buses")
 public class GetServicioBus {
 	private JsonObject respuesta;
 

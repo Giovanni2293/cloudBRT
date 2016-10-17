@@ -19,7 +19,7 @@ import db.TransaccionesBus;
  * @author Jose Giovanni Florez Nocua
  * @author Carlos Andres Pereira
  */
-@Path("/post/buses")
+@Path("post/buses")
 public class PostServicioBus {
 	private JsonObject respuesta;
 
