@@ -457,4 +457,46 @@ Clases que se Modificaron:
 	Documentar los nuevos servicios que se implementen.
 	Modificar eliminar parada para que cuando se borre una parada tambien elimine la asignación a la rutas y de recorridos
 	Colocar una etiqueta de hora de recepcion de un json.
+
+####[17/10/2016]:[11:40]
+
+* Se adecuo la clase bus para que se encargue de contener informacion relevante al bus en tiempo de ejecucion
+* Se adecuo la clase conductor con metodos para poder crear un conductor y obtener sus atributos
+* Se adecuo una parada como un objeto que contiene un id de parada y unas cordenadas. Este tambien posee la geocerca que
+se empleara para determinar si un bus esta fuera o dentro de esa estacion mediante su metodo.
+* Se modifico la clase ruta que contiene un arreglo de todas las paradas.
+* Se modifico la clase recorrido que da la posibilidad de obtener una parada dada una posicion o
+obtener datos del hashmap del horario por sus indices.
+* Se modifico la visibilidad del metodo de construirHorario para emplearlo en la clase Recorrido.
+* Se creo una clase llamada parque automotor que contiene todos los buses del sistema y sus ultimo valor de coordeanadas recibido desde
+el servicio de obtencion de datos. Se implemento con singleton. Esta contiene un metodo para acceder a un bus en especifico.
+* Se creo la clase itinerario que se encargara de relacionar: conductor,recorrido y bus.
+
+Clases que se modificaron:
+
+	Bus
+	Conductor
+	Parada
+	Recorrido
+	Ruta
+	TransaccionesRecorrido
+	UbicacionBus
+
+Clases que se crearon:
+
+	Itinerario
+	ParqueAutomotor
+
+Clases que se eliminaron:
+
+	Tiempo
 	
+####Tareas Pendientes
+
+	Implementar la logica de Itinerario con metodos que permitan ubicar el bus de forma porcentual y metodos para el manejo del conductor.
+	Crear la clase despacho que contendra todos los itinerarios y el manejo de los mismos.
+
+
+####Dudas
+
+	¿Se implementara la logica de adelantos o atrasos?

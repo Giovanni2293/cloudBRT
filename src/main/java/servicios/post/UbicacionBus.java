@@ -35,26 +35,26 @@ public class UbicacionBus {
 		JsonObject salida;
 		FileWriter escritor;
 		BufferedWriter buffer;
-
 		JsonReader jsonReader = Json.createReader(incomingData);
 		entrada = jsonReader.readObject();
-		
+
 		String locatefile = "../../historico/";
-		String filename = entrada.getString("placa") + "-" + Fecha.getFechaClass().getSoloYMD()+".txt";
+		String filename = entrada.getString("placa") + "-" + Fecha.getFechaClass().getSoloYMD() + ".txt";
 		System.out.println(filename);
 		String uri = locatefile + filename;
 		File folder = new File(locatefile);
-		if (!folder.exists()){ 
+		if (!folder.exists()) {
 			folder.mkdirs();
 		}
 		String v = entrada.toString();
-		
-		
-		salida = Json.createObjectBuilder().add("placa", entrada.get("placa"))
-				.add("tde", entrada.get("tde"))
-				.add("tdr", Fecha.getFechaClass().getFecha())
-				.add("coordenada", entrada.get("coordenada")).build();
-		
+
+		// Inicia asignacion de coordenada a bus del parque automotor runtime
+		asignarCoorABus(entrada);
+		// Termina la asignacion de coordenada a bus del parque automotor runtime
+
+		salida = Json.createObjectBuilder().add("placa", entrada.get("placa")).add("tde", entrada.get("tde"))
+				.add("tdr", Fecha.getFechaClass().getFecha()).add("coordenada", entrada.get("coordenada")).build();
+
 		try {
 			escritor = new FileWriter(uri, true);
 			buffer = new BufferedWriter(escritor);
@@ -75,6 +75,24 @@ public class UbicacionBus {
 		 * while(tokenizer.hasMoreTokens()){ v +="," + tokenizer.nextToken() ; }
 		 */
 	}
-
 	
+	private void asignarCoorABus(JsonObject entrada)
+	{
+		Bus bus;
+		bus = ParqueAutomotor.getParque().encontrarBus(entrada.getString("placa"));
+		if (bus != null) {
+			//El bus existe
+			String latS, lngS;
+			Double lat, lng;
+			JsonObject coordenada = entrada.getJsonObject("coordenada");
+			latS = coordenada.getString("latitud");
+			lngS = coordenada.getString("longitud");
+			lat = Double.parseDouble(latS);
+			lng = Double.parseDouble(lngS);
+			System.out.println("lat:"+lat+" lng:"+lng);
+			bus.setCoor(new Coordenadas(lat, lng));
+		}
+		ParqueAutomotor.getParque().mostarParque();
+	}
+
 }

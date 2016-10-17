@@ -29,6 +29,18 @@ public class Bus {
 		actualizarBusDesdeBD();
 	}
 	
+	public Bus(String placa)
+	{
+		//Constructor de buses runtime.
+		coor = new Coordenadas(0,0);
+		this.placa = placa;
+		this.tipoBus="";
+		this.capacidad=0;
+		this.estado=false;
+		busDB = new BusDB(placa);
+		actualizarBusDesdeBD();
+	}
+	
 	public void actualizarBusDesdeBD()
 	{
 		if (busDB.valoresBaseDatos())
@@ -49,7 +61,6 @@ public class Bus {
 				.add("capacidad", capacidad)
 				.add("tipoBus", tipoBus)
 				.add("estado", estado).build();
-		System.out.println(JsonDatos.toString());
 		
 	}
 	
@@ -79,6 +90,11 @@ public class Bus {
 
 	public Coordenadas getCoor() {
 		return coor;
+	}
+	
+	public void setCoor(Coordenadas coor)
+	{
+		this.coor=coor;
 	}
 
 	

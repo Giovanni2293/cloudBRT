@@ -103,7 +103,7 @@ public class TransaccionesRecorrido {
 	 * @return {@link LinkedHashMap} devuelve el mapa de datos ordenado que
 	 *         contiene la pareja {parada,tiempo}
 	 */
-	private static LinkedHashMap<String, String> construirHorario(DBObject consultarRuta, String horaDePartida) {
+	public static LinkedHashMap<String, String> construirHorario(DBObject consultarRuta, String horaDePartida) {
 		int cantParadas;
 		String horaAcumulada = horaDePartida;
 		BasicDBObject anterior, actual;
@@ -127,7 +127,6 @@ public class TransaccionesRecorrido {
 			temp = (BasicDBObject) actual.get("Coordenada");
 			coorAct = new Coordenadas((double) temp.getDouble("Latitud"), (double) temp.getDouble("Longitud"));
 			tiempo = GeoMatematicas.hallarTiempo(GeoMatematicas.calcDistancia(coorAnt, coorAct), velMed);
-			System.out.println("Tiempo: " + tiempo);
 			tiempo = tiempo + removerFormatoDeTiempo(horaAcumulada);
 			horaAcumulada = FormatearDatos.formatoDeTiempo(tiempo);
 			recorrido.put(actual.getString("Clave"), "" + horaAcumulada);
@@ -153,7 +152,6 @@ public class TransaccionesRecorrido {
 		segI = (int) Double.parseDouble(segT);
 
 		segundos = horaI * 3600 + minI * 60 + segI;
-		System.out.println("Hora:" + horaI + " Minutos:" + minI + " Segundos:" + segI + " En segundos=" + segundos);
 		return segundos;
 
 	}

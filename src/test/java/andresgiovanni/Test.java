@@ -16,6 +16,9 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.util.JSON;
 
+import core.ParqueAutomotor;
+import core.Recorrido;
+import core.Ruta;
 import db.ConectarMongo;
 import db.TransaccionesParada;
 import db.TransaccionesRecorrido;
@@ -47,6 +50,9 @@ public class Test {
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST3");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST4");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST5");*/
+		//ParqueAutomotor.getParque().mostarParque();
+	     Recorrido r = new Recorrido("T3", "00:00:00");
+	     r.mostarHorario();
 		//TransaccionesRecorrido.crearRecorridoAutomatico("hola","T3", "23:54:59");
 		//TransaccionesRecorrido.editarHoraRecorrido("HOLA","ST3","00:02:54","00:02:52");
 		//TransaccionesRuta.eliminarParadas("P2");
