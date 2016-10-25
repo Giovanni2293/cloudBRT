@@ -12,9 +12,9 @@ import core.Coordenadas;
 import utilidad.FormatearDatos;
 import utilidad.GeoMatematicas;
 
-public class TransaccionesRecorrido {
+public class TRecorrido {
 
-	private static ConectarMongo mongo;
+	private static DBGeneralBRT mongo;
 	private static final String nombreColeccion = "Recorrido";
 	private static final String colleccionRuta = "Ruta";
 	private static String horaInicial;
@@ -31,7 +31,7 @@ public class TransaccionesRecorrido {
 		BasicDBObject data, rutaDB;
 		clave = clave.toUpperCase();
 		ruta = ruta.toUpperCase();
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		data = new BasicDBObject("Clave", clave);
 		rutaDB = new BasicDBObject("Nombre", ruta);
 		consultarRuta = mongo.consultarMDB(colleccionRuta, rutaDB);
@@ -72,7 +72,7 @@ public class TransaccionesRecorrido {
 		BasicDBObject nuevaData, dataARemplazar;
 		nuevaData = new BasicDBObject("Clave", clave);
 		dataARemplazar = new BasicDBObject("Clave", clave);
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		recorrido = mongo.consultarMDB(nombreColeccion, nuevaData);
 		if (recorrido != null) {
 			nuevaData.append("Ruta", recorrido.get("Ruta"));

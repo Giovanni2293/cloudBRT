@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import db.TransaccionesRuta;
+import db.TRuta;
 
 @Path("post/rutas")
 public class PostServicioRuta {
@@ -41,7 +41,7 @@ public class PostServicioRuta {
 		clave = entrada.getString("ClaveParada");
 		posicion = Integer.parseInt(entrada.getString("PosicionParada"));
 
-		progreso = TransaccionesRuta.añadirXPosicionARuta(nombreRuta, clave, posicion);
+		progreso = TRuta.añadirXPosicionARuta(nombreRuta, clave, posicion);
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		System.out.println("Clave:" + clave + " Nombre:" + nombreRuta + " Posicion:" + posicion);
 		return Response.status(200).entity(respuesta.toString()).build();
@@ -71,7 +71,7 @@ public class PostServicioRuta {
 		clave = entrada.getString("ClaveParada");
 		posicion = Integer.parseInt(entrada.getString("PosicionParada"));
 
-		progreso = TransaccionesRuta.reemplazarParadaDeRuta(nombreRuta, clave, posicion);
+		progreso = TRuta.reemplazarParadaDeRuta(nombreRuta, clave, posicion);
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		System.out.println("Clave:" + clave + " Nombre:" + nombreRuta + " Posicion:" + posicion);
 		return Response.status(200).entity(respuesta.toString()).build();

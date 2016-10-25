@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import core.Coordenadas;
-import db.TransaccionesParada;
+import db.TParada;
 
 @Path("post/paradas")
 public class PostServicioParada {
@@ -45,7 +45,7 @@ public class PostServicioParada {
 		slatitud = coordenada.getString("Latitud");
 		slongitud = coordenada.getString("Longitud");
 		c1 = new Coordenadas(Double.parseDouble(slatitud), Double.parseDouble(slongitud));
-		progreso = TransaccionesParada.crearParada(clave, nombre, c1.getLatitud(), c1.getLongitud());
+		progreso = TParada.crearParada(clave, nombre, c1.getLatitud(), c1.getLongitud());
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		System.out.println("Clave:" + clave + " Nombre:" + nombre + " Latitud:" + c1.getLatitud() + " Longitud:"
 				+ c1.getLongitud());

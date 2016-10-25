@@ -7,7 +7,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 
-import db.ConectarMongo;
+import db.DBGeneralBRT;
 
 public class ParqueAutomotor {
 
@@ -20,7 +20,7 @@ public class ParqueAutomotor {
 	}
 	private void inicializarParque()
 	{
-		ConectarMongo conexion = new ConectarMongo();
+		DBGeneralBRT conexion = new DBGeneralBRT();
 		DBCollection collection = conexion.consultarColeccion("Bus");
 		DBCursor cursor = collection.find();
 		buses = new ArrayList<>();

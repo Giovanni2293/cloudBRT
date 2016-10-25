@@ -19,10 +19,10 @@ import com.mongodb.util.JSON;
 import core.ParqueAutomotor;
 import core.Recorrido;
 import core.Ruta;
-import db.ConectarMongo;
-import db.TransaccionesParada;
-import db.TransaccionesRecorrido;
-import db.TransaccionesRuta;
+import db.DBGeneralBRT;
+import db.TParada;
+import db.TRecorrido;
+import db.TRuta;
 import utilidad.FormatearDatos;
 /**
  * Esta es una clase que utilizaremos para probar el codigo antes de utilizarlo con
@@ -34,7 +34,7 @@ import utilidad.FormatearDatos;
  *
  */
 public class Test {
-	private ConectarMongo conexion;
+	private DBGeneralBRT conexion;
 	public static void main(String[] args) {
 		
 		//Insertar i = new Insertar();
@@ -89,7 +89,7 @@ public class Test {
 	
 	
 	 public String imprimirRutas(){
-		 conexion = new ConectarMongo();
+		 conexion = new DBGeneralBRT();
 		 DBCollection collection = conexion.consultarColeccion("Ruta");
 		 DBCursor cursor = collection.find();
 		 ArrayList<BasicDBObject> rutas = new ArrayList<>();

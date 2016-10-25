@@ -17,8 +17,8 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
-import db.ConectarMongo;
-import db.TransaccionesParada;
+import db.DBGeneralBRT;
+import db.TParada;
 import utilidad.MensajeError;
 
 /**
@@ -43,7 +43,7 @@ public class GetServicioParada {
 	@GET
 	@Produces("application/json")
 	public Response obtenerParadas() {
-		ConectarMongo conexion = new ConectarMongo();
+		DBGeneralBRT conexion = new DBGeneralBRT();
 		DBCollection collection = conexion.consultarColeccion("Parada");
 		DBCursor cursor = collection.find();
 		ArrayList<BasicDBObject> paradas = new ArrayList<>();
@@ -70,7 +70,7 @@ public class GetServicioParada {
 	@GET
 	@Produces("application/json")
 	public Response obtenerParada(@PathParam("claveParada") String claveParada) {
-		ConectarMongo conexion = new ConectarMongo();
+		DBGeneralBRT conexion = new DBGeneralBRT();
 		claveParada = claveParada.toUpperCase() ;
 		DBObject json = null;
 		BasicDBObject dbo = new BasicDBObject();
@@ -100,7 +100,7 @@ public class GetServicioParada {
 	@Produces("application/json")
 	public Response eliminarParada(@PathParam("clave") String clave) {
 		boolean progreso;
-		progreso=TransaccionesParada.eliminarParada(clave);
+		progreso=TParada.eliminarParada(clave);
 		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}

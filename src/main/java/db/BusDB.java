@@ -13,8 +13,11 @@ public class BusDB {
 	private boolean estado;
 
 	private String nombreColeccion;
-	private ConectarMongo mongo;
+	private String nombreColeccionCol = "HistoBuses";
+	private DBGeneralBRT mongo;
+	private DBColector mongocol;
 	private DBObject datos;
+	
 	
 	public BusDB(String placa)
 	{
@@ -25,15 +28,22 @@ public class BusDB {
 
 	public boolean valoresBaseDatos()
 	{
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
+		mongocol = new DBColector();
 		datos = mongo.consultarMDB(nombreColeccion,placa);
 		if (datos!=null)
 		{
-			
 			capacidad = (int) datos.get("Capacidad");
 			tipoBus = (String) datos.get("TipoBus");
 			estado = (boolean) datos.get("Estado");
+			
+			datos = mongocol.consultarMDB(nombreColeccionCol,placa);
+			if(datos == null){
+				TColectorBus.crearHistoBus(placa);
+			}
+			
 			mongo.cerrarConexion();
+			
 			return true; 
 		}
 		else

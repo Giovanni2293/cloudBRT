@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
-import db.TransaccionesRecorrido;
+import db.TRecorrido;
 
 @Path("post/recorrido")
 public class PostServicioRecorrido {
@@ -34,7 +34,7 @@ public class PostServicioRecorrido {
 	    clave = entrada.getString("Clave");
 	    ruta = entrada.getString("Ruta");
 	    horaDePartida = entrada.getString("HoraDePartida");
-	    progreso=TransaccionesRecorrido.crearRecorridoAutomatico(clave, ruta, horaDePartida);
+	    progreso=TRecorrido.crearRecorridoAutomatico(clave, ruta, horaDePartida);
 	    respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 		
@@ -55,7 +55,7 @@ public class PostServicioRecorrido {
 	    parada = entrada.getString("Parada");
 	    horaAnterior = entrada.getString("HoraAnterior");
 	    horaNueva = entrada.getString("HoraNueva");
-	    progreso=TransaccionesRecorrido.editarHoraRecorrido(clave, parada, horaAnterior, horaNueva);
+	    progreso=TRecorrido.editarHoraRecorrido(clave, parada, horaAnterior, horaNueva);
 	    respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 		

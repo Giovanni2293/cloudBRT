@@ -5,8 +5,8 @@ import java.util.LinkedHashMap;
 
 import com.mongodb.BasicDBObject;
 
-import db.ConectarMongo;
-import db.TransaccionesRecorrido;
+import db.DBGeneralBRT;
+import db.TRecorrido;
 
 public class Recorrido {
 
@@ -20,8 +20,8 @@ public class Recorrido {
 		ruta = new Ruta(clave);
 		this.horaPartida = horaPartida;
 		BasicDBObject rutaDB = new BasicDBObject("Nombre", clave);
-		ConectarMongo mongo = new ConectarMongo();
-		horario=TransaccionesRecorrido.construirHorario(mongo.consultarMDB(colleccionRuta, rutaDB), horaPartida);
+		DBGeneralBRT mongo = new DBGeneralBRT();
+		horario=TRecorrido.construirHorario(mongo.consultarMDB(colleccionRuta, rutaDB), horaPartida);
 		mongo.cerrarConexion();
 	}
 

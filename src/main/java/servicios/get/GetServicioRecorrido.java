@@ -17,7 +17,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
-import db.ConectarMongo;
+import db.DBGeneralBRT;
 import utilidad.MensajeError;
 
 @Path("get/recorridos")
@@ -29,7 +29,7 @@ public class GetServicioRecorrido {
 	@GET
 	@Produces("application/json")
 	public Response obtenerRecorridos() {
-		ConectarMongo conexion = new ConectarMongo();
+		DBGeneralBRT conexion = new DBGeneralBRT();
 		DBCollection collection = conexion.consultarColeccion("Recorrido");
 		DBCursor cursor = collection.find();
 		ArrayList<BasicDBObject> recorridos = new ArrayList<>();
@@ -52,7 +52,7 @@ public class GetServicioRecorrido {
 	@GET
 	@Produces("application/json")
 	public Response obtenerParada(@PathParam("claveRecorrido") String claveRecorrido) {
-		ConectarMongo conexion = new ConectarMongo();
+		DBGeneralBRT conexion = new DBGeneralBRT();
 		DBObject json = null;
 		BasicDBObject dbo = new BasicDBObject();
 		json = conexion.consultarMDB("Recorrido", new BasicDBObject("Clave", claveRecorrido));

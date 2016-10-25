@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import db.TransaccionesBus;
+import db.TBus;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class PostServicioBus {
 		tipoBus = entrada.getString("TipoBus");
 		estado = Boolean.parseBoolean(entrada.getString("Estado"));
 
-		progreso = TransaccionesBus.crearBus(placa, capacidad, tipoBus, estado);
+		progreso = TBus.crearBus(placa, capacidad, tipoBus, estado);
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		System.out.println("Placa:" + placa + " Capacidad:" + capacidad + " TipoBus:" + tipoBus + " Estado:" + estado);
 		return Response.status(200).entity(respuesta.toString()).build();

@@ -12,9 +12,9 @@ import utilidad.FormatearDatos;
  * @author Jose Giovanni Florez Nocua
  *
  */
-public class TransaccionesParada {
+public class TParada {
 
-	private static ConectarMongo mongo;
+	private static DBGeneralBRT mongo;
 	private static final String nombreColeccion = "Parada";
 
 	/**
@@ -31,7 +31,7 @@ public class TransaccionesParada {
 		BasicDBObject data, consNombre;
 		clave = clave.toUpperCase();
 		nombre = FormatearDatos.mayusInicialMulti(nombre);
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		data = new BasicDBObject("Clave", clave);
 		consNombre = new BasicDBObject("Nombre", nombre);
 		consulta = mongo.consultarMDB(nombreColeccion, data);
@@ -55,7 +55,7 @@ public class TransaccionesParada {
 	public static boolean eliminarParada(String parada) {
 		boolean elimino;
 		parada = parada.toUpperCase();
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		BasicDBObject paradaAEliminar = new BasicDBObject("Clave", parada);
 		elimino = mongo.eliminarMDB(nombreColeccion, paradaAEliminar);
 		if (elimino == true) {

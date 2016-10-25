@@ -8,9 +8,9 @@ import com.mongodb.DBObject;
  * @author Carlos Andrés Pereira Grimaldo
  *
  */
-public class TransaccionesBus {
+public class TBus {
 
-	private static ConectarMongo mongo;
+	private static DBGeneralBRT mongo;
 	private static final String nombreColeccion = "Bus";
 
 	public static boolean crearBus(String Placa, int Capacidad, String TipoBus, boolean Estado) {
@@ -22,7 +22,7 @@ public class TransaccionesBus {
 		}
 		BasicDBObject data;
 		DBObject consulta;
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		data = new BasicDBObject("Placa", Placa);
 		consulta = mongo.consultarMDB(nombreColeccion, data);
 		if (consulta == null) {
@@ -44,7 +44,7 @@ public class TransaccionesBus {
 		Placa = Placa.toUpperCase();
 		DBObject Bus;
 		BasicDBObject nuevaData, dataAReemplazar;
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		dataAReemplazar = new BasicDBObject("Placa", Placa);
 		Bus = mongo.consultarMDB(nombreColeccion, dataAReemplazar);
 		if (Bus != null) {
@@ -70,7 +70,7 @@ public class TransaccionesBus {
 			return false;
 		}
 		boolean elimino;
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		BasicDBObject placaAEliminar = new BasicDBObject("Placa", Placa);
 		elimino = mongo.eliminarMDB(nombreColeccion, placaAEliminar);
 		mongo.cerrarConexion();

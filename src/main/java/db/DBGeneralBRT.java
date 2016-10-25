@@ -22,15 +22,16 @@ import com.mongodb.DBObject;
  * @author José Giovanni Florez Nocua
  *
  */
-public class ConectarMongo {
+public class DBGeneralBRT {
 	private MongoClient mongo;
 	private DBCollection Colleccion;
 	private DB db;
 	private final String DB = "GeneralBRT";
 
-	public ConectarMongo() {
+	public DBGeneralBRT() {
 
 		try {
+			
 			mongo = new MongoClient();
 			mongo.getAddress();
 

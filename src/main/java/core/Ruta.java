@@ -9,7 +9,7 @@ import org.bson.BSONObject;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
-import db.ConectarMongo;
+import db.DBGeneralBRT;
 
 public class Ruta {
 	
@@ -20,7 +20,7 @@ public class Ruta {
 	public Ruta(String nombre)
 	{
 		this.nombre=nombre;
-		ConectarMongo conexion = new ConectarMongo();
+		DBGeneralBRT conexion = new DBGeneralBRT();
 		DBObject json;
 		json = conexion.consultarMDB("Ruta", new BasicDBObject("Nombre", nombre));
 		paradasDB =  (ArrayList<BasicDBObject>) json.get("Ruta");

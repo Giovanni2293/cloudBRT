@@ -19,8 +19,8 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
-import db.ConectarMongo;
-import db.TransaccionesRuta;
+import db.DBGeneralBRT;
+import db.TRuta;
 import utilidad.MensajeError;
 
 /**
@@ -46,7 +46,7 @@ public class GetServicioRuta {
 	@GET
 	@Produces("application/json")
 	public Response obtenerRutas() {
-		ConectarMongo conexion = new ConectarMongo();
+		DBGeneralBRT conexion = new DBGeneralBRT();
 		DBCollection collection = conexion.consultarColeccion("Ruta");
 		DBCursor cursor = collection.find();
 		ArrayList<BasicDBObject> rutas = new ArrayList<>();
@@ -83,7 +83,7 @@ public class GetServicioRuta {
 	@GET
 	@Produces("application/json")
 	public Response obtenerRuta(@PathParam("nombreRuta") String nombreRuta) {
-		ConectarMongo conexion = new ConectarMongo();
+		DBGeneralBRT conexion = new DBGeneralBRT();
 		JsonObject respuesta;
 		DBObject json = null;
 		json = conexion.consultarMDB("Ruta", new BasicDBObject("Nombre", nombreRuta));
@@ -122,7 +122,7 @@ public class GetServicioRuta {
 	@Produces("application/json")
 	public Response eliminarParadasDeRuta(@PathParam("nombre") String nombre) {
 		boolean progreso;
-		progreso=TransaccionesRuta.eliminarParadas(nombre);
+		progreso=TRuta.eliminarParadas(nombre);
 		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
@@ -138,7 +138,7 @@ public class GetServicioRuta {
 	@Produces("application/json")
 	public Response eliminarParadaEspecificaDeRuta(@PathParam("nombreRuta") String nombreRuta,@PathParam("posicion") int posicion) {
 		boolean progreso;
-		progreso=TransaccionesRuta.removerParadaDeRuta(nombreRuta, posicion);
+		progreso=TRuta.removerParadaDeRuta(nombreRuta, posicion);
 		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
@@ -153,7 +153,7 @@ public class GetServicioRuta {
 	@Produces("application/json")
 	public Response eliminarRuta(@PathParam("nombreRuta") String nombreRuta) {
 		boolean progreso;
-		progreso=TransaccionesRuta.eliminarRuta(nombreRuta);
+		progreso=TRuta.eliminarRuta(nombreRuta);
 		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
@@ -169,7 +169,7 @@ public class GetServicioRuta {
 	@Produces("application/json")
 	public Response agregarParadasAlFinal(@PathParam("nombreRuta") String nombreRuta,@PathParam("clave") String clave) {
 		boolean progreso;
-		progreso=TransaccionesRuta.añadirAlFinalDeRuta(nombreRuta, clave);
+		progreso=TRuta.añadirAlFinalDeRuta(nombreRuta, clave);
 		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
@@ -184,7 +184,7 @@ public class GetServicioRuta {
 	@Produces("application/json")
 	public Response crearRuta(@PathParam("nombreRuta") String nombreRuta) {
 		boolean progreso;
-		progreso=TransaccionesRuta.crearRuta(nombreRuta);
+		progreso=TRuta.crearRuta(nombreRuta);
 		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}

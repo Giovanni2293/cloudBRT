@@ -14,9 +14,9 @@ import com.mongodb.DBObject;
  * @author Jose Giovanni Florez Nocua
  *
  */
-public class TransaccionesRuta {
+public class TRuta {
 
-	private static ConectarMongo mongo;
+	private static DBGeneralBRT mongo;
 	private static final String nombreColeccion = "Ruta";
 
 	/**
@@ -31,7 +31,7 @@ public class TransaccionesRuta {
 		nombreMayus = nombre.toUpperCase();
 		DBObject consulta;
 		BasicDBObject data;
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		data = new BasicDBObject("Nombre", nombreMayus);
 		consulta = mongo.consultarMDB(nombreColeccion, data);
 		ArrayList<BasicDBObject> paradas = new ArrayList<>();
@@ -59,7 +59,7 @@ public class TransaccionesRuta {
 		BasicDBObject nuevaData, dataARemplazar;
 		nuevaData = new BasicDBObject("Nombre", nombreRuta);
 		dataARemplazar = new BasicDBObject("Nombre", nombreRuta);
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		ruta = mongo.consultarMDB(nombreColeccion, dataARemplazar);
 		if (ruta != null) {
 			paradas = (ArrayList<DBObject>) ruta.get(nombreColeccion);
@@ -97,7 +97,7 @@ public class TransaccionesRuta {
 		BasicDBObject nuevaData, dataARemplazar;
 		nuevaData = new BasicDBObject("Nombre", nombreRuta);
 		dataARemplazar = new BasicDBObject("Nombre", nombreRuta);
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		ruta = mongo.consultarMDB(nombreColeccion, dataARemplazar);
 		if (ruta != null) {
 			paradas = (ArrayList<DBObject>) ruta.get(nombreColeccion);
@@ -127,7 +127,7 @@ public class TransaccionesRuta {
 	public static boolean eliminarRuta(String ruta) {
 		boolean elimino;
 		ruta = ruta.toUpperCase();
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		BasicDBObject rutaAEliminar = new BasicDBObject("Nombre", ruta);
 		elimino = mongo.eliminarMDB(nombreColeccion, rutaAEliminar);
 		
@@ -151,7 +151,7 @@ public class TransaccionesRuta {
 		BasicDBObject nuevaData, dataARemplazar;
 		nuevaData = new BasicDBObject("Nombre", nombreRuta);
 		dataARemplazar = new BasicDBObject("Nombre", nombreRuta);
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		ruta = mongo.consultarMDB(nombreColeccion, dataARemplazar);
 		if (ruta != null) {
 			paradas = (ArrayList<DBObject>) ruta.get(nombreColeccion);
@@ -199,7 +199,7 @@ public class TransaccionesRuta {
 		nombreMayus = nombre.toUpperCase();
 		DBObject consulta;
 		BasicDBObject dataNueva,dataAnterior;
-		mongo = new ConectarMongo();
+		mongo = new DBGeneralBRT();
 		dataNueva = new BasicDBObject("Nombre", nombreMayus);
 		dataAnterior = new BasicDBObject("Nombre",nombreMayus);
 		consulta = mongo.consultarMDB(nombreColeccion, dataNueva);
