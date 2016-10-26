@@ -13,9 +13,7 @@ public class BusDB {
 	private boolean estado;
 
 	private String nombreColeccion;
-	private String nombreColeccionCol = "HistoBuses";
 	private DBGeneralBRT mongo;
-	private DBColector mongocol;
 	private DBObject datos;
 	
 	
@@ -29,7 +27,7 @@ public class BusDB {
 	public boolean valoresBaseDatos()
 	{
 		mongo = new DBGeneralBRT();
-		mongocol = new DBColector();
+		
 		datos = mongo.consultarMDB(nombreColeccion,placa);
 		if (datos!=null)
 		{
@@ -37,10 +35,9 @@ public class BusDB {
 			tipoBus = (String) datos.get("TipoBus");
 			estado = (boolean) datos.get("Estado");
 			
-			datos = mongocol.consultarMDB(nombreColeccionCol,placa);
-			if(datos == null){
+			
 				TColectorBus.crearHistoBus(placa);
-			}
+			
 			
 			mongo.cerrarConexion();
 			

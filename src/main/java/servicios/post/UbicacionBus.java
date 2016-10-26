@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -35,49 +36,49 @@ public class UbicacionBus {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response recibirBus(InputStream incomingData) {
-		String placa;
+		String placa,tde;
+		Coordenadas coor;
 		JsonObject entrada;
 		BasicDBObject salida;
-		FileWriter escritor;
 		BufferedWriter buffer;
 		JsonReader jsonReader = Json.createReader(incomingData);
 		entrada = jsonReader.readObject();
 		
-		placa = entrada.getString("placa");
+		placa = entrada.getString("Placa");
 		placa = placa.toUpperCase();
+		tde = entrada.getString("Tde");
+		JsonObject coordenada = entrada.getJsonObject("Coordenada");
+		coor = new Coordenadas(Double.parseDouble(coordenada.getString("Latitud")), Double.parseDouble(coordenada.getString("Longitud")));
+	
+		
+	
 		
 		// Inicia asignacion de coordenada a bus del parque automotor runtime
-		asignarCoorABus(entrada);
+		asignarCoorABus(entrada , coor);
 		// Termina la asignacion de coordenada a bus del parque automotor runtime
 		
-		salida = new BasicDBObject("tde", entrada.get("tde"))
-				.append("tdr", Fecha.getFechaClass().getFecha())
-				.append("coordenada", entrada.get("coordenada"));
-
+		 salida = new BasicDBObject("Tde",tde)
+				.append("Tdr", Fecha.getFechaClass().getFecha())
+				.append("Coordenada", new BasicDBObject("Latitud", coor.getLatitud())
+						.append("Longitiud", coor.getLongitud()));
 		
-		TColectorBus.regDiarioBuses(salida,placa);
+		
+		TColectorBus.regDiarioBuses(salida , placa);
 		//
 		
-		return Response.status(200).entity(salida.toString()).build();
+		return Response.status(200).entity(entrada.toString()).build();
 
 		
 	}
 	
-	private void asignarCoorABus(JsonObject entrada)
+	private void asignarCoorABus(JsonObject entrada , Coordenadas coor)
 	{
 		Bus bus;
-		bus = ParqueAutomotor.getParque().encontrarBus(entrada.getString("placa"));
+		bus = ParqueAutomotor.getParque().encontrarBus(entrada.getString("Placa"));
 		if (bus != null) {
 			//El bus existe
-			String latS, lngS;
-			Double lat, lng;
-			JsonObject coordenada = entrada.getJsonObject("coordenada");
-			latS = coordenada.getString("latitud");
-			lngS = coordenada.getString("longitud");
-			lat = Double.parseDouble(latS);
-			lng = Double.parseDouble(lngS);
-			System.out.println("lat:"+lat+" lng:"+lng);
-			bus.setCoor(new Coordenadas(lat, lng));
+			
+			bus.setCoor(coor);
 		}
 		ParqueAutomotor.getParque().mostarParque();
 	}

@@ -15,45 +15,69 @@ public class TColectorBus {
 
 	public static boolean regDiarioBuses(DBObject data , String placa ) {
 		mongo = new DBColector();
-		BasicDBObject nuevaData;
-		//fecha = Fecha.getFechaClass().getSoloYMD();
-		fecha = "fecha1";
+		BasicDBObject nuevaData,dataARemplazar;
+		fecha = Fecha.getFechaClass().getSoloYMD();
 		DBObject consulta;
-		nuevaData = new BasicDBObject("placa", placa);
+		dataARemplazar = new BasicDBObject("Bus", placa);
+		nuevaData = new BasicDBObject("Bus", placa);
 		ArrayList<DBObject> fechas = new ArrayList<>();	
 		ArrayList<DBObject> registros = new ArrayList<>();
-		
-		/*
-		BasicDBObject nuevaData, dataARemplazar;
-		nuevaData = new BasicDBObject("Nombre", nombreRuta);
-		dataARemplazar = new BasicDBObject("Nombre", nombreRuta);
-		mongo = new DBGeneralBRT();
-		ruta = mongo.consultarMDB(nombreColeccion, dataARemplazar);
-		if (ruta != null) {
-			paradas = (ArrayList<DBObject>) ruta.get(nombreColeccion);
-			parada = mongo.consultarMDB("Parada", new BasicDBObject("Clave", clave));
-			if (parada != null) {
-				paradas.add(parada);
-				nuevaData.append(nombreColeccion, paradas);
+		consulta = mongo.consultarMDB(nombreColeccion, dataARemplazar);
+		if(consulta != null ){
+			fechas =  (ArrayList<DBObject>) consulta.get(fecha);
+			
+			if(fechas == null){
+			
+				nuevaData = (BasicDBObject) consulta;
+				registros.add(data);
+				nuevaData.append(fecha, registros);
 				mongo.actualizarMDB(nombreColeccion, nuevaData, dataARemplazar);
-				mongo.cerrarConexion();
-				return true;
-			} else {
-				System.out.println("Error: La parada no existe. Debe crear la parada " + clave
-						+ " primero antes de añadirle elementos");
 				
 				
+			}else{
+				registros = (ArrayList<DBObject>) consulta.get(fecha);					
+				registros.add(data);
+				nuevaData = (BasicDBObject) consulta;
+				nuevaData.replace(fecha, registros);
+				mongo.actualizarMDB(nombreColeccion, nuevaData, dataARemplazar);
 			}
-		} else {
-			System.out.println("Error: La ruta no existe. Debe crear la ruta " + nombreRuta
-					+ " primero antes de añadirle elementos");
+			
+			
+			
+		}else{
+			//No encontro el historico
+			System.out.println("Error El historico para " + dataARemplazar + "no ha sido encontrado");
 		}
-		mongo.cerrarConexion();*/
+		
 		return false;
 		
 	}
 
 	public static boolean crearHistoBus(BasicDBObject placa){
+		DBObject consulta;
+		String Placa = placa.getString("Placa");
+		BasicDBObject data; 
+		fecha = Fecha.getFechaClass().getSoloYMD();
+		mongo = new DBColector();
+		data = new BasicDBObject("Bus", Placa );
+		consulta = mongo.consultarMDB(nombreColeccion, data);
+		ArrayList<BasicDBObject> registros = new ArrayList<>();
+		ArrayList<ArrayList<BasicDBObject>> Fechas = new ArrayList<>() ;
+		Fechas.add(registros);
+		
+		if (consulta == null) {
+			data.append(fecha, Fechas);
+			mongo.insertarMDB(nombreColeccion, data);
+			mongo.cerrarConexion();
+			return true;
+		} else {
+			System.out.println(
+					"Error: No se puede crear el historico del bus"
+					+ Placa + ". Esta ya existe " + "en la base de datos");
+			
+		}
+		mongo.cerrarConexion();
+		
 		return true;
 	}
 
