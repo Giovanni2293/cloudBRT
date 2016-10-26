@@ -50,6 +50,10 @@ public class Ruta {
 		return paradas;
 	}
 	
+	public String getNombre()
+	{
+		return nombre;
+	}
 	
 	
 }

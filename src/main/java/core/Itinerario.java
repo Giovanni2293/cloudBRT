@@ -7,11 +7,11 @@ public class Itinerario {
 	private Recorrido recorridoDesignado;
 	private Bus busDesignado;
 	
-	public Itinerario(String id,String placa,String recorrido,String conductor,String horaPartida)
+	public Itinerario(String id,String placa,String nombreRuta,String conductor,String claveRecorrido)
 	{
 		this.id = id;
 		busDesignado = ParqueAutomotor.getParque().encontrarBus(placa);
-		recorridoDesignado = new Recorrido(recorrido, horaPartida);
+		recorridoDesignado = new Recorrido(nombreRuta, claveRecorrido);
 	}
 
 	public String getId() {

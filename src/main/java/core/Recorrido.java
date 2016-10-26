@@ -4,29 +4,37 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 
 import db.DBGeneralBRT;
 import db.TRecorrido;
 
 public class Recorrido {
-
-	private String clave;
+	
+	private String claveRecorrido;
 	private Ruta ruta;
 	private String horaPartida;
+	private String horaFinalizacion;
 	private LinkedHashMap<String,String> horario;
 	
-	public Recorrido(String clave, String horaPartida) {
-		String colleccionRuta="Ruta";
-		ruta = new Ruta(clave);
-		this.horaPartida = horaPartida;
-		BasicDBObject rutaDB = new BasicDBObject("Nombre", clave);
+	public Recorrido(String nombreRuta, String claveRecorrido) {		
+		ruta = new Ruta(nombreRuta);
+		BasicDBObject recorridoDB = new BasicDBObject("Clave", claveRecorrido);
 		DBGeneralBRT mongo = new DBGeneralBRT();
-		horario=TRecorrido.construirHorario(mongo.consultarMDB(colleccionRuta, rutaDB), horaPartida);
+		DBObject recorrido = mongo.consultarMDB("Recorrido", recorridoDB);
+		horario=(LinkedHashMap<String, String>) recorrido.get("Horario");
+		this.horaPartida = getHoraPorIndice(0);
+		this.horaFinalizacion = getHoraPorIndice(horario.keySet().toArray().length-1);
 		mongo.cerrarConexion();
 	}
 
 	public String getHoraPartida() {
 		return horaPartida;
+	}
+	
+	public String getHoraFinalizacion()
+	{
+		return horaFinalizacion;
 	}
 	
 	/**
@@ -43,15 +51,15 @@ public class Recorrido {
 	public void mostarHorario()
 	{
 		Object[] keys=horario.keySet().toArray();
-	     for (int i=0;i<keys.length;i++)System.out.println(getClaveParadaPorIndice(i)+" "+getHoraPorIndice(i));
+	    for (int i=0;i<keys.length;i++)System.out.println(getClaveParadaPorIndice(i)+" "+getHoraPorIndice(i));
 	}
 	
 	//Inicia la pareja de metodos encargada de obtener valores del hashmap de horario
-	public String getClaveParadaPorIndice(int i) {
+	public String getHoraPorIndice(int i) {
 		return horario.get(horario.keySet().toArray()[i]);
 	}
 	
-	public String getHoraPorIndice(int i){
+	public String getClaveParadaPorIndice(int i){
 		Object[] keys=horario.keySet().toArray();
 		return (String)keys[i];
 	}
@@ -61,8 +69,8 @@ public class Recorrido {
 		this.horaPartida = horaPartida;
 	}
 
-	public String getClave() {
-		return clave;
+	public String getClaveRecorrido() {
+		return claveRecorrido;
 	}
 
 	public Ruta getRuta() {
