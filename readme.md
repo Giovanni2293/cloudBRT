@@ -462,14 +462,11 @@ Clases que se Modificaron:
 
 * Se adecuo la clase bus para que se encargue de contener informacion relevante al bus en tiempo de ejecucion
 * Se adecuo la clase conductor con metodos para poder crear un conductor y obtener sus atributos
-* Se adecuo una parada como un objeto que contiene un id de parada y unas cordenadas. Este tambien posee la geocerca que
-se empleara para determinar si un bus esta fuera o dentro de esa estacion mediante su metodo.
+* Se adecuo una parada como un objeto que contiene un id de parada y unas cordenadas. Este tambien posee la geocerca que se empleara para determinar si un bus esta fuera o dentro de esa estacion mediante su metodo.
 * Se modifico la clase ruta que contiene un arreglo de todas las paradas.
-* Se modifico la clase recorrido que da la posibilidad de obtener una parada dada una posicion o
-obtener datos del hashmap del horario por sus indices.
+* Se modifico la clase recorrido que da la posibilidad de obtener una parada dada una posicion o obtener datos del hashmap del horario por sus indices.
 * Se modifico la visibilidad del metodo de construirHorario para emplearlo en la clase Recorrido.
-* Se creo una clase llamada parque automotor que contiene todos los buses del sistema y sus ultimo valor de coordeanadas recibido desde
-el servicio de obtencion de datos. Se implemento con singleton. Esta contiene un metodo para acceder a un bus en especifico.
+* Se creo una clase llamada parque automotor que contiene todos los buses del sistema y sus ultimo valor de coordeanadas recibido desde el servicio de obtencion de datos. Se implemento con singleton. Esta contiene un metodo para acceder a un bus en especifico.
 * Se creo la clase itinerario que se encargara de relacionar: conductor,recorrido y bus.
 * Se agrego una coordeanda a la consulta de los buses. Esta tiene la ultima coordenada que llega desde el servicio post de wilson para ese bus.
 
@@ -502,3 +499,33 @@ Clases que se eliminaron:
 ####Dudas
 
 	¿Se implementara la logica de adelantos o atrasos?
+	
+####[17/10/2016]:[11:40]
+
+* Se refactorizo el sistema de recoleccion de datos historico. Ahora se almacena en la base de datos y no en un archivo de texto.
+* Se modifico la clase BusDB. Ahora tambien se encarga de crear un historico para cada bus en otra base de datos.
+* Se modifico la documentacion para separar los servicios de administracion, colector y monitoreo.
+* Se creo una nueva clase llamada Despacho que es la encargada de contener todos los itinerarios creados.
+* Se hizo refactor a Recorrido. Ahora no vuelve a construir el horario sino que lo lee desde la base de datos.
+* Se hizo refactor general a todos los nombres de las clases.
+* Se creo una nueva clase llamada DBColector que es la encargada de interactuar con la base de datos de recoleccion.
+
+Clases que se modificaron:
+
+	BusDB
+	UbicacionBus
+	TBus
+	TColectorBus
+	TParada
+	TRecorrido
+	TRuta
+	DBGeneralBRT
+	Recorrido
+	
+
+Clases que se crearon:
+	
+	DBColector
+	Despacho
+
+
