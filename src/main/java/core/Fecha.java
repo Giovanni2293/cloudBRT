@@ -24,7 +24,7 @@ public class Fecha {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	    Date date = new Date();
 		fecha=dateFormat.format(date);
-		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+		DateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd");
 		Date date2 = new Date();
 		ymd = dateFormat2.format(date2);
 		
