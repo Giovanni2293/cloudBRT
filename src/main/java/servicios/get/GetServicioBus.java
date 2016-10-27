@@ -55,7 +55,7 @@ public class GetServicioBus {
 			bso.append("Capacidad", obj.get("Capacidad"));
 			bso.append("TipoBus", obj.get("TipoBus"));
 			bso.append("Estado", obj.get("Estado"));
-			bso.append("Coordenada",ParqueAutomotor.getParque().encontrarBus(obj.getString("Placa")).getJsonBus().getJsonObject("coordenada").toString());
+			bso.append("Coordenada",ParqueAutomotor.getParque().encontrarBus(obj.getString("Placa")).getJsonBus().get("coordenada"));
 			buses.add(bso);
 		}
 		BasicDBObject data = new BasicDBObject("Buses", buses);
@@ -88,7 +88,7 @@ public class GetServicioBus {
 		dbo.append("Capacidad", json.get("Capacidad"));
 		dbo.append("TipoBus", json.get("TipoBus"));
 		dbo.append("Estado",json.get("Estado"));
-		dbo.append("Coordenada",ParqueAutomotor.getParque().encontrarBus(placaBus).getJsonBus().getJsonObject("coordenada").toString());
+		dbo.append("Coordenada",ParqueAutomotor.getParque().encontrarBus(placaBus).getJsonBus().get("coordenada"));
 		JsonReader jsonReader = Json.createReader(new StringReader(dbo.toString()));
 		respuesta = jsonReader.readObject();
 		}

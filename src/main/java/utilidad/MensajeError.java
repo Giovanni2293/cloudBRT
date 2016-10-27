@@ -3,6 +3,8 @@ package utilidad;
 import javax.json.Json;
 import javax.json.JsonObject;
 
+import com.mongodb.BasicDBObject;
+
 public class MensajeError {
 	
 	public static JsonObject servicioCaido()
@@ -10,10 +12,10 @@ public class MensajeError {
 		JsonObject mensaje = Json.createObjectBuilder().add("Error","El servicio de base de datos no responde").build();
 		return mensaje;
 	}
-	public static JsonObject denegar()
+	public static BasicDBObject denegar()
 	{
-		JsonObject mensaje = Json.createObjectBuilder().add("Error","La placa del bus no esta registrada. Comuniquese con un administrador"
-				+ "del sistema para agregarla").build();
+		BasicDBObject mensaje = new BasicDBObject("Error","La placa del bus no esta registrada. Comuniquese con un administrador"
+				+ "del sistema para agregarla");
 		return mensaje;
 	}
 	public static JsonObject noEncontroElElemento(String elemento,String clave)
