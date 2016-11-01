@@ -26,7 +26,7 @@ public class TRuta {
 	 * 
 	 * @param nombre
 	 */
-	public static boolean crearRuta(String nombre) {
+	public static boolean crearRuta(String nombre, String categoria, String descripcion) {
 		String nombreMayus;
 		nombreMayus = nombre.toUpperCase();
 		DBObject consulta;
@@ -36,6 +36,8 @@ public class TRuta {
 		consulta = mongo.consultarMDB(nombreColeccion, data);
 		ArrayList<BasicDBObject> paradas = new ArrayList<>();
 		if (consulta == null) {
+			data.append("Categoria", categoria);
+			data.append("Descripcion", descripcion);
 			data.append(nombreColeccion, paradas);
 			mongo.insertarMDB(nombreColeccion, data);
 			mongo.cerrarConexion();
@@ -44,6 +46,53 @@ public class TRuta {
 			System.out.println(
 					"Error: No se puede crear la ruta " + nombreMayus + ". Esta ya existe " + "en la base de datos");
 			
+		}
+		mongo.cerrarConexion();
+		return false;
+	}
+	
+	public static boolean modificarCategoria(String nombre, String categoria){
+		nombre = nombre.toUpperCase();
+		DBObject ruta;
+		BasicDBObject nuevaData, dataAReemplazar;
+		mongo = new DBGeneralBRT();
+		dataAReemplazar = new BasicDBObject("Nombre", nombre);
+		ruta = mongo.consultarMDB(nombreColeccion, dataAReemplazar);
+		if (ruta != null) {
+			nuevaData = new BasicDBObject("Nombre", nombre)
+					.append("Categoria", categoria)
+					.append("Descripcion", ruta.get("Descripcion"))
+					.append(nombreColeccion, ruta.get("Ruta"));
+			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
+			mongo.cerrarConexion();
+			return true;
+			
+		} else {
+			System.out.println("Error: No se encontro el bus con placa: " + nombre + "  en la base de datos");
+
+		}
+		mongo.cerrarConexion();
+		return false;
+	}
+	public static boolean modificarDescripcion(String nombre, String descripcion){
+		nombre = nombre.toUpperCase();
+		DBObject ruta;
+		BasicDBObject nuevaData, dataAReemplazar;
+		mongo = new DBGeneralBRT();
+		dataAReemplazar = new BasicDBObject("Nombre", nombre);
+		ruta = mongo.consultarMDB(nombreColeccion, dataAReemplazar);
+		if (ruta != null) {
+			nuevaData = new BasicDBObject("Nombre", nombre)
+					.append("Categoria", ruta.get("Categoria"))
+					.append("Descripcion", descripcion)
+					.append(nombreColeccion, ruta.get("Ruta"));
+			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
+			mongo.cerrarConexion();
+			return true;
+			
+		} else {
+			System.out.println("Error: No se encontro el bus con placa: " + nombre + "  en la base de datos");
+
 		}
 		mongo.cerrarConexion();
 		return false;

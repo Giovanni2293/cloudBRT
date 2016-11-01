@@ -56,6 +56,8 @@ public class GetServicioRuta {
 			BasicDBObject obj = (BasicDBObject) cursor.next();
 			BasicDBObject bso = new BasicDBObject();
 			bso.append("Nombre", obj.get("Nombre"));
+			bso.append("Categoria", obj.get("Categoria"));
+			bso.append("Descripcion", obj.get("Descripcion"));	
 			arrayParadas = (ArrayList<BasicDBObject>) obj.get("Ruta");
 			for (BasicDBObject temp : arrayParadas) {
 				BasicDBObject parada = new BasicDBObject();
@@ -175,25 +177,22 @@ public class GetServicioRuta {
 	}
 	
 	/**
-	 * Crea una nueva ruta sin paradas
+	 * Crea una nueva ruta sin paradas, con los parametros categoria y descripcion vacios
 	 * @param nombreRuta
 	 * @return {@link Response}
 	 */
 	@Path("/crear/{nombreRuta}")
 	@GET
 	@Produces("application/json")
-	public Response crearRuta(@PathParam("nombreRuta") String nombreRuta) {
+	public Response crearRuta(@PathParam("nombreRuta") String nombreRuta ) {
 		boolean progreso;
-		progreso=TRuta.crearRuta(nombreRuta);
+		String categoria ="";
+		String	descripcion = "";
+		progreso=TRuta.crearRuta(nombreRuta,categoria,descripcion);
 		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
-	
-	
-	
-
-	
-	
+			
 	
 	
 

@@ -528,4 +528,18 @@ Clases que se crearon:
 	DBColector
 	Despacho
 
+####[1/11/2016]:[4:43]
+
+* Se implementaron unos cambios a peticion de antonio.
+* Se le han añadido los parametros categoria y descricion a las rutas.
+* Las rutas se siguen creando como siempre, solo que ahora almacenan vacios categoria y descripcion.
+* Se implementaron dos apis para modificar la categoria y la descripcion
+* Se añadieron esos datos a la consulta de las rutas.
+
+Clases que se modificaron:
+
+	TRuta
+	GetServicioRuta
+	PostServicioRuta
+	Ruta
 

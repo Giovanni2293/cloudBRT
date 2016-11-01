@@ -42,14 +42,14 @@ public class TBus {
 
 	public static boolean modificarEstado(String Placa, Boolean Estado) {
 		Placa = Placa.toUpperCase();
-		DBObject Bus;
+		DBObject bus;
 		BasicDBObject nuevaData, dataAReemplazar;
 		mongo = new DBGeneralBRT();
 		dataAReemplazar = new BasicDBObject("Placa", Placa);
-		Bus = mongo.consultarMDB(nombreColeccion, dataAReemplazar);
-		if (Bus != null) {
-			nuevaData = new BasicDBObject("Placa", Placa).append("Capacidad", (int) Bus.get("Capacidad"))
-					.append("TipoBus", (String) Bus.get("TipoBus")).append("Estado", Estado);
+		bus = mongo.consultarMDB(nombreColeccion, dataAReemplazar);
+		if (bus != null) {
+			nuevaData = new BasicDBObject("Placa", Placa).append("Capacidad", (int) bus.get("Capacidad"))
+					.append("TipoBus", (String) bus.get("TipoBus")).append("Estado", Estado);
 			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
 			mongo.cerrarConexion();
 			return true;

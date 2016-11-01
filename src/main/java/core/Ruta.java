@@ -13,7 +13,7 @@ import db.DBGeneralBRT;
 
 public class Ruta {
 	
-	private String nombre;
+	private String nombre,categoria,descripcion;
 	private ArrayList<BasicDBObject> paradasDB;
 	private ArrayList<Parada> paradas;
 	
@@ -23,6 +23,8 @@ public class Ruta {
 		DBGeneralBRT conexion = new DBGeneralBRT();
 		DBObject json;
 		json = conexion.consultarMDB("Ruta", new BasicDBObject("Nombre", nombre));
+		categoria = (String) json.get("Categoria");
+		descripcion = (String) json.get("Descripcion");
 		paradasDB =  (ArrayList<BasicDBObject>) json.get("Ruta");
 		paradas = new ArrayList<>();
 		construirRuta();
@@ -54,6 +56,7 @@ public class Ruta {
 	{
 		return nombre;
 	}
+	
 	
 	
 }

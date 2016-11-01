@@ -50,8 +50,13 @@ public class Test {
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST3");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST4");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST5");*/
+		//TRuta.modificarDescripcion("P8", "hellow 2");
+		//TRuta.modificarCategoria("P8", "hi");
+		//TRuta.añadirAlFinalDeRuta("P8", "ST1");
 		//ParqueAutomotor.getParque().mostarParque();
-	     Recorrido r = new Recorrido("T3","T3-1");
+	    // Recorrido r = new Recorrido("T3","T3-1");
+		//Ruta r = new Ruta("P8");
+		
 		//TransaccionesRecorrido.crearRecorridoAutomatico("hola","T3", "23:54:59");
 		//TransaccionesRecorrido.editarHoraRecorrido("HOLA","ST3","00:02:54","00:02:52");
 		//TransaccionesRuta.eliminarParadas("P2");

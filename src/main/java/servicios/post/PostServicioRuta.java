@@ -77,4 +77,44 @@ public class PostServicioRuta {
 		return Response.status(200).entity(respuesta.toString()).build();
 
 	}
+	/**
+	 * modifica la categoria de una ruta
+	 * @param incomingData
+	 * @return {@link Response}
+	 */
+	@Path("/modificar/categoria")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response modificarCategoria(InputStream incomingData) {
+		
+		JsonObject entrada;
+		JsonReader jsonReader = Json.createReader(incomingData);
+		boolean progreso;
+		entrada = jsonReader.readObject();
+		progreso = TRuta.modificarCategoria(entrada.getString("Ruta"), entrada.getString("Categoria"));
+		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
+
+	}
+	/**
+	 * modifica la descripcion de una ruta
+	 * @param incomingData
+	 * @return {@link Response}
+	 */
+	@Path("/modificar/descripcion")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response modificarDescripcion(InputStream incomingData) {
+		
+		JsonObject entrada;
+		JsonReader jsonReader = Json.createReader(incomingData);
+		boolean progreso;
+		entrada = jsonReader.readObject();
+		progreso = TRuta.modificarDescripcion(entrada.getString("Ruta"), entrada.getString("Descripcion"));
+		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
+
+	}
 }
