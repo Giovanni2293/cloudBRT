@@ -20,12 +20,12 @@ import com.mongodb.DBObject;
 import db.DBGeneralBRT;
 import utilidad.MensajeError;
 
-@Path("get/recorridos")
+@Path("recorridos")
 public class GetServicioRecorrido {
 
 	private JsonObject respuesta;
 	
-	@Path("/consultar")
+	@Path("monitoreo/consultar")
 	@GET
 	@Produces("application/json")
 	public Response obtenerRecorridos() {
@@ -48,7 +48,7 @@ public class GetServicioRecorrido {
 		return Response.status(200).entity(json.toString()).build();
 	}
 	
-	@Path("consultar/{claveRecorrido}")
+	@Path("monitoreo/consultar/{claveRecorrido}")
 	@GET
 	@Produces("application/json")
 	public Response obtenerParada(@PathParam("claveRecorrido") String claveRecorrido) {

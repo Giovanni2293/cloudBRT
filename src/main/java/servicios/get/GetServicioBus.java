@@ -29,7 +29,7 @@ import utilidad.MensajeError;
  * @author Jose Giovanni Florez Nocua
  * @author Carlos Andrés Pereira Grimaldo
  */
-@Path("get/buses")
+@Path("buses")
 public class GetServicioBus {
 	private JsonObject respuesta;
 
@@ -40,7 +40,7 @@ public class GetServicioBus {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("/consultar")
+	@Path("monitoreo/consultar")
 	@GET
 	@Produces("application/json")
 	public Response obtenerBuses() {
@@ -70,7 +70,7 @@ public class GetServicioBus {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("consultar/{placaBus}")
+	@Path("monitoreo/consultar/{placaBus}")
 	@GET
 	@Produces("application/json")
 	public Response obtenerBus(@PathParam("placaBus") String placaBus) {
@@ -105,7 +105,7 @@ public class GetServicioBus {
 	 * @param placaBus
 	 * @return {@link Boolean}
 	 */
-	@Path("/eliminar/{placaBus}")
+	@Path("administracion/eliminar/{placaBus}")
 	@GET
 	@Produces("application/json")
 	public Response eliminarBuses(@PathParam("placaBus") String placaBus) {
@@ -122,7 +122,7 @@ public class GetServicioBus {
 	 * @param estado
 	 * @return {@link Boolean}
 	 */
-	@Path("/modificar/{placaBus},{estado}")
+	@Path("administracion/modificar/{placaBus},{estado}")
 	@GET
 	@Produces("application/json")
 	public Response modificarEstado(@PathParam("placaBus") String placaBus,@PathParam("estado") boolean estado) {

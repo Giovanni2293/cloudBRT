@@ -543,3 +543,17 @@ Clases que se modificaron:
 	PostServicioRuta
 	Ruta
 
+####[1/11/2016]:[21:30]
+
+* Se hizo refactor a las URI de los servicios. Consultar la documentacion en el excel.
+
+Clases que se modificaron:
+
+	GetServicioBus
+	GetServicioParada
+	GetServicioRuta
+	GetServicioRecorrido
+	PostServicioBus
+	PostServicioParada
+	PostServicioRuta
+	PostServicioRecorrido

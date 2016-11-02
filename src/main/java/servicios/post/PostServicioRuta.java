@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 
 import db.TRuta;
 
-@Path("post/rutas")
+@Path("rutas/administracion")
 public class PostServicioRuta {
 	private JsonObject respuesta;
 	

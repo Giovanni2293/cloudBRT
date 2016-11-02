@@ -31,7 +31,7 @@ import utilidad.MensajeError;
  * @author Jose Giovanni Florez Nocua
  * @author Carlos Andrés Pereira Grimaldo
  */
-@Path("get/rutas")
+@Path("rutas")
 public class GetServicioRuta {
 	private JsonObject respuesta;
 
@@ -42,7 +42,7 @@ public class GetServicioRuta {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("/consultar")
+	@Path("monitoreo/consultar")
 	@GET
 	@Produces("application/json")
 	public Response obtenerRutas() {
@@ -81,7 +81,7 @@ public class GetServicioRuta {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("consultar/{nombreRuta}")
+	@Path("monitoreo/consultar/{nombreRuta}")
 	@GET
 	@Produces("application/json")
 	public Response obtenerRuta(@PathParam("nombreRuta") String nombreRuta) {
@@ -119,7 +119,7 @@ public class GetServicioRuta {
 	 * @param nombre
 	 * @return
 	 */
-	@Path("/remover/paradas/{nombre}")
+	@Path("administracion/remover/paradas/{nombre}")
 	@GET
 	@Produces("application/json")
 	public Response eliminarParadasDeRuta(@PathParam("nombre") String nombre) {
@@ -135,7 +135,7 @@ public class GetServicioRuta {
 	 * @param posicion
 	 * @return {@link Response}
 	 */
-	@Path("/remover/paradas/{nombreRuta},{posicion}")
+	@Path("administracion/remover/paradas/{nombreRuta},{posicion}")
 	@GET
 	@Produces("application/json")
 	public Response eliminarParadaEspecificaDeRuta(@PathParam("nombreRuta") String nombreRuta,@PathParam("posicion") int posicion) {
@@ -150,7 +150,7 @@ public class GetServicioRuta {
 	 * @param nombreRuta
 	 * @return {@link Response}
 	 */
-	@Path("/eliminar/{nombreRuta}")
+	@Path("administracion/eliminar/{nombreRuta}")
 	@GET
 	@Produces("application/json")
 	public Response eliminarRuta(@PathParam("nombreRuta") String nombreRuta) {
@@ -166,7 +166,7 @@ public class GetServicioRuta {
 	 * @param clave
 	 * @return {@link Response}
 	 */
-	@Path("/agregar/paradas/{nombreRuta},{clave}")
+	@Path("administracion/agregar/paradas/{nombreRuta},{clave}")
 	@GET
 	@Produces("application/json")
 	public Response agregarParadasAlFinal(@PathParam("nombreRuta") String nombreRuta,@PathParam("clave") String clave) {
@@ -181,7 +181,7 @@ public class GetServicioRuta {
 	 * @param nombreRuta
 	 * @return {@link Response}
 	 */
-	@Path("/crear/{nombreRuta}")
+	@Path("administracion/crear/{nombreRuta}")
 	@GET
 	@Produces("application/json")
 	public Response crearRuta(@PathParam("nombreRuta") String nombreRuta ) {

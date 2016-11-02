@@ -28,7 +28,7 @@ import utilidad.MensajeError;
  * @author Jose Giovanni Florez Nocua
  * @author Carlos Andrés Pereira Grimaldo
  */
-@Path("get/paradas")
+@Path("paradas")
 public class GetServicioParada {
 	private JsonObject respuesta;
 
@@ -39,7 +39,7 @@ public class GetServicioParada {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("/consultar")
+	@Path("monitoreo/consultar")
 	@GET
 	@Produces("application/json")
 	public Response obtenerParadas() {
@@ -66,7 +66,7 @@ public class GetServicioParada {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("consultar/{claveParada}")
+	@Path("monitoreo/consultar/{claveParada}")
 	@GET
 	@Produces("application/json")
 	public Response obtenerParada(@PathParam("claveParada") String claveParada) {
@@ -95,7 +95,7 @@ public class GetServicioParada {
 	 * @param clave
 	 * @return {@link Boolean}
 	 */
-	@Path("/eliminar/{clave}")
+	@Path("administracion/eliminar/{clave}")
 	@GET
 	@Produces("application/json")
 	public Response eliminarParada(@PathParam("clave") String clave) {
