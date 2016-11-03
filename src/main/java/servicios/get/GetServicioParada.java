@@ -95,7 +95,7 @@ public class GetServicioParada {
 	 * @param clave
 	 * @return {@link Boolean}
 	 */
-	@Path("administracion/eliminar/{clave}")
+	@Path("admin/eliminar/{clave}")
 	@GET
 	@Produces("application/json")
 	public Response eliminarParada(@PathParam("clave") String clave) {

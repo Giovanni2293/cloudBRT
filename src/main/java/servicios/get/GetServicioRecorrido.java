@@ -52,6 +52,7 @@ public class GetServicioRecorrido {
 	@GET
 	@Produces("application/json")
 	public Response obtenerParada(@PathParam("claveRecorrido") String claveRecorrido) {
+		claveRecorrido = claveRecorrido.toUpperCase();
 		DBGeneralBRT conexion = new DBGeneralBRT();
 		DBObject json = null;
 		BasicDBObject dbo = new BasicDBObject();

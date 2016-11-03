@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import db.TBus;
 import db.TConductor;
 
-@Path("conductor/administracion")
+@Path("conductor/admin")
 public class PostServicioConductor {
 	
 	private JsonObject respuesta;
@@ -33,7 +33,8 @@ public class PostServicioConductor {
 	public Response crearBus(InputStream incomingData) {
 		JsonObject entrada;
 		
-		long cedula, licencia;
+		String cedula;
+		String licencia;
 		String primerNombre,segundoNombre,
 		primerApellido,segundoApellido,tipoSangre;	
 				
@@ -41,12 +42,12 @@ public class PostServicioConductor {
 		JsonReader jsonReader = Json.createReader(incomingData);
 		entrada = jsonReader.readObject();
 
-		cedula = entrada.getInt("Cedula");
+		cedula = entrada.getString("Cedula");
 		primerNombre = entrada.getString("Primer Nombre");
 		segundoNombre = entrada.getString("Segundo Nombre");
 		primerApellido = entrada.getString("Primer Apellido");
 		segundoApellido = entrada.getString("Segundo Apellido");
-		licencia = entrada.getInt("Numero de Licencia");
+		licencia = entrada.getString("Numero de Licencia");
 		tipoSangre = entrada.getString("Grupo Sanguineo");
 
 		progreso = TConductor.crearBus(cedula, primerNombre, segundoNombre,

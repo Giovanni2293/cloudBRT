@@ -48,8 +48,7 @@ public class TBus {
 		dataAReemplazar = new BasicDBObject("Placa", Placa);
 		bus = mongo.consultarMDB(nombreColeccion, dataAReemplazar);
 		if (bus != null) {
-			nuevaData = new BasicDBObject("Placa", Placa).append("Capacidad", (int) bus.get("Capacidad"))
-					.append("TipoBus", (String) bus.get("TipoBus")).append("Estado", Estado);
+			nuevaData = new BasicDBObject("Estado", Estado);
 			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
 			mongo.cerrarConexion();
 			return true;
@@ -62,7 +61,7 @@ public class TBus {
 
 	}
 
-	public static boolean eliminar(String Placa) {
+	public static boolean eliminarBus(String Placa) {
 		Placa = Placa.toUpperCase();
 		if (Placa.length() != 6) {
 			System.out.println(

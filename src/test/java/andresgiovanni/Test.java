@@ -20,6 +20,7 @@ import core.ParqueAutomotor;
 import core.Recorrido;
 import core.Ruta;
 import db.DBGeneralBRT;
+import db.TBus;
 import db.TColectorBus;
 import db.TConductor;
 import db.TParada;
@@ -91,7 +92,12 @@ public class Test {
 		//TransaccionesRuta.removerParadaDeRuta("P2", 	4	);
 		//TransaccionesRecorrido.crearRecorrido("hola2", "","");
 		//System.out.println(FormatearDatos.formatoDeTiempo(3821));
-		TConductor.crearBus(1098755547, "Carlos", "Andrés", "Pereira", "Grimaldo", 7987809, "A+");
+		//TConductor.crearBus(1098755547, "Carlos", "Andrés", "Pereira", "Grimaldo", 7987809, "A+");
+		//TRuta.añadirAlFinalDeRuta("p8", "ST1");
+		//TRuta.añadirXPosicionARuta("P8", "ST10", 1);
+		//TRuta.reemplazarParadaDeRuta("p8", "ST4", 1);
+		//TBus.modificarEstado("XB536A", true);
+		TConductor.modificarDatoConductor("1098755547", "LIC", "154987989");
 	}
 	
 	

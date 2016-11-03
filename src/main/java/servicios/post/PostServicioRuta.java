@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 
 import db.TRuta;
 
-@Path("rutas/administracion")
+@Path("rutas/admin")
 public class PostServicioRuta {
 	private JsonObject respuesta;
 	
@@ -82,7 +82,7 @@ public class PostServicioRuta {
 	 * @param incomingData
 	 * @return {@link Response}
 	 */
-	@Path("/modificar/categoria")
+	@Path("/modificar/datos")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -92,29 +92,10 @@ public class PostServicioRuta {
 		JsonReader jsonReader = Json.createReader(incomingData);
 		boolean progreso;
 		entrada = jsonReader.readObject();
-		progreso = TRuta.modificarCategoria(entrada.getString("Ruta"), entrada.getString("Categoria"));
+		progreso = TRuta.modificarDatoRuta(entrada.getString("Ruta"),entrada.getString("Atributo"), entrada.getString("Datos"));
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 
 	}
-	/**
-	 * modifica la descripcion de una ruta
-	 * @param incomingData
-	 * @return {@link Response}
-	 */
-	@Path("/modificar/descripcion")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response modificarDescripcion(InputStream incomingData) {
-		
-		JsonObject entrada;
-		JsonReader jsonReader = Json.createReader(incomingData);
-		boolean progreso;
-		entrada = jsonReader.readObject();
-		progreso = TRuta.modificarDescripcion(entrada.getString("Ruta"), entrada.getString("Descripcion"));
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
-
-	}
+	
 }

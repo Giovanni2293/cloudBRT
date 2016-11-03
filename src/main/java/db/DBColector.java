@@ -85,7 +85,7 @@ public class DBColector {
 		// Documento en el cual se desea actualizar el dato
 		BasicDBObject searchById = IdDoc;
 
-		Colleccion.updateMulti(searchById, ActualizarDato);
+		Colleccion.update(searchById, ActualizarDato);
 
 	}
 

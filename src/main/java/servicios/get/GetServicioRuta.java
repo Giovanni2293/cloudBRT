@@ -85,6 +85,7 @@ public class GetServicioRuta {
 	@GET
 	@Produces("application/json")
 	public Response obtenerRuta(@PathParam("nombreRuta") String nombreRuta) {
+		nombreRuta = nombreRuta.toUpperCase();
 		DBGeneralBRT conexion = new DBGeneralBRT();
 		JsonObject respuesta;
 		DBObject json = null;
@@ -119,7 +120,7 @@ public class GetServicioRuta {
 	 * @param nombre
 	 * @return
 	 */
-	@Path("administracion/remover/paradas/{nombre}")
+	@Path("admin/remover/paradas/{nombre}")
 	@GET
 	@Produces("application/json")
 	public Response eliminarParadasDeRuta(@PathParam("nombre") String nombre) {
@@ -135,7 +136,7 @@ public class GetServicioRuta {
 	 * @param posicion
 	 * @return {@link Response}
 	 */
-	@Path("administracion/remover/paradas/{nombreRuta},{posicion}")
+	@Path("admin/remover/paradas/{nombreRuta},{posicion}")
 	@GET
 	@Produces("application/json")
 	public Response eliminarParadaEspecificaDeRuta(@PathParam("nombreRuta") String nombreRuta,@PathParam("posicion") int posicion) {
@@ -150,7 +151,7 @@ public class GetServicioRuta {
 	 * @param nombreRuta
 	 * @return {@link Response}
 	 */
-	@Path("administracion/eliminar/{nombreRuta}")
+	@Path("admin/eliminar/{nombreRuta}")
 	@GET
 	@Produces("application/json")
 	public Response eliminarRuta(@PathParam("nombreRuta") String nombreRuta) {
@@ -166,7 +167,7 @@ public class GetServicioRuta {
 	 * @param clave
 	 * @return {@link Response}
 	 */
-	@Path("administracion/agregar/paradas/{nombreRuta},{clave}")
+	@Path("admin/agregar/paradas/{nombreRuta},{clave}")
 	@GET
 	@Produces("application/json")
 	public Response agregarParadasAlFinal(@PathParam("nombreRuta") String nombreRuta,@PathParam("clave") String clave) {
@@ -181,7 +182,7 @@ public class GetServicioRuta {
 	 * @param nombreRuta
 	 * @return {@link Response}
 	 */
-	@Path("administracion/crear/{nombreRuta}")
+	@Path("admin/crear/{nombreRuta}")
 	@GET
 	@Produces("application/json")
 	public Response crearRuta(@PathParam("nombreRuta") String nombreRuta ) {

@@ -105,12 +105,12 @@ public class GetServicioBus {
 	 * @param placaBus
 	 * @return {@link Boolean}
 	 */
-	@Path("administracion/eliminar/{placaBus}")
+	@Path("admin/eliminar/{placaBus}")
 	@GET
 	@Produces("application/json")
 	public Response eliminarBuses(@PathParam("placaBus") String placaBus) {
 		boolean progreso;
-		progreso=TBus.eliminar(placaBus);
+		progreso=TBus.eliminarBus(placaBus);
 		respuesta = Json.createObjectBuilder().add("Encontrado",progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
@@ -122,7 +122,7 @@ public class GetServicioBus {
 	 * @param estado
 	 * @return {@link Boolean}
 	 */
-	@Path("administracion/modificar/{placaBus},{estado}")
+	@Path("admin/modificar/{placaBus},{estado}")
 	@GET
 	@Produces("application/json")
 	public Response modificarEstado(@PathParam("placaBus") String placaBus,@PathParam("estado") boolean estado) {

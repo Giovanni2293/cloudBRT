@@ -1,6 +1,7 @@
 package db;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -51,41 +52,20 @@ public class TRuta {
 		return false;
 	}
 	
-	public static boolean modificarCategoria(String nombre, String categoria){
+	
+	public static boolean modificarDatoRuta(String nombre, String dato, String nuevo){
 		nombre = nombre.toUpperCase();
+		dato = dato.toUpperCase();
 		DBObject ruta;
 		BasicDBObject nuevaData, dataAReemplazar;
+		HashMap<String, String> diccionario = new HashMap<>();
+		diccionario.put("CAT", "Categoria");
+		diccionario.put("DES", "Descripcion");
 		mongo = new DBGeneralBRT();
 		dataAReemplazar = new BasicDBObject("Nombre", nombre);
 		ruta = mongo.consultarMDB(nombreColeccion, dataAReemplazar);
 		if (ruta != null) {
-			nuevaData = new BasicDBObject("Nombre", nombre)
-					.append("Categoria", categoria)
-					.append("Descripcion", ruta.get("Descripcion"))
-					.append(nombreColeccion, ruta.get("Ruta"));
-			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
-			mongo.cerrarConexion();
-			return true;
-			
-		} else {
-			System.out.println("Error: No se encontro el bus con placa: " + nombre + "  en la base de datos");
-
-		}
-		mongo.cerrarConexion();
-		return false;
-	}
-	public static boolean modificarDescripcion(String nombre, String descripcion){
-		nombre = nombre.toUpperCase();
-		DBObject ruta;
-		BasicDBObject nuevaData, dataAReemplazar;
-		mongo = new DBGeneralBRT();
-		dataAReemplazar = new BasicDBObject("Nombre", nombre);
-		ruta = mongo.consultarMDB(nombreColeccion, dataAReemplazar);
-		if (ruta != null) {
-			nuevaData = new BasicDBObject("Nombre", nombre)
-					.append("Categoria", ruta.get("Categoria"))
-					.append("Descripcion", descripcion)
-					.append(nombreColeccion, ruta.get("Ruta"));
+			nuevaData = new BasicDBObject(diccionario.get(dato), nuevo);
 			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
 			mongo.cerrarConexion();
 			return true;
@@ -265,4 +245,6 @@ public class TRuta {
 		mongo.cerrarConexion();
 		return false;
 	}
+
+	
 }

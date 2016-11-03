@@ -15,7 +15,7 @@ import javax.ws.rs.core.Response;
 import core.Coordenadas;
 import db.TParada;
 
-@Path("paradas/administracion")
+@Path("paradas/admin")
 public class PostServicioParada {
 	private JsonObject respuesta;
 
