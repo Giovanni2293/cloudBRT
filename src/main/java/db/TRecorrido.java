@@ -127,7 +127,7 @@ public class TRecorrido {
 			temp = (BasicDBObject) actual.get("Coordenada");
 			coorAct = new Coordenadas((double) temp.getDouble("Latitud"), (double) temp.getDouble("Longitud"));
 			tiempo = GeoMatematicas.hallarTiempo(GeoMatematicas.calcDistancia(coorAnt, coorAct), velMed);
-			tiempo = tiempo + removerFormatoDeTiempo(horaAcumulada);
+			tiempo = tiempo + FormatearDatos.removerFormatoDeTiempo(horaAcumulada);
 			horaAcumulada = FormatearDatos.formatoDeTiempo(tiempo);
 			recorrido.put(actual.getString("Clave"), "" + horaAcumulada);
 			anterior = paradas.get(i);
@@ -139,21 +139,5 @@ public class TRecorrido {
 
 	}
 
-	public static double removerFormatoDeTiempo(String hora) {
-		String horaT, minT, segT;
-		int horaI, minI, segI;
-		int segundos;
-		StringTokenizer st = new StringTokenizer(hora, ":");
-		horaT = st.nextToken();
-		minT = st.nextToken();
-		segT = st.nextToken();
-		horaI = (int) Double.parseDouble(horaT);
-		minI = (int) Double.parseDouble(minT);
-		segI = (int) Double.parseDouble(segT);
-
-		segundos = horaI * 3600 + minI * 60 + segI;
-		return segundos;
-
-	}
 
 }

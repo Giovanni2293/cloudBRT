@@ -90,4 +90,21 @@ public class FormatearDatos {
 		return formato;
 		
 	}
+	
+	public static double removerFormatoDeTiempo(String hora) {
+		String horaT, minT, segT;
+		int horaI, minI, segI;
+		int segundos;
+		StringTokenizer st = new StringTokenizer(hora, ":");
+		horaT = st.nextToken();
+		minT = st.nextToken();
+		segT = st.nextToken();
+		horaI = (int) Double.parseDouble(horaT);
+		minI = (int) Double.parseDouble(minT);
+		segI = (int) Double.parseDouble(segT);
+
+		segundos = horaI * 3600 + minI * 60 + segI;
+		return segundos;
+
+	}
 }
