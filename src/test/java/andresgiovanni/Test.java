@@ -20,6 +20,8 @@ import core.ParqueAutomotor;
 import core.Recorrido;
 import core.Ruta;
 import db.DBGeneralBRT;
+import db.TColectorBus;
+import db.TConductor;
 import db.TParada;
 import db.TRecorrido;
 import db.TRuta;
@@ -88,7 +90,8 @@ public class Test {
 		//TransaccionesRuta.crearRuta("T3");
 		//TransaccionesRuta.removerParadaDeRuta("P2", 	4	);
 		//TransaccionesRecorrido.crearRecorrido("hola2", "","");
-		//System.out.println(FormatearDatos.formatoDeTiempo(3821));		
+		//System.out.println(FormatearDatos.formatoDeTiempo(3821));
+		TConductor.crearBus(1098755547, "Carlos", "Andrés", "Pereira", "Grimaldo", 7987809, "A+");
 	}
 	
 	
