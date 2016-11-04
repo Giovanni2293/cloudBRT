@@ -14,7 +14,7 @@ public class TConductor {
 	private static DBPersonal mongo;
 	private static final String nombreColeccion = "Conductores";
 
-	public static boolean crearBus(String cedula, String primerNombre, String segundoNombre, String primerApellido,
+	public static boolean crearConductor(String cedula, String primerNombre, String segundoNombre, String primerApellido,
 			String segundoApellido, String licencia, String tipoSangre) {
 
 		primerNombre = FormatearDatos.mayusInicial(primerNombre);

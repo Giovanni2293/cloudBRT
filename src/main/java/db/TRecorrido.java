@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.StringTokenizer;
 
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -38,12 +37,18 @@ public class TRecorrido {
 		consultaRecorrido = mongo.consultarMDB(nombreColeccion, data);
 		if (consultaRecorrido == null) {
 			if (consultarRuta != null) {
-				data.append("Ruta", ruta);
-				data.append("HoraPartida", horaDePartida);
-				data.append("Horario", construirHorario(consultarRuta, horaDePartida));
-				System.out.println(data.toString());
-
-				mongo.insertarMDB(nombreColeccion, data);
+				ArrayList<BasicDBObject> temp = (ArrayList<BasicDBObject>) consultarRuta.get("Ruta");
+				if (temp.size() != 0) {
+					data.append("Ruta", ruta);
+					data.append("HoraPartida", horaDePartida);
+					data.append("Horario", construirHorario(consultarRuta, horaDePartida));
+					System.out.println(data.toString());
+					mongo.insertarMDB(nombreColeccion, data);
+				}
+				else
+				{
+					System.out.println("Error: No se puede crear un recorrido de una ruta sin paradas");
+				}
 				mongo.cerrarConexion();
 				return true;
 			} else {
@@ -57,8 +62,9 @@ public class TRecorrido {
 	}
 
 	/**
-	 * Si existe el recorrido intenta encontrar una pareja coincidente "(parada,horaAnterior)" en el hashmap y edita su hora a una hora
-	 * nueva
+	 * Si existe el recorrido intenta encontrar una pareja coincidente
+	 * "(parada,horaAnterior)" en el hashmap y edita su hora a una hora nueva
+	 * 
 	 * @param clave
 	 * @param parada
 	 * @param horaAnterior
@@ -86,12 +92,10 @@ public class TRecorrido {
 				System.out.println("Error: Edicion insactifactoria. No se encontro la pareja especificada parada:"
 						+ parada + " horaAnterior:" + horaAnterior);
 			}
-		} 
-		else
-		{
-				System.out.println("Error: No se encontro la ruta "+clave+" en la base de datos");
+		} else {
+			System.out.println("Error: No se encontro la ruta " + clave + " en la base de datos");
 		}
-		
+
 		mongo.cerrarConexion();
 		return remplazado;
 	}
@@ -138,6 +142,5 @@ public class TRecorrido {
 		return recorrido;
 
 	}
-
 
 }

@@ -557,3 +557,41 @@ Clases que se modificaron:
 	PostServicioParada
 	PostServicioRuta
 	PostServicioRecorrido
+
+
+####[3/11/2016]:[22:33]
+
+* Se refactorizo el metodo para actualizar en la base de datos. Ya no se utiliza UpdateMulti puesto que puede modificar multiples valores si se repite la clave.
+* Reduccion de codigo en la clase TBus
+* Se creo la clase TConductor y los servicios correspondientes al conductor.
+* Se refactorizo el proyecto en general para generar url mas legibles. 
+* Se corrigio una excepcion que impide la creacion de un recorrido utilizando una ruta sin paradas.
+* Se corrigio el servicio de monitoreo de paradas para que liste la clave de las mismas.
+
+Clases que se Eliminaron:
+
+	GetServicioBus
+	GetServicioParada
+	GetServicioRuta
+	GetServicioRecorrido
+	PostServicioBus
+	PostServicioParada
+	PostServicioRuta
+	PostServicioRecorrido
+
+Clases que se Crearon:
+
+	Admin
+	Monitoreo
+
+Clases que se modificaron:
+
+	Se movieron las clases de probar algunos metodos por servicios a src/test/java/andres.giovanni
+
+Tareas Pendientes:
+
+	Ver como agregar mas directorios de codigo a la compilacion.
+	Metodo para eliminar recorrido.
+	
+
+
