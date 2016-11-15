@@ -19,6 +19,7 @@ public class Recorrido {
 	
 	public Recorrido(String claveRecorrido) {		
 		
+		this.claveRecorrido = claveRecorrido;
 		BasicDBObject recorridoDB = new BasicDBObject("Clave", claveRecorrido);
 		DBGeneralBRT mongo = new DBGeneralBRT();
 		DBObject recorrido = mongo.consultarMDB("Recorrido", recorridoDB);

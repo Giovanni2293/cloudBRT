@@ -31,7 +31,7 @@ public class RecorridosRT {
 		}
 	}
 	
-	public static RecorridosRT getParque()
+	public static RecorridosRT getRecorridosRT()
 	{
 		if (r==null)
 		{
@@ -42,7 +42,7 @@ public class RecorridosRT {
 
 	}
 	
-	public ArrayList<Recorrido> getBuses()
+	public ArrayList<Recorrido> getRecorridos()
 	{
 		return recorridos;
 	}

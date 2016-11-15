@@ -18,6 +18,7 @@ import com.mongodb.util.JSON;
 
 import core.BusesRT;
 import core.Recorrido;
+import core.RecorridosRT;
 import core.Ruta;
 import db.DBGeneralBRT;
 import db.TBus;
@@ -58,8 +59,10 @@ public class Test {
 		//TRuta.modificarCategoria("P8", "hi");
 		//TRuta.añadirAlFinalDeRuta("P8", "ST1");
 		//ParqueAutomotor.getParque().mostarParque();
-	    // Recorrido r = new Recorrido("T3","T3-1");
+	    //Recorrido r = new Recorrido("T3-1");
+	   //System.out.println( r.getRuta().getNombre());
 		//Ruta r = new Ruta("P8");
+		RecorridosRT.getRecorridosRT().mostarRecorridos();
 		
 		//TransaccionesRecorrido.crearRecorridoAutomatico("hola","T3", "23:54:59");
 		//TransaccionesRecorrido.editarHoraRecorrido("HOLA","ST3","00:02:54","00:02:52");
