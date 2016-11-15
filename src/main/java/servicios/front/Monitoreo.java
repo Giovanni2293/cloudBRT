@@ -17,7 +17,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
-import core.ParqueAutomotor;
+import core.BusesRT;
 import db.DBGeneralBRT;
 import utilidad.MensajeError;
 
@@ -55,7 +55,7 @@ public class Monitoreo {
 			bso.append("TipoBus", obj.get("TipoBus"));
 			bso.append("Estado", obj.get("Estado"));
 			bso.append("Coordenada",
-					ParqueAutomotor.getParque().encontrarBus(obj.getString("Placa")).getJsonBus().get("coordenada"));
+					BusesRT.getBusesRT().encontrarBus(obj.getString("Placa")).getJsonBus().get("coordenada"));
 			buses.add(bso);
 		}
 		BasicDBObject data = new BasicDBObject("Buses", buses);
@@ -88,7 +88,7 @@ public class Monitoreo {
 			dbo.append("Capacidad", json.get("Capacidad"));
 			dbo.append("TipoBus", json.get("TipoBus"));
 			dbo.append("Estado", json.get("Estado"));
-			dbo.append("Coordenada", ParqueAutomotor.getParque().encontrarBus(placaBus).getJsonBus().get("coordenada"));
+			dbo.append("Coordenada", BusesRT.getBusesRT().encontrarBus(placaBus).getJsonBus().get("coordenada"));
 			JsonReader jsonReader = Json.createReader(new StringReader(dbo.toString()));
 			respuesta = jsonReader.readObject();
 		} else {

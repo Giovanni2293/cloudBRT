@@ -17,11 +17,12 @@ public class Recorrido {
 	private String horaFinalizacion;
 	private LinkedHashMap<String,String> horario;
 	
-	public Recorrido(String nombreRuta, String claveRecorrido) {		
-		ruta = new Ruta(nombreRuta);
+	public Recorrido(String claveRecorrido) {		
+		
 		BasicDBObject recorridoDB = new BasicDBObject("Clave", claveRecorrido);
 		DBGeneralBRT mongo = new DBGeneralBRT();
 		DBObject recorrido = mongo.consultarMDB("Recorrido", recorridoDB);
+		ruta = new Ruta((String) recorrido.get("Ruta"));
 		horario=(LinkedHashMap<String, String>) recorrido.get("Horario");
 		this.horaPartida = getHoraPorIndice(0);
 		this.horaFinalizacion = getHoraPorIndice(horario.keySet().toArray().length-1);

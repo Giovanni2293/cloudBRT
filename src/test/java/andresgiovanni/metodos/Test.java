@@ -16,7 +16,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.util.JSON;
 
-import core.ParqueAutomotor;
+import core.BusesRT;
 import core.Recorrido;
 import core.Ruta;
 import db.DBGeneralBRT;

@@ -32,7 +32,7 @@ public class Despacho {
 	
 	public void añadirItinerario(String id,String placa,String nombreRuta,String conductor,String claveRecorrido)
 	{
-		itinerarios.add(new Itinerario(id, placa, nombreRuta, conductor, claveRecorrido));
+		//itinerarios.add(new Itinerario(id, placa, nombreRuta, conductor, claveRecorrido));
 	}
 	
 	/**

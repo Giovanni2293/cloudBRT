@@ -71,13 +71,13 @@ public class UbicacionBus {
 	private void asignarCoorABus(JsonObject entrada , Coordenadas coor)
 	{
 		Bus bus;
-		bus = ParqueAutomotor.getParque().encontrarBus(entrada.getString("Placa"));
+		bus = BusesRT.getBusesRT().encontrarBus(entrada.getString("Placa"));
 		if (bus != null) {
 			//El bus existe
 			
 			bus.setCoor(coor);
 		}
-		ParqueAutomotor.getParque().mostarParque();
+		BusesRT.getBusesRT().mostrarBuses();
 	}
 
 }

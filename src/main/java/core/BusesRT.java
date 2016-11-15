@@ -9,19 +9,20 @@ import com.mongodb.DBCursor;
 
 import db.DBGeneralBRT;
 
-public class ParqueAutomotor {
+public class BusesRT {
 
 	private static ArrayList<Bus> buses;
-	private static ParqueAutomotor p;
+	private static BusesRT p;
+	private final String coleccion = "Bus";
 	
-	private ParqueAutomotor()
+	private BusesRT()
 	{
 		inicializarParque();
 	}
 	private void inicializarParque()
 	{
 		DBGeneralBRT conexion = new DBGeneralBRT();
-		DBCollection collection = conexion.consultarColeccion("Bus");
+		DBCollection collection = conexion.consultarColeccion(coleccion);
 		DBCursor cursor = collection.find();
 		buses = new ArrayList<>();
 		while (cursor.hasNext()) {
@@ -30,11 +31,11 @@ public class ParqueAutomotor {
 		}
 	}
 	
-	public static ParqueAutomotor getParque()
+	public static BusesRT getBusesRT()
 	{
 		if (p==null)
 		{
-			p=new ParqueAutomotor();
+			p=new BusesRT();
 		}
 		
 		return p;
@@ -61,7 +62,7 @@ public class ParqueAutomotor {
 		return null;
 	}
 	
-	public void mostarParque()
+	public void mostrarBuses()
 	{
 		System.out.println(buses.size());
 		for (Bus b : buses)
