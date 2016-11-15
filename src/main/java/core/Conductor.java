@@ -1,34 +1,42 @@
 package core;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+
+import db.DBPersonal;
+
 public class Conductor {
 
-	private long cedula;
+	private String cedula;
 	private String primerNombre;
 	private String segundoNombre;
 	private String primerApellido;
 	private String segundoApellido;	
-	private long licencia;
+	private String licencia;
 	private	String tipoSangre;
+	private final String coleccion = "Conductores";
 	
-	
-	public Conductor(long cedula, String primerNombre, String segundoNombre, String primerApellido,
-			String segundoApellido, long licencia, String tipoSangre) {
+	public Conductor(String cedula) {
 		this.cedula = cedula;
-		this.primerNombre = primerNombre;
-		this.segundoNombre = segundoNombre;
-		this.primerApellido = primerApellido;
-		this.segundoApellido = segundoApellido;
-		this.licencia = licencia;
-		this.tipoSangre = tipoSangre;
+		DBPersonal mongo = new DBPersonal();
+		BasicDBObject data = new BasicDBObject("Cedula", cedula);
+		DBObject consulta = mongo.consultarMDB(coleccion,data);
+		this.primerNombre = (String) consulta.get("Primer Nombre");
+		this.segundoNombre = (String) consulta.get("Segundo Nombre");
+		this.primerApellido = (String) consulta.get("Primer Apellido");
+		this.segundoApellido = (String) consulta.get("Segundo Apellido");
+		this.licencia = (String) consulta.get("Numero de Licencia");
+		this.tipoSangre = (String)consulta.get("Grupo Sanguineo");
 	}
 
 
-	public long getLicencia() {
+	public String getLicencia() {
 		return licencia;
 	}
 
 
-	public void setLicencia(long licencia) {
+	public void setLicencia(String licencia) {
 		this.licencia = licencia;
 	}
 
@@ -43,7 +51,7 @@ public class Conductor {
 	}
 
 
-	public long getCedula() {
+	public String getCedula() {
 		return cedula;
 	}
 

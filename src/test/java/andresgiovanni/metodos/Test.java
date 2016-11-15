@@ -17,6 +17,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.util.JSON;
 
 import core.BusesRT;
+import core.ConductoresRT;
 import core.Recorrido;
 import core.RecorridosRT;
 import core.Ruta;
@@ -41,32 +42,13 @@ public class Test {
 	private DBGeneralBRT conexion;
 	public static void main(String[] args) {
 		
-		//Insertar i = new Insertar();
-		//TransaccionesBus.modificarEstado("XB536a", true);
-		//Bus.crearBus("XB536a", 50, "Padron", false);
-		//Bus.eliminar(Placa)
-		//modificarEstado("XB536a", false);
-	
-		//TransaccionesRuta.reemplazarParadaDeRuta("P2", "ST1", 4);
-		//TransaccionesRuta.removerParadaDeRuta("P2",1);
+		
 		/*TransaccionesRuta.crearRuta("T3");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST1");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST2");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST3");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST4");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST5");*/
-		//TRuta.modificarDescripcion("P8", "hellow 2");
-		//TRuta.modificarCategoria("P8", "hi");
-		//TRuta.añadirAlFinalDeRuta("P8", "ST1");
-		//ParqueAutomotor.getParque().mostarParque();
-	    //Recorrido r = new Recorrido("T3-1");
-	   //System.out.println( r.getRuta().getNombre());
-		//Ruta r = new Ruta("P8");
-		RecorridosRT.getRecorridosRT().mostarRecorridos();
-		
-		//TransaccionesRecorrido.crearRecorridoAutomatico("hola","T3", "23:54:59");
-		//TransaccionesRecorrido.editarHoraRecorrido("HOLA","ST3","00:02:54","00:02:52");
-		//TransaccionesRuta.eliminarParadas("P2");
 		/*TransaccionesParada.crearParada("ST1", "EST. TEMPRANA",7.002608, -73.055068);
 		TransaccionesParada.crearParada("ST2", "EST. ESPANOLITA", 7.017099, -73.057545);
 		TransaccionesParada.crearParada("ST3", "EST. PALMICHAL", 7.038484, -73.073994);
@@ -86,22 +68,7 @@ public class Test {
 		TransaccionesParada.crearParada("ST17", "EST. HORMIGUEROS", 7.078735, -73.108101);
 		TransaccionesParada.crearParada("ST18", "EST. PAYADOR", 7.084418, -73.107869);*/
 		//TransaccionesParada.crearParada("ST18", "EST. PAYADOR", 7.095377, -73.110602);
-		//TransaccionesParada.eliminarParada("ST3");
-		//Test t = new Test();
-		//t.imprimirRutas();
-	    // System.out.println(FormatearDatos.ArreglarCharset("Ã±"));
-		//System.out.println(FormatearDatos.mayusInicialMulti("Parque Estacion Uis"));
-		//FormatearDatos.mayusInicialMulti("lagos");
-		//TransaccionesRuta.crearRuta("T3");
-		//TransaccionesRuta.removerParadaDeRuta("P2", 	4	);
-		//TransaccionesRecorrido.crearRecorrido("hola2", "","");
-		//System.out.println(FormatearDatos.formatoDeTiempo(3821));
-		//TConductor.crearBus(1098755547, "Carlos", "Andrés", "Pereira", "Grimaldo", 7987809, "A+");
-		//TRuta.añadirAlFinalDeRuta("p8", "ST1");
-		//TRuta.añadirXPosicionARuta("P8", "ST10", 1);
-		//TRuta.reemplazarParadaDeRuta("p8", "ST4", 1);
-		//TBus.modificarEstado("XB536A", true);
-		//TConductor.modificarDatoConductor("1098755547", "LIC", "154987989");
+		
 	}
 	
 	
