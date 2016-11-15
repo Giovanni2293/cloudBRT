@@ -1,17 +1,22 @@
 package core;
 
+import java.util.LinkedHashMap;
+
 public class Itinerario {
 
 	private String id;
+	private LinkedHashMap<String,String> horaReal;
 	private Conductor conductorDesignado;
 	private Recorrido recorridoDesignado;
 	private Bus busDesignado;
 	
-	public Itinerario(String id, Bus bus , Conductor conductor, Recorrido recorrido)
+	public Itinerario(String id,String placa, String conductor, String recorrido)
 	{
 		this.id = id;
-		busDesignado = bus;
-		recorridoDesignado = recorrido;
+		horaReal = new LinkedHashMap<>();
+		busDesignado = BusesRT.getBusesRT().encontrarBus(placa);
+		recorridoDesignado = RecorridosRT.getRecorridosRT().encontrarRecorrido(recorrido);
+		conductorDesignado = ConductoresRT.getConductoresRT().encontrarConductor(conductor);
 	}
 
 	public String getId() {
@@ -22,6 +27,21 @@ public class Itinerario {
 	{
 		
 	}*/
+	
+	public void anotar(Parada p)
+	{
+		horaReal.put(p.getClave(),Fecha.getFechaClass().getFecha());
+	}
+	
+	public void encontrar()
+	{
+		Parada p = recorridoDesignado.getRuta().getParadas().get(0);
+  		boolean resultado = p.estaDentro(busDesignado.getCoor());
+  		if (resultado==true)
+  		{
+  			anotar(p);
+  		}
+	}
 
 	public void setId(String id) {
 		this.id = id;
