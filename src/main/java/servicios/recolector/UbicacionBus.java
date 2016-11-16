@@ -28,6 +28,8 @@ import javax.json.*;
 @Path("/colector")
 public class UbicacionBus {
 
+	private static final 	Itinerario i = new Itinerario("I1T3");
+	
 	@Path("/buses")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -62,6 +64,7 @@ public class UbicacionBus {
 		
 		TColectorBus.regDiarioBuses(salida , placa);
 		//
+		horaReal();
 		return Response.status(200).entity(entrada.toString()).build();
 
 		
@@ -81,12 +84,11 @@ public class UbicacionBus {
 	
 	private void horaReal()
 	{
-		Itinerario i = new Itinerario("I1T3");
+	
 		for (int x = 0;x<BusesRT.getBusesRT().getBuses().size();x++)
 		{
 			i.AddObserver(BusesRT.getBusesRT().getBuses().get(x));
 		}
 		i.encontrar();
 	}
-
 }

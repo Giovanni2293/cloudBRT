@@ -46,7 +46,7 @@ public class Test {
 	public static void main(String[] args) {
 		
 		TItinerario.crearItinerario("I1T3", "1098755547", "ZOE101", "T3-1");
-		TItinerario.iniciarItinerario("I1T3", "8:26:38");
+		//TItinerario.iniciarItinerario("I1T3", "8:26:38");
 		
 		/*TransaccionesRuta.crearRuta("T3");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST1");
