@@ -1,19 +1,25 @@
 package core;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-public class Itinerario {
+import interfaces.Observer;
+import interfaces.Subject;
+
+public class Itinerario implements Subject{
 
 	private String id;
 	private LinkedHashMap<String,String> horaReal;
 	private Conductor conductorDesignado;
 	private Recorrido recorridoDesignado;
 	private Bus busDesignado;
+	private ArrayList<Observer> observers;
 	
 	public Itinerario(String id,String placa, String conductor, String recorrido)
 	{
 		this.id = id;
 		horaReal = new LinkedHashMap<>();
+		observers = new ArrayList<>();
 		busDesignado = BusesRT.getBusesRT().encontrarBus(placa);
 		recorridoDesignado = RecorridosRT.getRecorridosRT().encontrarRecorrido(recorrido);
 		conductorDesignado = ConductoresRT.getConductoresRT().encontrarConductor(conductor);
@@ -40,6 +46,7 @@ public class Itinerario {
   		if (resultado==true)
   		{
   			anotar(p);
+  			NotifyObservers();
   		}
 	}
 
@@ -70,6 +77,36 @@ public class Itinerario {
 	public void setBusDesignado(Bus busDesignado) {
 		this.busDesignado = busDesignado;
 	}
+	
+	public void mostrarHoraReal()
+	{
+	System.out.println(horaReal.toString());
+	}	
+
+	@Override
+	public void AddObserver(Observer e) {
+		// TODO Auto-generated method stub
+		observers.add(e);
+	}
+
+	@Override
+	public void RemoveObserver(Observer e) {
+		// TODO Auto-generated method stub
+		observers.remove(e);
+	}
+
+	@Override
+	public void NotifyObservers() {
+		// TODO Auto-generated method stub
+		for (int i=0;i<observers.size();i++)
+		{
+			observers.get(i).Update();
+		}
+	}
+	
+	
+
+
 	
 	
 }

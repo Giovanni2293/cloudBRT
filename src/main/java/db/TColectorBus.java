@@ -71,9 +71,7 @@ public class TColectorBus {
 			mongo.cerrarConexion();
 			return true;
 		} else {
-			System.out.println(
-					"Error: No se puede crear el historico del bus"
-					+ Placa + ". Esta ya existe " + "en la base de datos");
+	
 			
 		}
 		mongo.cerrarConexion();

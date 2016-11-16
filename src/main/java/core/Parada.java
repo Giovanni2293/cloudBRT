@@ -28,6 +28,7 @@ public class Parada {
 	 */
 	public boolean estaDentro(Coordenadas bus)
 	{
+	
 		return geoArea.estaDentro(coordenada, bus);
 	}
 	

@@ -6,9 +6,11 @@ import javax.json.JsonObject;
 import com.mongodb.BasicDBObject;
 
 import db.BusDB;
+import interfaces.Observer;
+import interfaces.Subject;
 import utilidad.MensajeError;
 
-public class Bus {
+public class Bus implements Observer{
 	// Datos del bus
 	private String placa;
 	private int capacidad;
@@ -107,6 +109,14 @@ public class Bus {
 	{
 		this.coor=coor;
 	}
+
+	@Override
+	public void Update() {
+		// TODO Auto-generated method stub
+		System.out.println("El bus de placa:"+placa);
+	}
+
+
 
 	
 	

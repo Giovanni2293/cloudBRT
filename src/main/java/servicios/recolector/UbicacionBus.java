@@ -49,7 +49,7 @@ public class UbicacionBus {
 	
 		
 	
-		
+
 		// Inicia asignacion de coordenada a bus del parque automotor runtime
 		asignarCoorABus(entrada , coor);
 		// Termina la asignacion de coordenada a bus del parque automotor runtime
@@ -62,7 +62,6 @@ public class UbicacionBus {
 		
 		TColectorBus.regDiarioBuses(salida , placa);
 		//
-		
 		return Response.status(200).entity(entrada.toString()).build();
 
 		
@@ -77,7 +76,17 @@ public class UbicacionBus {
 			
 			bus.setCoor(coor);
 		}
-		BusesRT.getBusesRT().mostrarBuses();
+		//BusesRT.getBusesRT().mostrarBuses();
+	}
+	
+	private void horaReal()
+	{
+		Itinerario i = new Itinerario("A","ZOE101","1098123764","T3-1");
+		for (int x = 0;x<BusesRT.getBusesRT().getBuses().size();x++)
+		{
+			i.AddObserver(BusesRT.getBusesRT().getBuses().get(x));
+		}
+		i.encontrar();
 	}
 
 }
