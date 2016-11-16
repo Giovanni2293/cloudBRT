@@ -18,6 +18,7 @@ import com.mongodb.util.JSON;
 
 import core.BusesRT;
 import core.ConductoresRT;
+import core.Fecha;
 import core.Itinerario;
 import core.Recorrido;
 import core.RecorridosRT;
@@ -26,6 +27,7 @@ import db.DBGeneralBRT;
 import db.TBus;
 import db.TColectorBus;
 import db.TConductor;
+import db.TItinerario;
 import db.TParada;
 import db.TRecorrido;
 import db.TRuta;
@@ -43,7 +45,8 @@ public class Test {
 	private DBGeneralBRT conexion;
 	public static void main(String[] args) {
 		
-		
+		TItinerario.crearItinerario("I1T3", "1098755547", "ZOE101", "T3-1");
+		TItinerario.iniciarItinerario("I1T3", "8:26:38");
 		
 		/*TransaccionesRuta.crearRuta("T3");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST1");

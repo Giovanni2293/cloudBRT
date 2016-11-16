@@ -81,7 +81,7 @@ public class UbicacionBus {
 	
 	private void horaReal()
 	{
-		Itinerario i = new Itinerario("A","ZOE101","1098123764","T3-1");
+		Itinerario i = new Itinerario("I1T3");
 		for (int x = 0;x<BusesRT.getBusesRT().getBuses().size();x++)
 		{
 			i.AddObserver(BusesRT.getBusesRT().getBuses().get(x));

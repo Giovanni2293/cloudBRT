@@ -3,30 +3,42 @@ package core;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
+import db.DBGeneralBRT;
+import db.TItinerario;
 import interfaces.Observer;
 import interfaces.Subject;
 
 public class Itinerario implements Subject{
 
-	private String id;
-	private LinkedHashMap<String,String> horaReal;
+	private String clave;
+	private LinkedHashMap<String,String> horarioReal;
 	private Conductor conductorDesignado;
 	private Recorrido recorridoDesignado;
 	private Bus busDesignado;
 	private ArrayList<Observer> observers;
+	private String horaSalidaReal;
 	
-	public Itinerario(String id,String placa, String conductor, String recorrido)
+	public Itinerario(String clave)
 	{
-		this.id = id;
-		horaReal = new LinkedHashMap<>();
+		
+		this.clave = clave;
+		BasicDBObject itinerarioDB = new BasicDBObject("Clave", clave);
+		DBGeneralBRT mongo = new DBGeneralBRT();
+		DBObject itineario = mongo.consultarMDB("Itinerario", itinerarioDB);
+		horarioReal = (LinkedHashMap<String, String>) itineario.get("HorarioReal");
+		horaSalidaReal = (String) itineario.get("HoraSalidaReal");
+		busDesignado = BusesRT.getBusesRT().encontrarBus((String) itineario.get("Bus"));
+		recorridoDesignado = RecorridosRT.getRecorridosRT().encontrarRecorrido((String) itineario.get("Recorrido"));
+		conductorDesignado = ConductoresRT.getConductoresRT().encontrarConductor((String) itineario.get("Conductor"));
 		observers = new ArrayList<>();
-		busDesignado = BusesRT.getBusesRT().encontrarBus(placa);
-		recorridoDesignado = RecorridosRT.getRecorridosRT().encontrarRecorrido(recorrido);
-		conductorDesignado = ConductoresRT.getConductoresRT().encontrarConductor(conductor);
+		mongo.cerrarConexion();
 	}
 
 	public String getId() {
-		return id;
+		return clave;
 	}
 	
 	/*public double getAvancePorcentual()
@@ -34,9 +46,16 @@ public class Itinerario implements Subject{
 		
 	}*/
 	
-	public void anotar(Parada p)
+	public void actualizarHorarioReal(Parada p)
 	{
-		horaReal.put(p.getClave(),Fecha.getFechaClass().getFecha());
+		BasicDBObject itinerarioDB = new BasicDBObject("Clave", clave);
+		DBGeneralBRT mongo = new DBGeneralBRT();
+		DBObject itineario = mongo.consultarMDB("Itinerario", itinerarioDB);
+		horarioReal = (LinkedHashMap<String, String>) itineario.get("HorarioReal");
+		horarioReal.put(p.getClave(),Fecha.getFechaClass().getFecha());
+		TItinerario.marcarHora(clave, horarioReal);
+		mongo.cerrarConexion();
+		
 	}
 	
 	public void encontrar()
@@ -45,13 +64,13 @@ public class Itinerario implements Subject{
   		boolean resultado = p.estaDentro(busDesignado.getCoor());
   		if (resultado==true)
   		{
-  			anotar(p);
+  			actualizarHorarioReal(p);
   			NotifyObservers();
   		}
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setId(String clave) {
+		this.clave = clave;
 	}
 
 	public Conductor getConductorDesignado() {
@@ -80,8 +99,10 @@ public class Itinerario implements Subject{
 	
 	public void mostrarHoraReal()
 	{
-	System.out.println(horaReal.toString());
+	System.out.println(horarioReal.toString());
 	}	
+	
+	
 
 	@Override
 	public void AddObserver(Observer e) {

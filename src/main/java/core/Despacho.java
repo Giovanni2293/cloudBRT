@@ -30,9 +30,9 @@ public class Despacho {
 	}
 	
 	
-	public void añadirItinerario(String id,String placa,String nombreRuta,String conductor,String claveRecorrido)
+	public void añadirItinerario(String clave)
 	{
-		itinerarios.add(new Itinerario(id, placa, conductor, claveRecorrido));
+		itinerarios.add(new Itinerario(clave));
 	}
 	
 	/**
