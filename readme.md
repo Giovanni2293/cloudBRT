@@ -593,5 +593,25 @@ Tareas Pendientes:
 	Ver como agregar mas directorios de codigo a la compilacion.
 	Metodo para eliminar recorrido.
 	
+####[15/11/2016]:[22:15]
+	
+* Refactor de nombre de la clase ParqueAutomotor. Ahora todas las clases que coleccionen todos los objetos de un tipo se llaman
+ TipoRT donde RT significa RunTime (Ej. BusesRT)
+* Se crearon dos clases que coleccionan objetos de los tipos conductor llamado ConductoresRT y RecorridosRT que tienen todos los objetos 
+ de dichos tipos.
+* Se implemento el patron de diseno observer entre Itinerario y bus. Si uno de los buses llega a una geocerca de una parada el bus que
+ llega a la misma notifica al sistema. Cada itinerario solo escucha al objeto de tipo bus declarado como busDesignado en itinerario.
+ 
+Clases que se Crearon:
 
+	RecorridosRT
+	ConductoresRT
+	Observer
+	Subject
+	
+Clases que se modificaron.
 
+	ParqueAutomotor
+	Itinerario
+	UbicacionBus
+	
