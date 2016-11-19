@@ -23,7 +23,6 @@ public class Itinerario implements Subject {
 	private String horaSalidaReal;
 	private int index;
 	private boolean terminado;
-	
 
 	public Itinerario(String clave) {
 		this.clave = clave;
@@ -33,8 +32,8 @@ public class Itinerario implements Subject {
 	public String getId() {
 		return clave;
 	}
-	
-	public boolean getTerminado(){
+
+	public boolean getTerminado() {
 		return terminado;
 	}
 	/*
@@ -55,7 +54,7 @@ public class Itinerario implements Subject {
 	}
 
 	public void encontrar() {
-		
+
 		if (cantParadas >= index) {
 			Parada p = recorridoDesignado.getRuta().getParadas().get(index);
 			boolean resultado = p.estaDentro(busDesignado.getCoor());
@@ -65,12 +64,12 @@ public class Itinerario implements Subject {
 				NotifyObservers();
 				index++;
 				TItinerario.modificarProximaParada(this.getId(), index);
-			}else{
-				terminado = true;
-				TItinerario.modificarTerminado(this.getId(), true);
-				Despacho.getDespacho().Refrescar();
-				System.out.println("se ha terminado este itinerario");
 			}
+		} else {
+			terminado = true;
+			TItinerario.modificarTerminado(this.getId(), true);
+			Despacho.getDespacho().Refrescar();
+			System.out.println("se ha terminado este itinerario");
 		}
 	}
 
@@ -105,8 +104,8 @@ public class Itinerario implements Subject {
 	public void mostrarHoraReal() {
 		System.out.println(horarioReal.toString());
 	}
-	
-	public void refrescarItinerario(){
+
+	public void refrescarItinerario() {
 		BasicDBObject itinerarioDB = new BasicDBObject("Clave", clave);
 		DBGeneralBRT mongo = new DBGeneralBRT();
 		DBObject itineario = mongo.consultarMDB("Itinerario", itinerarioDB);
