@@ -18,6 +18,7 @@ import com.mongodb.util.JSON;
 
 import core.BusesRT;
 import core.ConductoresRT;
+import core.Despacho;
 import core.Fecha;
 import core.Itinerario;
 import core.Recorrido;
@@ -44,9 +45,12 @@ import utilidad.FormatearDatos;
 public class Test {
 	private DBGeneralBRT conexion;
 	public static void main(String[] args) {
+		//System.out.println(Despacho.getDespacho().encontarXBus("ZOE101").get(0).getId());
+		System.out.println(Despacho.getDespacho().getItinerarios().size());
 		
-		TItinerario.crearItinerario("I1T3", "1098755547", "ZOE101", "T3-1");
-		//TItinerario.iniciarItinerario("I1T3", "8:26:38");
+		
+		//TItinerario.crearItinerario("I3T3", "1098755547", "ZOE101", "T3-3");
+		//TItinerario.iniciarItinerario("I3T3", "8:26:38");
 		
 		/*TransaccionesRuta.crearRuta("T3");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST1");

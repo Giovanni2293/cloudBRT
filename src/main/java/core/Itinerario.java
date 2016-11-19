@@ -22,27 +22,21 @@ public class Itinerario implements Subject {
 	private ArrayList<Observer> observers;
 	private String horaSalidaReal;
 	private int index;
+	private boolean terminado;
+	
 
 	public Itinerario(String clave) {
-		index = 0;
 		this.clave = clave;
-		BasicDBObject itinerarioDB = new BasicDBObject("Clave", clave);
-		DBGeneralBRT mongo = new DBGeneralBRT();
-		DBObject itineario = mongo.consultarMDB("Itinerario", itinerarioDB);
-		horarioReal = (LinkedHashMap<String, String>) itineario.get("HorarioReal");
-		horaSalidaReal = (String) itineario.get("HoraSalidaReal");
-		busDesignado = BusesRT.getBusesRT().encontrarBus((String) itineario.get("Bus"));
-		recorridoDesignado = RecorridosRT.getRecorridosRT().encontrarRecorrido((String) itineario.get("Recorrido"));
-		conductorDesignado = ConductoresRT.getConductoresRT().encontrarConductor((String) itineario.get("Conductor"));
-		cantParadas = recorridoDesignado.getRuta().getParadas().size();
-		observers = new ArrayList<>();
-		mongo.cerrarConexion();
+		refrescarItinerario();
 	}
 
 	public String getId() {
 		return clave;
 	}
-
+	
+	public boolean getTerminado(){
+		return terminado;
+	}
 	/*
 	 * public double getAvancePorcentual() {
 	 * 
@@ -61,13 +55,21 @@ public class Itinerario implements Subject {
 	}
 
 	public void encontrar() {
-		if (cantParadas != index) {
+		
+		if (cantParadas >= index) {
 			Parada p = recorridoDesignado.getRuta().getParadas().get(index);
 			boolean resultado = p.estaDentro(busDesignado.getCoor());
 			if (resultado == true) {
+				refrescarItinerario();
 				actualizarHorarioReal(p);
 				NotifyObservers();
 				index++;
+				TItinerario.modificarProximaParada(this.getId(), index);
+			}else{
+				terminado = true;
+				TItinerario.modificarTerminado(this.getId(), true);
+				Despacho.getDespacho().Refrescar();
+				System.out.println("se ha terminado este itinerario");
 			}
 		}
 	}
@@ -102,6 +104,22 @@ public class Itinerario implements Subject {
 
 	public void mostrarHoraReal() {
 		System.out.println(horarioReal.toString());
+	}
+	
+	public void refrescarItinerario(){
+		BasicDBObject itinerarioDB = new BasicDBObject("Clave", clave);
+		DBGeneralBRT mongo = new DBGeneralBRT();
+		DBObject itineario = mongo.consultarMDB("Itinerario", itinerarioDB);
+		horarioReal = (LinkedHashMap<String, String>) itineario.get("HorarioReal");
+		horaSalidaReal = (String) itineario.get("HoraSalidaReal");
+		busDesignado = BusesRT.getBusesRT().encontrarBus((String) itineario.get("Bus"));
+		recorridoDesignado = RecorridosRT.getRecorridosRT().encontrarRecorrido((String) itineario.get("Recorrido"));
+		conductorDesignado = ConductoresRT.getConductoresRT().encontrarConductor((String) itineario.get("Conductor"));
+		terminado = (boolean) itineario.get("Terminado");
+		index = (int) itineario.get("ProximaParada");
+		cantParadas = recorridoDesignado.getRuta().getParadas().size();
+		observers = new ArrayList<>();
+		mongo.cerrarConexion();
 	}
 
 	@Override

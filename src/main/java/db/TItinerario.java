@@ -33,11 +33,56 @@ public class TItinerario {
 					data.append("Bus", bus );
 					data.append("Recorrido",recorrido);
 					data.append("HoraSalidaReal", "");
+					data.append("ProximaParada", 0);
+					data.append("Terminado", false);
 					data.append("HorarioReal", horarioReal);
+					
 					mongo.insertarMDB(nombreColeccion, data);
 				
 		} else {
 			System.out.println("Error: El elemento ya existe en la base de datos");
+		}
+		mongo.cerrarConexion();
+		return false;
+	}
+	
+public static boolean modificarProximaParada(String clave, int proximaParada) {
+		
+		DBObject consultaItinerario;
+		BasicDBObject data,nuevaData,dataAReemplazar;
+		clave = clave.toUpperCase();
+		mongo = new DBGeneralBRT();
+		data = new BasicDBObject("Clave", clave);
+		dataAReemplazar = new BasicDBObject("Clave", clave);
+		consultaItinerario = mongo.consultarMDB(nombreColeccion, data);
+		
+		if(consultaItinerario != null){
+			nuevaData = new BasicDBObject("ProximaParada", proximaParada);
+			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
+			mongo.cerrarConexion();			
+		}else{
+			System.out.println("Error: No se encontro el itinerario: " + clave + "  en la base de datos");
+		}
+		mongo.cerrarConexion();
+		return false;
+	}
+	
+public static boolean modificarTerminado(String clave, boolean estado) {
+		
+		DBObject consultaItinerario;
+		BasicDBObject data,nuevaData,dataAReemplazar;
+		clave = clave.toUpperCase();
+		mongo = new DBGeneralBRT();
+		data = new BasicDBObject("Clave", clave);
+		dataAReemplazar = new BasicDBObject("Clave", clave);
+		consultaItinerario = mongo.consultarMDB(nombreColeccion, data);
+		
+		if(consultaItinerario != null){
+			nuevaData = new BasicDBObject("Terminado", estado);
+			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
+			mongo.cerrarConexion();			
+		}else{
+			System.out.println("Error: No se encontro el itinerario: " + clave + "  en la base de datos");
 		}
 		mongo.cerrarConexion();
 		return false;
@@ -57,6 +102,8 @@ public class TItinerario {
 			nuevaData = new BasicDBObject("HoraSalidaReal", horaSalidaReal);
 			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
 			mongo.cerrarConexion();			
+			modificarTerminado(clave, false);
+			modificarProximaParada(clave, 0);
 		}else{
 			System.out.println("Error: No se encontro el itinerario: " + clave + "  en la base de datos");
 		}

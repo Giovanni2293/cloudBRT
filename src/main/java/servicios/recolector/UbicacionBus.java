@@ -27,15 +27,17 @@ import javax.json.*;
 
 @Path("/colector")
 public class UbicacionBus {
-
-	private static final 	Itinerario i = new Itinerario("I1T3");
+	
+	private Despacho despacho; 
+	private String placa;
+	
 	
 	@Path("/buses")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response recibirBus(InputStream incomingData) {
-		String placa,tde;
+		String tde;
 		Coordenadas coor;
 		JsonObject entrada;
 		BasicDBObject salida;
@@ -84,7 +86,9 @@ public class UbicacionBus {
 	
 	private void horaReal()
 	{
-	
+		despacho = Despacho.getDespacho();
+		Itinerario i = despacho.encontarXBus(placa).get(0);
+		
 		for (int x = 0;x<BusesRT.getBusesRT().getBuses().size();x++)
 		{
 			i.AddObserver(BusesRT.getBusesRT().getBuses().get(x));
