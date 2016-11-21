@@ -58,10 +58,8 @@ public class Monitoreo {
 					BusesRT.getBusesRT().encontrarBus(obj.getString("Placa")).getJsonBus().get("coordenada"));
 			buses.add(bso);
 		}
-		BasicDBObject data = new BasicDBObject("Buses", buses);
-		JsonReader jsonReader = Json.createReader(new StringReader(data.toString()));
-		JsonObject json = jsonReader.readObject();
-		return Response.status(200).entity(json.toString()).build();
+		
+		return Response.status(200).entity(buses.toString()).build();
 	}
 
 	/**
