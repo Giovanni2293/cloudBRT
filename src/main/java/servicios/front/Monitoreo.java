@@ -126,10 +126,9 @@ public class Monitoreo {
 			bso.append("Coordenada", obj.get("Coordenada"));
 			paradas.add(bso);
 		}
-		BasicDBObject data = new BasicDBObject("Paradas", paradas);
-		JsonReader jsonReader = Json.createReader(new StringReader(data.toString()));
-		JsonObject json = jsonReader.readObject();
-		return Response.status(200).entity(json.toString()).build();
+		
+	
+		return Response.status(200).entity(paradas.toString()).build();
 	}
 
 	/**
