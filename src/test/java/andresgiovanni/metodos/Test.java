@@ -45,13 +45,22 @@ import utilidad.FormatearDatos;
 public class Test {
 	private DBGeneralBRT conexion;
 	public static void main(String[] args) {
-		//System.out.println(Despacho.getDespacho().encontarXBus("ZOE101").get(0).getId());
-		System.out.println(Despacho.getDespacho().getItinerarios().size());
-		
-		
-		//TItinerario.crearItinerario("I3T3", "1098755547", "ZOE101", "T3-3");
-		//TItinerario.iniciarItinerario("I3T3", "8:26:38");
-		
+		//System.out.println(Despacho.getDespacho().encontarXBus("ZOE101").get(0).getIndex());
+		//System.out.println(Despacho.getDespacho().getItinerarios().size());
+		//Despacho.getDespacho().Refrescar();
+		//TRecorrido.crearRecorridoAutomatico("P8-1","P8","00:00:00");
+		/*TItinerario.crearItinerario("I1T3", "1098755547", "ZOE101", "T3-1");
+		TItinerario.crearItinerario("I3T3", "1098755547", "ZOE101", "T3-3");
+		TItinerario.crearItinerario("I2T3", "1098755547", "ZOE101", "T3-2");
+		TItinerario.crearItinerario("I4T3", "1098755547", "ZOE101", "T3-4");*/
+	     //TItinerario.iniciarItinerario("I1T3", "23:24:38");
+		 ArrayList<Itinerario> dito = Despacho.getDespacho().encontarXBus("ZOE101"); 
+		 for (Itinerario temp : dito)
+		 {
+			 System.out.println(temp.getRecorridoDesignado().getHoraPartida());
+		 }
+	     //Despacho.getDespacho().mostrarItinerarios();
+	     //Despacho.getDespacho().encontarXBus("ZOE101");
 		/*TransaccionesRuta.crearRuta("T3");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST1");
 		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST2");

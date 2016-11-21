@@ -1,5 +1,4 @@
 
-
 package servicios.recolector;
 
 import core.*;
@@ -27,11 +26,10 @@ import javax.json.*;
 
 @Path("/colector")
 public class UbicacionBus {
-	
-	private Despacho despacho; 
+
+	private Despacho despacho;
 	private String placa;
-	
-	
+
 	@Path("/buses")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -44,55 +42,52 @@ public class UbicacionBus {
 		BufferedWriter buffer;
 		JsonReader jsonReader = Json.createReader(incomingData);
 		entrada = jsonReader.readObject();
-		
+
 		placa = entrada.getString("Placa");
 		placa = placa.toUpperCase();
 		tde = entrada.getString("Tde");
 		JsonObject coordenada = entrada.getJsonObject("Coordenada");
-		coor = new Coordenadas(Double.parseDouble(coordenada.getString("Latitud")), Double.parseDouble(coordenada.getString("Longitud")));
-	
-		
-	
+		coor = new Coordenadas(Double.parseDouble(coordenada.getString("Latitud")),
+				Double.parseDouble(coordenada.getString("Longitud")));
 
 		// Inicia asignacion de coordenada a bus del parque automotor runtime
-		asignarCoorABus(entrada , coor);
-		// Termina la asignacion de coordenada a bus del parque automotor runtime
-		
-		 salida = new BasicDBObject("Tde",tde)
-				.append("Tdr", Fecha.getFechaClass().getFecha())
-				.append("Coordenada", new BasicDBObject("Latitud", coor.getLatitud())
-						.append("Longitiud", coor.getLongitud()));
-		
-		
-		TColectorBus.regDiarioBuses(salida , placa);
+		asignarCoorABus(entrada, coor);
+		// Termina la asignacion de coordenada a bus del parque automotor
+		// runtime
+
+		salida = new BasicDBObject("Tde", tde).append("Tdr", Fecha.getFechaClass().getFecha()).append("Coordenada",
+				new BasicDBObject("Latitud", coor.getLatitud()).append("Longitiud", coor.getLongitud()));
+
+		TColectorBus.regDiarioBuses(salida, placa);
 		//
 		horaReal();
 		return Response.status(200).entity(entrada.toString()).build();
 
-		
 	}
-	
-	private void asignarCoorABus(JsonObject entrada , Coordenadas coor)
-	{
+
+	private void asignarCoorABus(JsonObject entrada, Coordenadas coor) {
 		Bus bus;
 		bus = BusesRT.getBusesRT().encontrarBus(entrada.getString("Placa"));
 		if (bus != null) {
-			//El bus existe
-			
+			// El bus existe
+
 			bus.setCoor(coor);
 		}
-		//BusesRT.getBusesRT().mostrarBuses();
+		// BusesRT.getBusesRT().mostrarBuses();
 	}
-	
-	private void horaReal()
-	{
+
+	private void horaReal() {
 		despacho = Despacho.getDespacho();
-		Itinerario i = despacho.encontarXBus(placa).get(0);
 		
-		for (int x = 0;x<BusesRT.getBusesRT().getBuses().size();x++)
-		{
-			i.AddObserver(BusesRT.getBusesRT().getBuses().get(x));
+		
+			if (despacho.encontarXBus(placa)!=null) {
+				Itinerario i = despacho.encontarXBus(placa).get(0);
+			for (int x = 0; x < BusesRT.getBusesRT().getBuses().size(); x++) {
+				i.AddObserver(BusesRT.getBusesRT().getBuses().get(x));
+			}
+			i.encontrar();
+		} else {
+			System.out.println("No hay itinerarios cargados");
 		}
-		i.encontrar();
 	}
 }

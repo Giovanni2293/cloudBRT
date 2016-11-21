@@ -1,6 +1,7 @@
 package utilidad;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**
@@ -17,6 +18,7 @@ import java.util.StringTokenizer;
 public class FormatearDatos {
 
 	private static final double factorDeConversionKmhToMs=0.277778;
+	
 	/**
 	 * Coloca una unica mayuscula inicial el resto de caracteres en minuscula
 	 * @param original
@@ -107,4 +109,69 @@ public class FormatearDatos {
 		return segundos;
 
 	}
+	
+	/*public static void quicksort(double A[], int izq, int der) {
+
+		  double pivote=A[izq]; // tomamos primer elemento como pivote
+		  int i=izq; // i realiza la búsqueda de izquierda a derecha
+		  int j=der; // j realiza la búsqueda de derecha a izquierda
+		  double aux;
+		 
+		  while(i<j){            // mientras no se crucen las búsquedas
+		     while(A[i]<=pivote && i<j) i++; // busca elemento mayor que pivote
+		     while(A[j]>pivote) j--;         // busca elemento menor que pivote
+		     if (i<j) {                      // si no se han cruzado                      
+		         aux= A[i];                  // los intercambia
+		         A[i]=A[j];
+		         A[j]=aux;
+		     }
+		   }
+		   A[izq]=A[j]; // se coloca el pivote en su lugar de forma que tendremos
+		   A[j]=pivote; // los menores a su izquierda y los mayores a su derecha
+		   if(izq<j-1)
+		      quicksort(A,izq,j-1); // ordenamos subarray izquierdo
+		   if(j+1 <der)
+		      quicksort(A,j+1,der); // ordenamos subarray derecho
+
+		}*/
+	
+	public static void quickSort(int lowerIndex, int higherIndex,double[] array) {
+        int i = lowerIndex;
+        int j = higherIndex;
+        // calculate pivot number, I am taking pivot as middle index number
+        double pivot = array[lowerIndex+(higherIndex-lowerIndex)/2];
+        // Divide into two arrays
+        while (i <= j) {
+            /**
+             * In each iteration, we will identify a number from left side which
+             * is greater then the pivot value, and also we will identify a number
+             * from right side which is less then the pivot value. Once the search
+             * is done, then we exchange both numbers.
+             */
+            while (array[i] < pivot) {
+                i++;
+            }
+            while (array[j] > pivot) {
+                j--;
+            }
+            if (i <= j) {
+                exchangeNumbers(i, j,array);
+                //move index to next position on both sides
+                i++;
+                j--;
+            }
+        }
+        // call quickSort() method recursively
+        if (lowerIndex < j)
+            quickSort(lowerIndex, j,array);
+        if (i < higherIndex)
+            quickSort(i, higherIndex,array);
+    }
+ 
+    private static void exchangeNumbers(int i, int j,double[] array) {
+        double temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
 }

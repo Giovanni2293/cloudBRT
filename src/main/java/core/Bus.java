@@ -100,6 +100,16 @@ public class Bus implements Observer{
 	public String getPlaca() {
 		return placa;
 	}
+	
+	public void setEstado(boolean estado)
+	{
+		this.estado = estado;
+	}
+	
+	public boolean getEstado()
+	{
+		return estado;
+	}
 
 	public Coordenadas getCoor() {
 		return coor;

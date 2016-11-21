@@ -93,13 +93,16 @@ public static boolean modificarTerminado(String clave, boolean estado) {
 		DBObject consultaItinerario;
 		BasicDBObject data,nuevaData,dataAReemplazar;
 		clave = clave.toUpperCase();
+		horarioReal = new LinkedHashMap<>();
 		mongo = new DBGeneralBRT();
 		data = new BasicDBObject("Clave", clave);
 		dataAReemplazar = new BasicDBObject("Clave", clave);
 		consultaItinerario = mongo.consultarMDB(nombreColeccion, data);
 		
+		
 		if(consultaItinerario != null){
 			nuevaData = new BasicDBObject("HoraSalidaReal", horaSalidaReal);
+			nuevaData.append("HorarioReal",horarioReal);
 			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
 			mongo.cerrarConexion();			
 			modificarTerminado(clave, false);

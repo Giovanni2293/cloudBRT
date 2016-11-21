@@ -3,12 +3,14 @@ package core;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 
 import db.DBGeneralBRT;
+import utilidad.FormatearDatos;
 
 /**
  * Clase encargada de administrar todos los itinerarios.
@@ -20,10 +22,10 @@ public class Despacho {
 
 	private static Despacho d = null;
 	private ArrayList<Itinerario> itinerarios;
-	private final String coleccion = "Itinerario" ;
+	private final String coleccion = "Itinerario";
 
 	private Despacho() {
-		
+
 		inicializarDespacho();
 	}
 
@@ -31,15 +33,15 @@ public class Despacho {
 		// TODO Auto-generated method stub
 
 		DBGeneralBRT conexion = new DBGeneralBRT();
-		DBCollection collection = conexion.consultarColeccion(coleccion );
+		DBCollection collection = conexion.consultarColeccion(coleccion);
 		DBCursor cursor = collection.find();
 		itinerarios = new ArrayList<>();
 		while (cursor.hasNext()) {
-			
+
 			BasicDBObject obj = (BasicDBObject) cursor.next();
-			Itinerario i =  new Itinerario((String) obj.get("Clave"));
-			if(i.getTerminado()==false){
-			itinerarios.add(i);
+			Itinerario i = new Itinerario((String) obj.get("Clave"));
+			if (i.getTerminado() == false) {
+				itinerarios.add(i);
 			}
 		}
 	}
@@ -56,12 +58,11 @@ public class Despacho {
 	public void añadirItinerario(String clave) {
 		itinerarios.add(new Itinerario(clave));
 	}
-	
-	public ArrayList<Itinerario> getItinerarios()
-	{
+
+	public ArrayList<Itinerario> getItinerarios() {
 		return itinerarios;
 	}
-	
+
 	public Itinerario encontrarItinerario(String id) {
 		Iterator<Itinerario> i = itinerarios.iterator();
 		Itinerario temp;
@@ -81,17 +82,24 @@ public class Despacho {
 	 */
 	public ArrayList<Itinerario> encontarXBus(String Placa) {
 		Placa = Placa.toUpperCase();
+		Refrescar();
 		Iterator<Itinerario> i = itinerarios.iterator();
+		System.out.println("Numero de itinerarios:" + itinerarios.size());
 		ArrayList<Itinerario> salida = new ArrayList<>();
 		Itinerario temp;
+		System.out.println(i.hasNext());
 		while (i.hasNext()) {
 			temp = i.next();
 			if (temp.getBusDesignado().getPlaca().equals(Placa)) {
 				salida.add(temp);
 			}
-			return salida;
 		}
-		return null;
+
+		if (salida.size() == 0) {
+			return null;
+		} else {
+			return ordenarItinerarios(salida);
+		}
 	}
 
 	/**
@@ -126,8 +134,45 @@ public class Despacho {
 		return salida;
 	}
 
-	public void Refrescar(){
+	public void Refrescar() {
 		inicializarDespacho();
 	}
-	
+
+	public ArrayList<Itinerario> ordenarItinerarios(ArrayList<Itinerario> busqueda) {
+		int tamaño = busqueda.size();
+		double[] entrada = new double[tamaño];
+		LinkedHashMap<Double,Itinerario> diccionario=new LinkedHashMap<>();
+		int indice = 0;
+		for (Itinerario b : busqueda) {
+			
+			entrada[indice] = FormatearDatos.removerFormatoDeTiempo(b.getRecorridoDesignado().getHoraPartida());
+			diccionario.put(entrada[indice],b);
+			indice++;
+		}
+		FormatearDatos.quickSort(0, entrada.length - 1, entrada);
+		busqueda = new ArrayList<>();
+		for (int i = 0; i < tamaño; i++) {
+			
+			busqueda.add(diccionario.get(entrada[i]));
+		}
+		
+		return busqueda;
+	}
+
+	/**
+	 * Metodo de pruebas
+	 */
+	public void mostrarItinerarios() {
+		System.out.println(itinerarios.size());
+		for (Itinerario b : itinerarios) {
+			System.out.println("Conductor:" + b.getConductorDesignado().getCedula());
+			System.out.println("Id:" + b.getId());
+			System.out.println("Bus:" + b.getBusDesignado().getPlaca());
+			System.out.println("Recorrido" + b.getRecorridoDesignado().getClaveRecorrido());
+			System.out.println("HoraSalida:" + b.getHoraSalidaReal());
+			System.out.println("CantParadas:" + b.getCantParadas());
+			System.out.println("Indice:" + b.getIndex());
+			System.out.println("Terminado:" + b.getTerminado());
+		}
+	}
 }

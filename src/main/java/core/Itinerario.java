@@ -41,6 +41,8 @@ public class Itinerario implements Subject {
 	 * 
 	 * }
 	 */
+	
+	
 
 	public void actualizarHorarioReal(Parada p) {
 		BasicDBObject itinerarioDB = new BasicDBObject("Clave", clave);
@@ -53,17 +55,33 @@ public class Itinerario implements Subject {
 
 	}
 
+	public int getCantParadas() {
+		return cantParadas;
+	}
+
+	public String getHoraSalidaReal() {
+		return horaSalidaReal;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
 	public void encontrar() {
 
-		if (cantParadas >= index) {
+		refrescarItinerario();
+		if (cantParadas > index) {
 			Parada p = recorridoDesignado.getRuta().getParadas().get(index);
 			boolean resultado = p.estaDentro(busDesignado.getCoor());
 			if (resultado == true) {
-				refrescarItinerario();
 				actualizarHorarioReal(p);
 				NotifyObservers();
 				index++;
 				TItinerario.modificarProximaParada(this.getId(), index);
+			}
+			else
+			{
+				System.out.println("no pase por aca");
 			}
 		} else {
 			terminado = true;

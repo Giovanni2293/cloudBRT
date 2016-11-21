@@ -196,10 +196,7 @@ public class Monitoreo {
 
 			rutas.add(bso);
 		}
-		BasicDBObject data = new BasicDBObject("Rutas", rutas);
-		JsonReader jsonReader = Json.createReader(new StringReader(data.toString()));
-		JsonObject json = jsonReader.readObject();
-		return Response.status(200).entity(json.toString()).build();
+		return Response.status(200).entity(rutas.toString()).build();
 	}
 
 	/**
@@ -264,10 +261,7 @@ public class Monitoreo {
 			bso.append("Horario", obj.get("Horario"));
 			recorridos.add(bso);
 		}
-		BasicDBObject data = new BasicDBObject("Recorridos", recorridos);
-		JsonReader jsonReader = Json.createReader(new StringReader(data.toString()));
-		JsonObject json = jsonReader.readObject();
-		return Response.status(200).entity(json.toString()).build();
+		return Response.status(200).entity(recorridos.toString()).build();
 	}
 	
 	@Path("recorridos/consultar/{claveRecorrido}")
