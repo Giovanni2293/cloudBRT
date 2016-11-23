@@ -55,7 +55,7 @@ public class Despacho {
 		}
 	}
 
-	public void añadirItinerario(String clave) {
+	public void anadirItinerario(String clave) {
 		itinerarios.add(new Itinerario(clave));
 	}
 
@@ -139,8 +139,8 @@ public class Despacho {
 	}
 
 	public ArrayList<Itinerario> ordenarItinerarios(ArrayList<Itinerario> busqueda) {
-		int tamaño = busqueda.size();
-		double[] entrada = new double[tamaño];
+		int tamano = busqueda.size();
+		double[] entrada = new double[tamano];
 		LinkedHashMap<Double,Itinerario> diccionario=new LinkedHashMap<>();
 		int indice = 0;
 		for (Itinerario b : busqueda) {
@@ -151,7 +151,7 @@ public class Despacho {
 		}
 		FormatearDatos.quickSort(0, entrada.length - 1, entrada);
 		busqueda = new ArrayList<>();
-		for (int i = 0; i < tamaño; i++) {
+		for (int i = 0; i < tamano; i++) {
 			
 			busqueda.add(diccionario.get(entrada[i]));
 		}

@@ -25,7 +25,7 @@ public class LecturaJson {
 	}
 
 	/**
-	 * Este metodo se encarga de recibir la información del cliente enviada en
+	 * Este metodo se encarga de recibir la informacion del cliente enviada en
 	 * formato Json y convertirla en un String para su posterior uso.
 	 * 
 	 * @param incomingData

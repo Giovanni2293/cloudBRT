@@ -105,7 +105,7 @@ public class DBColector {
 	 * Clase que imprime por pantalla todas las bases de datos MongoDB.
 	 * 
 	 * @param mongo
-	 *            conexión a MongoDB
+	 *            conexion a mongoDB
 	 */
 	private static void printDatabases(MongoClient mongo) {
 		List<String> dbs = mongo.getDatabaseNames();

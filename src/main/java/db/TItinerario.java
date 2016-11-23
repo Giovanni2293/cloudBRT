@@ -1,14 +1,9 @@
 package db;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-
-import core.Coordenadas;
-import utilidad.FormatearDatos;
-import utilidad.GeoMatematicas;
 
 public class TItinerario {
 
@@ -135,5 +130,5 @@ public static boolean marcarHora(String clave, LinkedHashMap<String, String> hor
 		return false;
 	}
 	
-
+	
 }

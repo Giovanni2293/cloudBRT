@@ -231,7 +231,7 @@ public class Admin {
 	public Response agregarParadasAlFinal(@PathParam("nombreRuta") String nombreRuta,
 			@PathParam("clave") String clave) {
 		boolean progreso;
-		progreso = TRuta.añadirAlFinalDeRuta(nombreRuta, clave);
+		progreso = TRuta.anadirAFinalDeRuta(nombreRuta, clave);
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
@@ -268,7 +268,7 @@ public class Admin {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response añadirXPosicionARuta(InputStream incomingData) {
+	public Response anadirXPosicionARuta(InputStream incomingData) {
 		JsonObject entrada;
 		String nombreRuta, clave;
 		int posicion;
@@ -282,7 +282,7 @@ public class Admin {
 		clave = entrada.getString("ClaveParada");
 		posicion = Integer.parseInt(entrada.getString("PosicionParada"));
 
-		progreso = TRuta.añadirXPosicionARuta(nombreRuta, clave, posicion);
+		progreso = TRuta.anadirXPosicionARuta(nombreRuta, clave, posicion);
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		System.out.println("Clave:" + clave + " Nombre:" + nombreRuta + " Posicion:" + posicion);
 		return Response.status(200).entity(respuesta.toString()).build();

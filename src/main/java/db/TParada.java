@@ -5,15 +5,8 @@ import com.mongodb.DBObject;
 
 import utilidad.FormatearDatos;
 
-/**
- * El fin de esta clase es otorgar transacciones consernientes a una Parada
- * 
- * @author Carlos Andrés Pereira Grimaldo
- * @author Jose Giovanni Florez Nocua
- *
- */
 public class TParada {
-
+	
 	private static DBGeneralBRT mongo;
 	private static final String nombreColeccion = "Parada";
 
@@ -68,5 +61,6 @@ public class TParada {
 		return elimino;
 
 	}
+	
 
 }

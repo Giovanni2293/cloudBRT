@@ -38,8 +38,8 @@ import utilidad.FormatearDatos;
  * otras clases.
  * 
  * Mensaje para Angel: Angel por favor no use esta clase cuando descargue esta version.
- * @author Carlos Andrés Pereira Grimaldo
- * @author Jose Giovanni Flores Nocua
+ * @author Carlos Andres Pereira Grimaldo
+ * @author Jose Giovanni Florez Nocua
  *
  */
 public class Test {
@@ -61,18 +61,12 @@ public class Test {
 		 }
 	     //Despacho.getDespacho().mostrarItinerarios();
 	     //Despacho.getDespacho().encontarXBus("ZOE101");
-		/*TransaccionesRuta.crearRuta("T3");
-		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST1");
-		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST2");
-		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST3");
-		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST4");
-		TransaccionesRuta.añadirAlFinalDeRuta("T3", "ST5");*/
 		/*TransaccionesParada.crearParada("ST1", "EST. TEMPRANA",7.002608, -73.055068);
 		TransaccionesParada.crearParada("ST2", "EST. ESPANOLITA", 7.017099, -73.057545);
 		TransaccionesParada.crearParada("ST3", "EST. PALMICHAL", 7.038484, -73.073994);
 		TransaccionesParada.crearParada("ST4", "EST. ESTANCIA", 7.137213,  -73.122289);
 		TransaccionesParada.crearParada("ST5", "EST. LAGOS", 7.066655, -73.099632);
-		TransaccionesParada.crearParada("ST6", "EST. CAÑAVERAL", 7.070660, -73.104938);
+		TransaccionesParada.crearParada("ST6", "EST. CAï¿½AVERAL", 7.070660, -73.104938);
 		TransaccionesParada.crearParada("ST7", "EST. PROVENZA", 7.090184, -73.108926);
 		TransaccionesParada.crearParada("ST8", "EST. LA ROSITA", 7.112485, -73.121840);
 		TransaccionesParada.crearParada("ST9", "EST. CHORRERAS", 7.116745, -73.125948);

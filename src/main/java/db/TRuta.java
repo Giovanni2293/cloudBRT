@@ -6,17 +6,8 @@ import java.util.HashMap;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
-
-
-/**
- * El fin de esta clase es otorgar transacciones consernientes a una Ruta
- * 
- * @author Carlos Andrés Pereira Grimaldo
- * @author Jose Giovanni Florez Nocua
- *
- */
 public class TRuta {
-
+	
 	private static DBGeneralBRT mongo;
 	private static final String nombreColeccion = "Ruta";
 
@@ -78,7 +69,7 @@ public class TRuta {
 		return false;
 	}
 
-	public static boolean añadirXPosicionARuta(String nombreRuta, String clave, int posicion) {
+	public static boolean anadirXPosicionARuta(String nombreRuta, String clave, int posicion) {
 		DBObject ruta;
 		DBObject parada;
 		clave = clave.toUpperCase();
@@ -102,7 +93,7 @@ public class TRuta {
 					return true;
 				} else {
 					System.out.println("Error: La parada no existe. Debe crear la parada " + clave
-							+ " primero antes de añadirle elementos");
+							+ " primero antes de anadirle elementos");
 					
 				}
 			} else {
@@ -110,14 +101,14 @@ public class TRuta {
 				
 			}
 		} else {
-			System.out.println("Error: La ruta " + nombreRuta + " a la que esta intentando añadir elementos no existe");
+			System.out.println("Error: La ruta " + nombreRuta + " a la que esta intentando anadir elementos no existe");
 			
 		}
 		mongo.cerrarConexion();
 		return false;
 	}
 
-	public static boolean añadirAlFinalDeRuta(String nombreRuta, String clave) {
+	public static boolean anadirAFinalDeRuta(String nombreRuta, String clave) {
 		DBObject ruta;
 		DBObject parada;
 		nombreRuta =nombreRuta.toUpperCase();
@@ -139,13 +130,13 @@ public class TRuta {
 				return true;
 			} else {
 				System.out.println("Error: La parada no existe. Debe crear la parada " + clave
-						+ " primero antes de añadirle elementos");
+						+ " primero antes de anadirle elementos");
 				
 				
 			}
 		} else {
 			System.out.println("Error: La ruta no existe. Debe crear la ruta " + nombreRuta
-					+ " primero antes de añadirle elementos");
+					+ " primero antes de anadirle elementos");
 		}
 		mongo.cerrarConexion();
 		return false;
@@ -206,9 +197,9 @@ public class TRuta {
 	public static boolean reemplazarParadaDeRuta(String nombreRuta, String clave, int posicion){
 		boolean estado1,estado2;
 		
-		estado1 = añadirXPosicionARuta(nombreRuta, clave, posicion);
+		estado1 = anadirXPosicionARuta(nombreRuta, clave, posicion);
 		if(estado1 == true){
-			System.out.println("se añadio");
+			System.out.println("se anadio");
 		estado2 = removerParadaDeRuta(nombreRuta, posicion+1);
 		if(estado2 == true){
 			System.out.println("se removio el siguiente");
@@ -247,4 +238,5 @@ public class TRuta {
 	}
 
 	
+
 }

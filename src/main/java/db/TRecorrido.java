@@ -2,7 +2,6 @@ package db;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.StringTokenizer;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -142,5 +141,6 @@ public class TRecorrido {
 		return recorrido;
 
 	}
-
+	
+	
 }

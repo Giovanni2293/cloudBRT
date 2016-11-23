@@ -1,23 +1,11 @@
 package utilidad;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-/**
- * La intención de esta darle formato a las entradas del usuario para evitar realizar inserciones
- * erroneas al sistema que afecten la integridad de este mismo, ademas quitarle la responsabilidad 
- * al usuario de pensar en cierto detalles a la hora de ingresar datos, a travez de un conjunto de 
- * metodos utiles.
- * 
- * 
- * @author Carlos Andrés Pereira Grimaldo 
- * @author Jose Giovanni Flores Nocua
- *
- */
 public class FormatearDatos {
 
-	private static final double factorDeConversionKmhToMs=0.277778;
+private static final double factorDeConversionKmhToMs=0.277778;
 	
 	/**
 	 * Coloca una unica mayuscula inicial el resto de caracteres en minuscula
@@ -113,11 +101,11 @@ public class FormatearDatos {
 	/*public static void quicksort(double A[], int izq, int der) {
 
 		  double pivote=A[izq]; // tomamos primer elemento como pivote
-		  int i=izq; // i realiza la búsqueda de izquierda a derecha
-		  int j=der; // j realiza la búsqueda de derecha a izquierda
+		  int i=izq; // i realiza la bï¿½squeda de izquierda a derecha
+		  int j=der; // j realiza la bï¿½squeda de derecha a izquierda
 		  double aux;
 		 
-		  while(i<j){            // mientras no se crucen las búsquedas
+		  while(i<j){            // mientras no se crucen las bï¿½squedas
 		     while(A[i]<=pivote && i<j) i++; // busca elemento mayor que pivote
 		     while(A[j]>pivote) j--;         // busca elemento menor que pivote
 		     if (i<j) {                      // si no se han cruzado                      
@@ -173,5 +161,5 @@ public class FormatearDatos {
         array[i] = array[j];
         array[j] = temp;
     }
-
+	
 }

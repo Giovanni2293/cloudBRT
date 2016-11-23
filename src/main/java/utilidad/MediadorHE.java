@@ -1,12 +1,8 @@
-/**
- * Clase encargada de ejecutar la logica del hilo
- */
-
 package utilidad;
 
 public class MediadorHE {
-	
-    /*
+
+	/*
      * status se encarga de mantener con vida el hilo y step es el numero de ejecucion del hilo 
      * (simulando el tiempo transcurrido)
      */
@@ -65,5 +61,5 @@ public class MediadorHE {
 			return step;
 		}
 		
-		
+	
 }

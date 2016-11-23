@@ -2,12 +2,7 @@ package db;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-/**
- * El fin de esta clase es otorgar transacciones consernientes a un bus
- * 
- * @author Carlos Andrés Pereira Grimaldo
- *
- */
+
 public class TBus {
 
 	private static DBGeneralBRT mongo;
@@ -17,7 +12,7 @@ public class TBus {
 		Placa = Placa.toUpperCase();
 		if (Placa.length() != 6) {
 			System.out.println(
-					"Error: El nombre de la placa debe ser de 6 Letras o Numeros." + "Dígite una placa valida");
+					"Error: El nombre de la placa debe ser de 6 Letras o Numeros." + "Digite una placa valida");
 			return false;
 		}
 		BasicDBObject data;
@@ -65,7 +60,7 @@ public class TBus {
 		Placa = Placa.toUpperCase();
 		if (Placa.length() != 6) {
 			System.out.println(
-					"Error: El nombre de la placa debe ser de 6 Letras o Numeros." + "Dígite una placa valida");
+					"Error: El nombre de la placa debe ser de 6 Letras o Numeros." + "Digite una placa valida");
 			return false;
 		}
 		boolean elimino;
@@ -85,5 +80,5 @@ public class TBus {
 		
 
 	}
-
+	
 }

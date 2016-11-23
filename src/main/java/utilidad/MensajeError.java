@@ -6,7 +6,7 @@ import javax.json.JsonObject;
 import com.mongodb.BasicDBObject;
 
 public class MensajeError {
-	
+
 	public static JsonObject servicioCaido()
 	{
 		JsonObject mensaje = Json.createObjectBuilder().add("Error","El servicio de base de datos no responde").build();
@@ -23,4 +23,5 @@ public class MensajeError {
 		JsonObject mensaje = Json.createObjectBuilder().add("Error","No se encontro el " + elemento + " con la clave " + clave + " en la base de datos").build();
 		return mensaje;
 	}
+	
 }

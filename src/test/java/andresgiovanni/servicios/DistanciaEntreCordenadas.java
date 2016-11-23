@@ -66,7 +66,7 @@ public class DistanciaEntreCordenadas {
 	/**
 	 * Calcula la distancia entre dos cordenadas mediante su latitud
 	 * y longitud, recibiendo un array de objetos cordenadas que 
-	 * contienen doubles para el cálculo
+	 * contienen doubles para el cï¿½lculo
 	 * 
 	 * @param entrada
 	 * @return double
@@ -81,7 +81,7 @@ public class DistanciaEntreCordenadas {
 		lat2 = entrada.get(1).getLatitud();
 		lng2= entrada.get(1).getLongitud();		
 		
-		double radioTierra = 6371;// en kilómetros
+		double radioTierra = 6371;// en kilometros
 		double dLat = Math.toRadians(lat2 - lat1);
 		double dLng = Math.toRadians(lng2 - lng1);
 		double sindLat = Math.sin(dLat / 2);

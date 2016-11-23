@@ -22,8 +22,8 @@ public class Extractor {
 	}
 
 	/**
-	 * Este método se encarga de extraer unicamente coordenadas en Json que han
-	 * sido enviadas con un formato especifico en el que varia el subíndice de
+	 * Este metodo se encarga de extraer unicamente coordenadas en Json que han
+	 * sido enviadas con un formato especifico en el que varia el subindice de
 	 * la coordenada. ejemplo de formato : coordenada1 , coordenada2 , ... ,
 	 * coordenadan
 	 * 

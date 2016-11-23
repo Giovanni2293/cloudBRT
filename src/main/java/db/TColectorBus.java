@@ -8,7 +8,7 @@ import com.mongodb.DBObject;
 import core.Fecha;
 
 public class TColectorBus {
-
+	
 	private static DBColector mongo;
 	private static String fecha;
 	private static final String nombreColeccion = "HistoBuses";
@@ -78,5 +78,6 @@ public class TColectorBus {
 		
 		return true;
 	}
+
 
 }

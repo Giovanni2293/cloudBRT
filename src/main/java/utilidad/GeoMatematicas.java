@@ -11,9 +11,9 @@ public  class GeoMatematicas {
 		
 	}
 	/**
-	 * Este funcion se encarga de determinar la distancia de la proyección del 
-	 * segmento formado por la estación origen y el bus sobre el segmento que 
-	 * forma la estación de origen a la estacion destino. 
+	 * Este funcion se encarga de determinar la distancia de la proyeccion del 
+	 * segmento formado por la estacion origen y el bus sobre el segmento que 
+	 * forma la estacion de origen a la estacion destino. 
 	 * Estos 3 puntos forman un triangulo por lo cual implementamos el teorema del 
 	 * coseno para resolver este problema.
 	 * Recibe:
@@ -21,7 +21,7 @@ public  class GeoMatematicas {
 	 * Distancia Entre bus y su origen DBO
 	 * Distancia entre origen y destino DOD
 	 * Entrega:
-	 * Distancia entre el origen y la proyección según las unidades 
+	 * Distancia entre el origen y la proyeccion segun las unidades 
 	 * de los valores de entrada.
 	 * @param DBD , DBO ,DOD
 	 * @return double
@@ -49,7 +49,7 @@ public  class GeoMatematicas {
 	
 	/**
 	 * Calcula la distancia entre dos cordenadas mediante su latitud
-	 * y longitud, recibiendo dos coordenadas para el cálculo.
+	 * y longitud, recibiendo dos coordenadas para el cï¿½lculo.
 	 * 
 	 * @param origen , destino
 	 * @return double
@@ -65,7 +65,7 @@ public  class GeoMatematicas {
 		lat2 = destino.getLatitud();
 		lng2 = destino.getLongitud();		
 		
-		double radioTierra = 6371;// en kilómetros
+		double radioTierra = 6371;// en kilï¿½metros
 		double dLat,dLng,sindLat,sindLng,va1,va2;
 		dLat = Math.toRadians(lat2 - lat1);
 		dLng = Math.toRadians(lng2 - lng1);

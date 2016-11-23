@@ -105,7 +105,7 @@ public class DBPersonal {
 	 * Clase que imprime por pantalla todas las bases de datos MongoDB.
 	 * 
 	 * @param mongo
-	 *            conexión a MongoDB
+	 *            conexion a MongoDB
 	 */
 	private static void printDatabases(MongoClient mongo) {
 		List<String> dbs = mongo.getDatabaseNames();

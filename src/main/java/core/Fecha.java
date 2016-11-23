@@ -1,5 +1,5 @@
 /**
- * Esta clase se encarga de construir una fecha y hora de acuerdo al formato indicado año/mes/dia hora/minuto/segundo
+ * Esta clase se encarga de construir una fecha y hora de acuerdo al formato indicado ano/mes/dia hora/minuto/segundo
  * y devuelve la misma como un String
  */
 

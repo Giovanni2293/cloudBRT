@@ -14,12 +14,12 @@ import com.mongodb.DBObject;
 
 /**
  * 
- * El proposito de esta clase es brindar la conexión con la base de datos MongoDB
+ * El proposito de esta clase es brindar la conexion con la base de datos MongoDB
  * y brindar las transacciones basicas en la base de datos que posteriormente
  * seran utilizadas por clases especificaran con detalle estas transacciones.
  * 
- * @author Carlos Andrés Pereira Grimaldo
- * @author José Giovanni Florez Nocua
+ * @author Carlos Andres Pereira Grimaldo
+ * @author Jose Giovanni Florez Nocua
  *
  */
 public class DBGeneralBRT {
@@ -116,7 +116,7 @@ public class DBGeneralBRT {
 	 * Clase que imprime por pantalla todas las bases de datos MongoDB.
 	 * 
 	 * @param mongo
-	 *            conexión a MongoDB
+	 *            conexion a MongoDB
 	 */
 	private static void printDatabases(MongoClient mongo) {
 		List<String> dbs = mongo.getDatabaseNames();
