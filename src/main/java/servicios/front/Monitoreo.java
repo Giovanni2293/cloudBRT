@@ -16,6 +16,9 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.MongoException;
+import com.mongodb.MongoWaitQueueFullException;
+import com.sun.jersey.server.impl.BuildId;
 
 import core.BusesRT;
 import db.DBGeneralBRT;
@@ -290,6 +293,79 @@ public class Monitoreo {
 			return Response.status(200).entity(respuesta.toString()).build();
 		}
 
-	
+			///////
+			/////////////////////////////////////// ITINERARIO /////////////////////////////////////////////
+			///////
+		
+		@Path("itinerario/consultar")
+		@GET
+		@Produces("application/json")
+		public Response obtenerItinerarios() {
+			DBGeneralBRT conexion = new DBGeneralBRT();
+			DBCollection collection = conexion.consultarColeccion("Itinerario");
+			DBCursor cursor = collection.find();
+			ArrayList<BasicDBObject> itinerarios = new ArrayList<>();
+			while (cursor.hasNext()) {
+				BasicDBObject obj = (BasicDBObject) cursor.next();
+				BasicDBObject bso = new BasicDBObject();
+				bso.append("Clave", obj.get("Clave"));
+				bso.append("Bus", obj.get("Bus"));
+				bso.append("Conductor", obj.get("Conductor"));
+				bso.append("Recorrido", obj.get("Recorrido"));
+				try{
+					DBObject datosRecorrido;
+					datosRecorrido = conexion.consultarMDB("Recorrido", new BasicDBObject("Clave", obj.get("Recorrido")));
+					bso.append("HoraSalidaEstimada", datosRecorrido.get("HoraPartida"));
+					bso.append("HoraSalidaReal", obj.get("HoraSalidaReal"));
+					bso.append("HorarioEstimado", datosRecorrido.get("Horario") );
+					bso.append("HorarioReal", obj.get("HorarioReal") );
+					
+				}catch (MongoException e){
+					String respuesta= "{Mensaje: No se el recorrido del itinerario }";
+					return Response.status(404).entity(respuesta).build();
+				}
+				bso.append("EstaTermiado", obj.get("Terminado"));
+				bso.append("ProximaParada", obj.get("ProximaParada"));
+				itinerarios.add(bso);
+			}
+			return Response.status(200).entity(itinerarios.toString()).build();
+		}
 
+		@Path("itinerario/consultar/{claveItinerario}")
+		@GET
+		@Produces("application/json")
+		public Response obtenerItinerario(@PathParam("claveItinerario") String claveItinerario) {
+			claveItinerario = claveItinerario.toUpperCase();
+			DBGeneralBRT conexion = new DBGeneralBRT();
+			DBObject obj = null;
+			BasicDBObject dbo = new BasicDBObject();
+			obj = conexion.consultarMDB("Itinerario", new BasicDBObject("Clave", claveItinerario));
+			BasicDBObject bso = new BasicDBObject();
+			if (obj != null) {
+				bso.append("Clave", obj.get("Clave"));
+				bso.append("Bus", obj.get("Bus"));
+				bso.append("Conductor", obj.get("Conductor"));
+				bso.append("Recorrido", obj.get("Recorrido"));
+				try{
+					DBObject datosRecorrido;
+					datosRecorrido = conexion.consultarMDB("Recorrido", new BasicDBObject("Clave", obj.get("Recorrido")));
+					bso.append("HoraSalidaEstimada", datosRecorrido.get("HoraPartida"));
+					bso.append("HoraSalidaReal", obj.get("HoraSalidaReal"));
+					bso.append("HorarioEstimado", datosRecorrido.get("Horario") );
+					bso.append("HorarioReal", obj.get("HorarioReal") );
+					
+				}catch (MongoException e){
+					String respuesta= "{Mensaje: No se el recorrido del itinerario }";
+					return Response.status(404).entity(respuesta).build();
+				}
+				bso.append("EstaTermiado", obj.get("Terminado"));
+				bso.append("ProximaParada", obj.get("ProximaParada"));
+				
+			}
+			else
+			{
+				respuesta = MensajeError.noEncontroElElemento("Itinerario",claveItinerario);
+			}
+			return Response.status(200).entity(bso.toString()).build();
+		}
 }
