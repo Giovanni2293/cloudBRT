@@ -14,12 +14,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import core.Bus;
+import core.BusesRT;
+import core.ConductoresRT;
 import core.Coordenadas;
+import core.RecorridosRT;
 import db.TBus;
 import db.TConductor;
 import db.TParada;
 import db.TRecorrido;
 import db.TRuta;
+import utilidad.Diccionario;
 
 @Path("admin")
 public class Admin {
@@ -44,6 +49,8 @@ public class Admin {
 	@Produces("application/json")
 	public Response eliminarBuses(@PathParam("placaBus") String placaBus) {
 		boolean progreso;
+		
+		BusesRT.getBusesRT().eliminarBus(placaBus); // Elimina el bus en RT
 		progreso = TBus.eliminarBus(placaBus);
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
@@ -62,7 +69,8 @@ public class Admin {
 	@GET
 	@Produces("application/json")
 	public Response modificarEstado(@PathParam("placaBus") String placaBus, @PathParam("estado") boolean estado) {
-		boolean progreso = TBus.modificarEstado(placaBus, estado);
+		BusesRT.getBusesRT().modificarEstado(placaBus, estado); // Modifica el estado del bus en RT
+		boolean progreso = TBus.modificarEstado(placaBus, estado);//Modifica en DB
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
@@ -92,9 +100,10 @@ public class Admin {
 		tipoBus = entrada.getString("TipoBus");
 		estado = Boolean.parseBoolean(entrada.getString("Estado"));
 
-		progreso = TBus.crearBus(placa, capacidad, tipoBus, estado);
+		progreso = TBus.crearBus(placa, capacidad, tipoBus, estado); //Modifica en DB
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		System.out.println("Placa:" + placa + " Capacidad:" + capacidad + " TipoBus:" + tipoBus + " Estado:" + estado);
+		BusesRT.getBusesRT().agregarNuevo(new Bus(placa)); // Agrega un nuevo bus al RT
 		return Response.status(200).entity(respuesta.toString()).build();
 
 	}
@@ -119,6 +128,7 @@ public class Admin {
 		boolean progreso;
 		progreso = TParada.eliminarParada(clave);
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+		
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
 
@@ -363,8 +373,11 @@ public class Admin {
 		clave = entrada.getString("Clave");
 		ruta = entrada.getString("Ruta");
 		horaDePartida = entrada.getString("HoraDePartida");
-		progreso = TRecorrido.crearRecorridoAutomatico(clave, ruta, horaDePartida);
+		progreso = TRecorrido.crearRecorridoAutomatico(clave, ruta, horaDePartida);//Modifica en DB
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+		
+		RecorridosRT.getRecorridosRT().agregarRecorrido(clave); // Crea un recorrido en RT
+		
 		return Response.status(200).entity(respuesta.toString()).build();
 
 	}
@@ -384,7 +397,9 @@ public class Admin {
 		parada = entrada.getString("Parada");
 		horaAnterior = entrada.getString("HoraAnterior");
 		horaNueva = entrada.getString("HoraNueva");
-		progreso = TRecorrido.editarHoraRecorrido(clave, parada, horaAnterior, horaNueva);
+		RecorridosRT.getRecorridosRT().editarHoraRecorridoRT(clave, parada, horaAnterior, horaNueva); /*Edita la hora de un punto de
+		un recorrido en RT*/
+		progreso = TRecorrido.editarHoraRecorrido(clave, parada, horaAnterior, horaNueva);//Modifica en DB
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 
@@ -401,7 +416,8 @@ public class Admin {
 	@Produces("application/json")
 	public Response eliminarConductor(@PathParam("cedula") String cedula) {
 		boolean progreso;
-		progreso = TConductor.eliminarConductor(cedula);
+		ConductoresRT.getConductoresRT().eliminarConductor(cedula); // Elimina un conductor en RT
+		progreso = TConductor.eliminarConductor(cedula);//Modifica en DB
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 
@@ -439,8 +455,9 @@ public class Admin {
 		tipoSangre = entrada.getString("Grupo Sanguineo");
 
 		progreso = TConductor.crearConductor(cedula, primerNombre, segundoNombre, primerApellido, segundoApellido,
-				licencia, tipoSangre);
+				licencia, tipoSangre); //Modifica en DB
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+		ConductoresRT.getConductoresRT().agregarConductor(cedula);// Agrega un conductor al RT
 		return Response.status(200).entity(respuesta.toString()).build();
 
 	}
@@ -470,7 +487,11 @@ public class Admin {
 		dato = entrada.getString("Dato");
 		nuevoValor = entrada.getString("NuevoValor");
 
-		progreso = TConductor.modificarDatoConductor(cedula, dato, nuevoValor);
+		String datoMapeado =Diccionario.atributoConduc(dato);
+		
+		ConductoresRT.getConductoresRT().modificarConductor(cedula,datoMapeado, nuevoValor);//Modifica RT
+		
+		progreso = TConductor.modificarDatoConductor(cedula, datoMapeado, nuevoValor);//Modifica la DB
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 

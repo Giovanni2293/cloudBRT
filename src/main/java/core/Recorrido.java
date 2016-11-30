@@ -39,6 +39,11 @@ public class Recorrido {
 		return horaFinalizacion;
 	}
 	
+	public boolean editarHorario(String parada, String horaAnterior, String horaNueva)
+	{
+		return horario.replace(parada, horaAnterior, horaNueva);
+	}
+	
 	/**
 	 * Metodo encargado de obtener una parada directamente desde la ruta con todos sus atributos.
 	 * @param i

@@ -42,6 +42,22 @@ public class RecorridosRT {
 
 	}
 	
+	/**
+	 * Agrega un nuevo recorrido verificando si previamente no existe uno ya creado con la misma clave
+	 * @param clave
+	 * @return
+	 */
+	public boolean agregarRecorrido(String clave)
+	{
+		if (encontrarRecorrido(clave)==null)
+		{
+			recorridos.add(new Recorrido(clave));
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public ArrayList<Recorrido> getRecorridos()
 	{
 		return recorridos;
@@ -69,6 +85,17 @@ public class RecorridosRT {
 		{
 			System.out.println(b.getClaveRecorrido());
 		}
+	}
+	
+	public boolean editarHoraRecorridoRT(String clave,String parada, String horaAnterior,String horaNueva)
+	{
+		Recorrido encontrado = encontrarRecorrido(clave);
+		if (encontrado!= null)
+		{
+			return encontrado.editarHorario(parada, horaAnterior, horaNueva);
+		}
+		return false;
+		
 	}
 	
 	

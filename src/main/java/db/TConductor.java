@@ -5,6 +5,8 @@ import java.util.HashMap;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
+import core.ConductoresRT;
+import utilidad.Diccionario;
 import utilidad.FormatearDatos;
 
 public class TConductor {
@@ -46,18 +48,13 @@ public class TConductor {
 		DBObject conductor;
 		dato = dato.toUpperCase();
 		BasicDBObject nuevaData, dataAReemplazar;
-		HashMap<String, String> diccionario = new HashMap<>();
-		diccionario.put("PN", "Primer Nombre");
-		diccionario.put("SN", "Segundo Nombre");
-		diccionario.put("PA", "Primer Apellido");
-		diccionario.put("SA", "Segundo Apellido");
-		diccionario.put("LIC", "Numero de Licencia");
-		diccionario.put("TS", "Grupo Sanguineo");
+		String atributo = dato;
+
 		mongo = new DBPersonal();
 		dataAReemplazar = new BasicDBObject("Cedula", cedula);
 		conductor = mongo.consultarMDB(nombreColeccion, dataAReemplazar);
 		if (conductor != null) {
-			nuevaData = new BasicDBObject(diccionario.get(dato), nuevo);
+			nuevaData = new BasicDBObject(atributo, nuevo);
 			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
 			return true;
 		} else {

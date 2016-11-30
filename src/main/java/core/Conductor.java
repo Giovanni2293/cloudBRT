@@ -17,6 +17,7 @@ public class Conductor {
 	private	String tipoSangre;
 	private final String coleccion = "Conductores";
 	
+	
 	public Conductor(String cedula) {
 		this.cedula = cedula;
 		DBPersonal mongo = new DBPersonal();
@@ -74,6 +75,34 @@ public class Conductor {
 	public String getSegundoApellido() {
 		return segundoApellido;
 	}
+	
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+
+
+	public void setPrimerNombre(String primerNombre) {
+		this.primerNombre = primerNombre;
+	}
+
+
+	public void setSegundoNombre(String segundoNombre) {
+		this.segundoNombre = segundoNombre;
+	}
+
+
+	public void setPrimerApellido(String primerApellido) {
+		this.primerApellido = primerApellido;
+	}
+
+
+	public void setSegundoApellido(String segundoApellido) {
+		this.segundoApellido = segundoApellido;
+	}
+
+
+	
+	
 	
 	
 	
