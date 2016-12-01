@@ -49,7 +49,7 @@ public class Itinerario implements Subject {
 		DBGeneralBRT mongo = new DBGeneralBRT();
 		DBObject itineario = mongo.consultarMDB("Itinerario", itinerarioDB);
 		horarioReal = (LinkedHashMap<String, String>) itineario.get("HorarioReal");
-		horarioReal.put(p.getClave(), Fecha.getFechaClass().getFecha());
+		horarioReal.put(p.getClave(), Fecha.getFechaClass().gethora());
 		TItinerario.marcarHora(clave, horarioReal);
 		mongo.cerrarConexion();
 

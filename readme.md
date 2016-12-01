@@ -615,3 +615,36 @@ Clases que se modificaron.
 	Itinerario
 	UbicacionBus
 	
+####[30/11/2016]:[17:49]
+	
+* Se creo una clase de utilidad llamada diccionario, esta contiene hasmaps para llevar el control de parametros a modificar.
+* Se hicieron modificaciones generales a las clases RT, para que actualicen sus datos cuando hallan cambios en la db.
+* Se crearon los servicios relacionados con Itinerario, uno de monitoreo para consultarlo y los de administración.
+* Se creo el metodo de eliminar recorrido que estaba pendiente.
+* Se creo el servicio de iniciar itinerario.
+* Se corrigio el formato de hora cuando se marca una estación en el itinerario
+ 
+Clases que se Crearon:
+
+	Diccionario
+	
+Clases que se modificaron.
+
+	Fecha
+	RecorridosRT
+	BusTR	ConductoresRT
+	TColectorBus	TItinerario	TRecorrido
+	Admin
+	UbicacionBuss
+
+Tareas Pendientes:
+
+	Realizar controles para evitar la creación de itinerarios cuano no existe un bus, un conductor o un recorrido.
+	Realizar controles para evitar que se elimien buses, conductores y recorridos cuando pertenecen a un itinerario.
+	Realizar control para evitar que se elimine una parada si esta pertenece a un una ruta.
+	Realizar control para evitar que se elimine una ruta si esta pertenece a un recorrido.
+	Realizar un control para cerrar itinerarios por falta de iniciacion.
+	Realizar un control para que una vez iniciado un itinerario no puede ser reinicado hasta que termine.
+		
+	
+	

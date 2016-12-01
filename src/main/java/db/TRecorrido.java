@@ -141,6 +141,22 @@ public class TRecorrido {
 		return recorrido;
 
 	}
-	
+	public static boolean eliminarRecorrido(String clave) {
+
+		
+		BasicDBObject data;
+		clave = clave.toUpperCase();
+		mongo = new DBGeneralBRT();
+		data = new BasicDBObject("Clave", clave);
+		boolean elimino = mongo.eliminarMDB(nombreColeccion, data);
+		if (elimino == true) {
+			System.out.println("Se ha eliminado el recorrido " + clave);
+		} else {
+			System.out.println(
+					"No se ha podido eliminar el recorrido " + clave + " Por que  no existe en la base de datos ");
+		}
+		mongo.cerrarConexion();
+		return false;
+	}
 	
 }

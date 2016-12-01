@@ -33,6 +33,7 @@ public class TItinerario {
 					data.append("HorarioReal", horarioReal);
 					
 					mongo.insertarMDB(nombreColeccion, data);
+					return true;
 				
 		} else {
 			System.out.println("Error: El elemento ya existe en la base de datos");
@@ -55,6 +56,7 @@ public static boolean modificarProximaParada(String clave, int proximaParada) {
 			nuevaData = new BasicDBObject("ProximaParada", proximaParada);
 			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
 			mongo.cerrarConexion();			
+			return true;
 		}else{
 			System.out.println("Error: No se encontro el itinerario: " + clave + "  en la base de datos");
 		}
@@ -76,6 +78,7 @@ public static boolean modificarTerminado(String clave, boolean estado) {
 			nuevaData = new BasicDBObject("Terminado", estado);
 			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
 			mongo.cerrarConexion();			
+			return true;
 		}else{
 			System.out.println("Error: No se encontro el itinerario: " + clave + "  en la base de datos");
 		}
@@ -102,6 +105,7 @@ public static boolean modificarTerminado(String clave, boolean estado) {
 			mongo.cerrarConexion();			
 			modificarTerminado(clave, false);
 			modificarProximaParada(clave, 0);
+			return true;
 		}else{
 			System.out.println("Error: No se encontro el itinerario: " + clave + "  en la base de datos");
 		}
@@ -123,6 +127,7 @@ public static boolean marcarHora(String clave, LinkedHashMap<String, String> hor
 			nuevaData = new BasicDBObject("HorarioReal", horarioReal);
 			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
 			mongo.cerrarConexion();			
+			return true;
 		}else{
 			System.out.println("Error: No se encontro el itinerario: " + clave + "  en la base de datos");
 		}
@@ -130,5 +135,22 @@ public static boolean marcarHora(String clave, LinkedHashMap<String, String> hor
 		return false;
 	}
 	
+public static boolean eliminarItinerario(String clave) {
+
 	
+	BasicDBObject data;
+	clave = clave.toUpperCase();
+	mongo = new DBGeneralBRT();
+	data = new BasicDBObject("Clave", clave);
+	boolean elimino = mongo.eliminarMDB(nombreColeccion, data);
+	if (elimino == true) {
+		System.out.println("Se ha eliminado el itinerario " + clave);
+		
+	} else {
+		System.out.println(
+				"No se ha podido eliminar el itinerario " + clave + " Por que  no existe en la base de datos ");
+	}
+	mongo.cerrarConexion();
+	return elimino;
+}
 }

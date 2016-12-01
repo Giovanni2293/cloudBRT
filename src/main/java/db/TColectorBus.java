@@ -16,7 +16,7 @@ public class TColectorBus {
 	public static boolean regDiarioBuses(DBObject data , String placa ) {
 		mongo = new DBColector();
 		BasicDBObject nuevaData,dataARemplazar;
-		fecha = Fecha.getFechaClass().getSoloYMD();
+		fecha = Fecha.getFechaClass().getYMD();
 		DBObject consulta;
 		dataARemplazar = new BasicDBObject("Bus", placa);
 		nuevaData = new BasicDBObject("Bus", placa);
@@ -57,7 +57,7 @@ public class TColectorBus {
 		DBObject consulta;
 		String Placa = placa.getString("Placa");
 		BasicDBObject data; 
-		fecha = Fecha.getFechaClass().getSoloYMD();
+		fecha = Fecha.getFechaClass().getYMD();
 		mongo = new DBColector();
 		data = new BasicDBObject("Bus", Placa );
 		consulta = mongo.consultarMDB(nombreColeccion, data);

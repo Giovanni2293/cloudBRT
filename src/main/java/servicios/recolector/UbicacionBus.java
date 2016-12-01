@@ -3,6 +3,8 @@ package servicios.recolector;
 
 import core.*;
 import db.TColectorBus;
+import db.TItinerario;
+import db.TRuta;
 import utilidad.*;
 
 import java.io.BufferedWriter;
@@ -13,8 +15,10 @@ import java.io.InputStream;
 import java.io.StringReader;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -63,6 +67,18 @@ public class UbicacionBus {
 		horaReal();
 		return Response.status(200).entity(entrada.toString()).build();
 
+	}
+	
+	@Path("itinerario/iniciar/{clave}")
+	@GET
+	@Produces("application/json")
+	public Response crearRuta(@PathParam("clave") String clave) {
+		boolean progreso;
+		JsonObject respuesta;
+		Fecha.getFechaClass().gethora();
+		progreso = TItinerario.iniciarItinerario(clave, Fecha.getFechaClass().gethora());
+		respuesta = Json.createObjectBuilder().add("Iniciado", progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
 	}
 
 	private void asignarCoorABus(JsonObject entrada, Coordenadas coor) {

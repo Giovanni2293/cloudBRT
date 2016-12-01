@@ -98,6 +98,17 @@ public class RecorridosRT {
 		
 	}
 	
-	
+	public boolean eliminarRecorrido(String clave) {
+		Iterator<Recorrido> i = recorridos.iterator();
+		Recorrido temp;
+		while (i.hasNext()) {
+			temp = i.next();
+			if (clave.equals(temp.getClaveRecorrido())) {
+				i.remove();
+				return true;
+			}
+		}
+		return false;
+	}
 	
 }

@@ -14,6 +14,7 @@ public class Fecha {
 	private String fecha;//cadena que contendra la fecha 
 	private static Fecha fechaClass;
 	private String ymd;
+	private String hora;
 	
 	/**
 	 *Constructor sin parametros donde se define el formato y se construye la fecha 
@@ -27,6 +28,10 @@ public class Fecha {
 		DateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd");
 		Date date2 = new Date();
 		ymd = dateFormat2.format(date2);
+		DateFormat dateFormat3 = new SimpleDateFormat("HH:mm:ss");
+		Date date3 = new Date();
+		hora = dateFormat3.format(date3);
+		
 		
 	}
 	
@@ -38,9 +43,13 @@ public class Fecha {
 	{	fechaClass = new Fecha();
 		return fecha;
 	}
-	public String getSoloYMD()
+	public String getYMD()
 	{
 		return ymd;
+	}
+	
+	public String gethora(){
+		return hora;
 	}
 	
 	public static Fecha getFechaClass(){

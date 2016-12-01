@@ -21,6 +21,7 @@ import core.Coordenadas;
 import core.RecorridosRT;
 import db.TBus;
 import db.TConductor;
+import db.TItinerario;
 import db.TParada;
 import db.TRecorrido;
 import db.TRuta;
@@ -356,6 +357,28 @@ public class Admin {
 	///////
 	///////////////////////////////////////// RECORRIDOS///////////////////////////////////////////
 	///////
+	//GET
+	
+		/**
+		 * Servicio que permite eliminar un itinerario en especifico utilizando su clave y
+		 * devuelve como resultado si fue satisfactoria o no la tarea
+		 * 
+		 * @param clave
+		 * @return {@link Boolean}
+		 */
+		@Path("recorrido/eliminar/{clave}")
+		@GET
+		@Produces("application/json")
+		public Response eliminarRecorrido(@PathParam("clave") String clave) {
+			boolean progreso;
+			
+			RecorridosRT.getRecorridosRT().eliminarRecorrido(clave); // Elimina el bus en RT
+			progreso = TRecorrido.eliminarRecorrido(clave);
+			respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+
+		
 
 	// POST
 
@@ -492,6 +515,65 @@ public class Admin {
 		ConductoresRT.getConductoresRT().modificarConductor(cedula,datoMapeado, nuevoValor);//Modifica RT
 		
 		progreso = TConductor.modificarDatoConductor(cedula, datoMapeado, nuevoValor);//Modifica la DB
+		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
+
+	}
+	
+
+	///////
+	/////////////////////////////////////// ITINERARIO /////////////////////////////////////////////
+	///////
+	
+    //GET
+	
+	/**
+	 * Servicio que permite eliminar un itinerario en especifico utilizando su clave y
+	 * devuelve como resultado si fue satisfactoria o no la tarea
+	 * 
+	 * @param clave
+	 * @return {@link Boolean}
+	 */
+	@Path("itinerario/eliminar/{clave}")
+	@GET
+	@Produces("application/json")
+	public Response eliminarItinerario(@PathParam("clave") String clave) {
+		boolean progreso;
+		
+		//BusesRT.getBusesRT().eliminarBus(placaBus); // Elimina el bus en RT
+		TItinerario.modificarTerminado(clave, true);
+		progreso = TItinerario.eliminarItinerario(clave);
+		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
+	}
+
+	
+	// POST
+
+	/**
+	 * Crea un nuevo itinerario mediante un json enviado por POST
+	 * 
+	 * @param incomingData
+	 * @return {@link Response}
+	 */
+	@Path("itinerario/crear")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response crearItinerario (InputStream incomingData) {
+		JsonObject entrada;
+		String clave, conductor, bus, recorrido ;
+		boolean progreso;
+		JsonReader jsonReader = Json.createReader(incomingData);
+		entrada = jsonReader.readObject();
+		
+
+		clave = entrada.getString("Clave");
+		conductor = entrada.getString("Conductor");
+		bus = entrada.getString("Placa");
+		recorrido = entrada.getString("Recorrido");
+
+		progreso = TItinerario.crearItinerario(clave, conductor, bus, recorrido); //Modifica en DB
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 
