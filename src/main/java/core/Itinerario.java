@@ -10,6 +10,7 @@ import db.DBGeneralBRT;
 import db.TItinerario;
 import interfaces.Observer;
 import interfaces.Subject;
+import utilidad.GeoMatematicas;
 
 public class Itinerario implements Subject {
 
@@ -36,11 +37,34 @@ public class Itinerario implements Subject {
 	public boolean getTerminado() {
 		return terminado;
 	}
-	/*
-	 * public double getAvancePorcentual() {
-	 * 
-	 * }
-	 */
+	
+	public Parada getParadaAnterior()
+	{
+		 int temp = index-1;
+		return recorridoDesignado.getObjetoPadadaPorIndice(temp);
+	}
+	
+	public Parada getParadaSiguiente()
+	{
+		return recorridoDesignado.getObjetoPadadaPorIndice(index);
+	}
+	
+	 public double getAvancePorcentual() {
+	 
+		 Parada anterior,siguiente;
+		 double distParcial,distTotal;
+		 double porcentaje;
+		 int temp = index-1;
+		 anterior = recorridoDesignado.getObjetoPadadaPorIndice(temp);
+		 siguiente=recorridoDesignado.getObjetoPadadaPorIndice(index);
+		 distParcial = GeoMatematicas.DisProyCoor(anterior.getCoordenada(),busDesignado.getCoor(),siguiente.getCoordenada());
+		 distTotal = GeoMatematicas.calcDistancia(anterior.getCoordenada(), siguiente.getCoordenada());
+		 porcentaje = (distParcial/distTotal)*100;
+		 
+		 return porcentaje;
+		 
+	  }
+	 
 	
 	
 

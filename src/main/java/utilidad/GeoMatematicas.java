@@ -49,7 +49,7 @@ public  class GeoMatematicas {
 	
 	/**
 	 * Calcula la distancia entre dos cordenadas mediante su latitud
-	 * y longitud, recibiendo dos coordenadas para el c�lculo.
+	 * y longitud, recibiendo dos coordenadas para el calculo.
 	 * 
 	 * @param origen , destino
 	 * @return double
