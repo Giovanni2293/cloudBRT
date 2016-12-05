@@ -29,7 +29,7 @@ public class TItinerario {
 					data.append("Recorrido",recorrido);
 					data.append("HoraSalidaReal", "");
 					data.append("ProximaParada", 0);
-					data.append("Terminado", false);
+					data.append("Terminado", true);
 					data.append("HorarioReal", horarioReal);
 					
 					mongo.insertarMDB(nombreColeccion, data);
