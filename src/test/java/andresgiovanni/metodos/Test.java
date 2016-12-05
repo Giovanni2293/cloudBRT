@@ -73,8 +73,17 @@ public class Test {
 			System.out.println("No hay itinerarios cargados");
 		}*/
 		
-		Parada p = new Parada("ST1","EST. TEMPRANA",7.002608, -73.055068);
-		System.out.println(p.getJsonParada());
+		//Parada p = new Parada("ST1","EST. TEMPRANA",7.002608, -73.055068);
+		//System.out.println(p.getJsonParada());
+		
+		/*TRuta.crearRuta("T3","Troncal","BGA/PIE");
+		TRuta.anadirAFinalDeRuta("T3","ST1");
+		TRuta.anadirAFinalDeRuta("T3","ST2");
+		TRuta.anadirAFinalDeRuta("T3","ST3");
+		TRuta.anadirAFinalDeRuta("T3","ST4");
+		TRuta.anadirAFinalDeRuta("T3","ST5");*/
+		
+		TRecorrido.crearRecorridoAutomatico("T3-8","T3","00:00:00");
 		
 		// Despacho.getDespacho().mostrarItinerarios();
 		// Despacho.getDespacho().encontarXBus("ZOE101");

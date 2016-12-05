@@ -364,6 +364,7 @@ public class Monitoreo {
 
 		} else {
 			respuesta = MensajeError.noEncontroElElemento("Itinerario", claveItinerario);
+			return Response.status(404).entity(respuesta).build();
 		}
 		return Response.status(200).entity(bso.toString()).build();
 	}
