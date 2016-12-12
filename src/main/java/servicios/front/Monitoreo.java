@@ -323,7 +323,7 @@ public class Monitoreo {
 				String respuesta = "{Mensaje: No se el recorrido del itinerario }";
 				return Response.status(404).entity(respuesta).build();
 			}
-			bso.append("EstaTermiado", obj.get("Terminado"));
+			bso.append("EstaTerminado", obj.get("Terminado"));
 			bso.append("ProximaParada", obj.get("ProximaParada"));
 			itinerarios.add(bso);
 		}
@@ -359,7 +359,7 @@ public class Monitoreo {
 				String respuesta = "{Mensaje: No se el recorrido del itinerario }";
 				return Response.status(404).entity(respuesta).build();
 			}
-			bso.append("EstaTermiado", obj.get("Terminado"));
+			bso.append("EstaTerminado", obj.get("Terminado"));
 			bso.append("ProximaParada", obj.get("ProximaParada"));
 
 		} else {
