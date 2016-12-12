@@ -1,5 +1,8 @@
 package core;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
 import utilidad.AreaEstacion;
 
 public class Parada {
@@ -53,7 +56,14 @@ public class Parada {
 		this.coordenada = coordenada;
 	}
 	
-	
+	public BasicDBObject getJsonParada()
+	{
+		BasicDBObject paradaJson = new BasicDBObject();
+		paradaJson.append("clave", clave);
+		paradaJson.append("nombre", nombre);
+		paradaJson.append("coordenada",coordenada.getBsonCoordenada());
+		return paradaJson;
+	}
 	
 	
 }

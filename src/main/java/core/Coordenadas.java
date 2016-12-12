@@ -2,6 +2,8 @@ package core;
 
 import javax.json.Json;
 
+import com.mongodb.BasicDBObject;
+
 /**
  * Una Clase sencilla que se encarga de manejar coordenadas
  * 
@@ -67,6 +69,14 @@ public class Coordenadas {
 		
 		
 		return cadena;
+	}
+	
+	public BasicDBObject getBsonCoordenada()
+	{
+		BasicDBObject coorBson = new BasicDBObject();
+		coorBson.append("Latitud",latitud);
+		coorBson.append("Longitud",longitud);
+		return coorBson;
 	}
 	
 	
