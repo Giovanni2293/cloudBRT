@@ -1,7 +1,10 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -11,22 +14,33 @@ import db.DBGeneralBRT;
 
 public class BusesRT {
 
-	private static ArrayList<Bus> buses;
+	// private static ArrayList<Bus> buses;
+	private LinkedHashMap<String, Bus> busesHashMap;
 	private static BusesRT p;
 	private final String coleccion = "Bus";
 
 	private BusesRT() {
+		busesHashMap = new LinkedHashMap<>();
+		// buses = new ArrayList<>();
 		inicializarParque();
 	}
+
+	/*
+	 * private void inicializarParque() { DBGeneralBRT conexion = new
+	 * DBGeneralBRT(); DBCollection collection =
+	 * conexion.consultarColeccion(coleccion); DBCursor cursor =
+	 * collection.find(); buses = new ArrayList<>(); while (cursor.hasNext()) {
+	 * BasicDBObject obj = (BasicDBObject) cursor.next(); buses.add(new
+	 * Bus((String) obj.get("Placa"))); } }
+	 */
 
 	private void inicializarParque() {
 		DBGeneralBRT conexion = new DBGeneralBRT();
 		DBCollection collection = conexion.consultarColeccion(coleccion);
 		DBCursor cursor = collection.find();
-		buses = new ArrayList<>();
 		while (cursor.hasNext()) {
 			BasicDBObject obj = (BasicDBObject) cursor.next();
-			buses.add(new Bus((String) obj.get("Placa")));
+			busesHashMap.put((String) obj.get("Placa"), new Bus((String) obj.get("Placa")));
 		}
 	}
 
@@ -39,21 +53,19 @@ public class BusesRT {
 
 	}
 
-	public ArrayList<Bus> getBuses() {
-		return buses;
-	}
+	/*
+	 * public ArrayList<Bus> getBuses() { return buses; }
+	 */
 
 	public Bus encontrarBus(String placa) {
-		Iterator<Bus> i = buses.iterator();
-		Bus temp;
-		while (i.hasNext()) {
-			temp = i.next();
-			if (placa.equals(temp.getPlaca())) {
-				return temp;
-			}
-		}
-		return null;
+		return busesHashMap.get(placa);
 	}
+
+	/*
+	 * public Bus encontrarBus(String placa) { Iterator<Bus> i =
+	 * buses.iterator(); Bus temp; while (i.hasNext()) { temp = i.next(); if
+	 * (placa.equals(temp.getPlaca())) { return temp; } } return null; }
+	 */
 
 	/**
 	 * Encuentra un bus en el arreglo y modifica su estado
@@ -74,14 +86,20 @@ public class BusesRT {
 	 * 
 	 * @param bus
 	 */
+
 	public void agregarNuevo(Bus bus) {
-		
-		if (encontrarBus(bus.getPlaca())==null)
-		{
-			buses.add(bus);
+
+		if (encontrarBus(bus.getPlaca()) == null) {
+			busesHashMap.put(bus.getPlaca(), bus);
 		}
-		
+
 	}
+
+	/*
+	 * public void agregarNuevo(Bus bus) {
+	 * 
+	 * if (encontrarBus(bus.getPlaca()) == null) { buses.add(bus); } }
+	 */
 
 	/**
 	 * Encuentra un bus y lo elimina del arreglo.
@@ -89,24 +107,22 @@ public class BusesRT {
 	 * @param placa
 	 * @return
 	 */
+
 	public boolean eliminarBus(String placa) {
-		Iterator<Bus> i = buses.iterator();
-		Bus temp;
-		while (i.hasNext()) {
-			temp = i.next();
-			if (placa.equals(temp.getPlaca())) {
-				i.remove();
-				return true;
-			}
+		Bus estado = busesHashMap.remove(placa);
+		if (estado != null) {
+			return true;
 		}
 		return false;
 	}
 
-	public void mostrarBuses() {
-		System.out.println(buses.size());
-		for (Bus b : buses) {
-			System.out.println(b.getJsonBus());
-		}
-	}
+	/*
+	 * public boolean eliminarBus(String placa) { Iterator<Bus> i =
+	 * buses.iterator(); Bus temp; while (i.hasNext()) { temp = i.next(); if
+	 * (placa.equals(temp.getPlaca())) { i.remove(); return true; } } return
+	 * false; }
+	 */
+
+
 
 }

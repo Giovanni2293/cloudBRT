@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.Arrays;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -28,11 +29,12 @@ import com.mongodb.DBObject;
 
 import javax.json.*;
 
-@Path("/colector")
+@Path("colector")
 public class UbicacionBus {
 
 	private Despacho despacho;
 	private String placa;
+	private static BusesRT BRT;
 
 	@Path("/buses")
 	@POST
@@ -62,9 +64,9 @@ public class UbicacionBus {
 		salida = new BasicDBObject("Tde", tde).append("Tdr", Fecha.getFechaClass().getFecha()).append("Coordenada",
 				new BasicDBObject("Latitud", coor.getLatitud()).append("Longitiud", coor.getLongitud()));
 
-		TColectorBus.regDiarioBuses(salida, placa);
+		//TColectorBus.regDiarioBuses(salida, placa);
 		//
-		horaReal();
+		//horaReal();
 		return Response.status(200).entity(entrada.toString()).build();
 
 	}
@@ -80,19 +82,27 @@ public class UbicacionBus {
 		respuesta = Json.createObjectBuilder().add("Iniciado", progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
+	
+	@Path("parqueAutomotor/iniciar")
+	@GET
+	@Produces("application/json")
+	public Response initParqueAutomotor()
+	{
+		BRT = BusesRT.getBusesRT();
+		return Response.status(200).entity(null).build();
+	}
 
 	private void asignarCoorABus(JsonObject entrada, Coordenadas coor) {
 		Bus bus;
-		bus = BusesRT.getBusesRT().encontrarBus(entrada.getString("Placa"));
+		bus = BRT.encontrarBus(entrada.getString("Placa"));
 		if (bus != null) {
 			// El bus existe
 
 			bus.setCoor(coor);
 		}
-		// BusesRT.getBusesRT().mostrarBuses();
 	}
 
-	private void horaReal() {
+	/*private void horaReal() {
 		despacho = Despacho.getDespacho();
 		
 		
@@ -105,5 +115,5 @@ public class UbicacionBus {
 		} else {
 			System.out.println("No hay itinerarios cargados");
 		}
-	}
+	}*/
 }
