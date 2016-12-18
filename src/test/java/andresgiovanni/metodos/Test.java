@@ -117,7 +117,10 @@ public class Test {
 		 */
 		// TransaccionesParada.crearParada("ST18", "EST. PAYADOR", 7.095377,
 		// -73.110602);
+		
 
+
+		
 	}
 
 	public String imprimirRutas() {

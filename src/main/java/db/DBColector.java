@@ -31,7 +31,7 @@ public class DBColector {
 
 	}
 
-	public DBObject consultarMDB(String Collection, BasicDBObject clave) {
+	public synchronized DBObject consultarMDB(String Collection, BasicDBObject clave) {
 
 		DBCursor encontrar;
 		// Si no existe la base de datos la crea
@@ -72,7 +72,7 @@ public class DBColector {
 
 	}
 
-	public synchronized void actualizarMDB(String Collection, BasicDBObject DocToChange, BasicDBObject IdDoc) {
+	public synchronized boolean actualizarMDB(String Collection, BasicDBObject DocToChange, BasicDBObject IdDoc) {
 
 		// Si no existe la base de datos la crea
 		db = mongo.getDB(DB);
@@ -86,6 +86,15 @@ public class DBColector {
 		BasicDBObject searchById = IdDoc;
 
 		Colleccion.update(searchById, ActualizarDato);
+		if (Colleccion != null)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	
 
 	}
 

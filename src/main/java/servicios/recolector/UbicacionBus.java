@@ -64,7 +64,7 @@ public class UbicacionBus {
 		salida = new BasicDBObject("Tde", tde).append("Tdr", Fecha.getFechaClass().getFecha()).append("Coordenada",
 				new BasicDBObject("Latitud", coor.getLatitud()).append("Longitiud", coor.getLongitud()));
 
-		//TColectorBus.regDiarioBuses(salida, placa);
+		TColectorBus.regDiarioBuses(salida, placa); // Se debe iniciar el parque automotor antes para llevar el registro
 		//
 		//horaReal();
 		return Response.status(200).entity(entrada.toString()).build();

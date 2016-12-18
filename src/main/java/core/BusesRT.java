@@ -14,25 +14,25 @@ import db.DBGeneralBRT;
 
 public class BusesRT {
 
-	// private static ArrayList<Bus> buses;
-	private LinkedHashMap<String, Bus> busesHashMap;
+	private HashMap<String, Bus> busesHashMap;
 	private static BusesRT p;
+	private HashMap<String, ArrayList<BasicDBObject>> registros;
 	private final String coleccion = "Bus";
 
 	private BusesRT() {
 		busesHashMap = new LinkedHashMap<>();
-		// buses = new ArrayList<>();
+		registros = new LinkedHashMap<>();
 		inicializarParque();
+		
 	}
 
-	/*
-	 * private void inicializarParque() { DBGeneralBRT conexion = new
-	 * DBGeneralBRT(); DBCollection collection =
-	 * conexion.consultarColeccion(coleccion); DBCursor cursor =
-	 * collection.find(); buses = new ArrayList<>(); while (cursor.hasNext()) {
-	 * BasicDBObject obj = (BasicDBObject) cursor.next(); buses.add(new
-	 * Bus((String) obj.get("Placa"))); } }
-	 */
+	
+
+	public HashMap<String, Bus> getBusesHashMap() {
+		return busesHashMap;
+	}
+
+
 
 	private void inicializarParque() {
 		DBGeneralBRT conexion = new DBGeneralBRT();
@@ -43,29 +43,45 @@ public class BusesRT {
 			busesHashMap.put((String) obj.get("Placa"), new Bus((String) obj.get("Placa")));
 		}
 	}
+	
+	private void iniciarMapa() {
+		System.out.println("ME CREO SOLO UNA VEZ");
+		ArrayList<String>placas = p.getBuses();
+		for (int x = 0; x < placas.size(); x++) {
+			registros.put(placas.get(x), new ArrayList<BasicDBObject>());
+		}
+
+	}
+	
+
 
 	public static BusesRT getBusesRT() {
 		if (p == null) {
 			p = new BusesRT();
+			p.iniciarMapa();
 		}
 
 		return p;
 
 	}
+	
 
-	/*
-	 * public ArrayList<Bus> getBuses() { return buses; }
-	 */
+	
+	public  HashMap<String, ArrayList<BasicDBObject>> getRegistros() {
+		return registros;
+	}
+
+
+
+	//Devuelve un arreglo de placas
+	public ArrayList<String> getBuses() {
+		
+		return new ArrayList<>(p.getBusesHashMap().keySet());
+	}
 
 	public Bus encontrarBus(String placa) {
 		return busesHashMap.get(placa);
 	}
-
-	/*
-	 * public Bus encontrarBus(String placa) { Iterator<Bus> i =
-	 * buses.iterator(); Bus temp; while (i.hasNext()) { temp = i.next(); if
-	 * (placa.equals(temp.getPlaca())) { return temp; } } return null; }
-	 */
 
 	/**
 	 * Encuentra un bus en el arreglo y modifica su estado
@@ -91,15 +107,10 @@ public class BusesRT {
 
 		if (encontrarBus(bus.getPlaca()) == null) {
 			busesHashMap.put(bus.getPlaca(), bus);
+			registros.put(bus.getPlaca(),new ArrayList<BasicDBObject>());
 		}
 
 	}
-
-	/*
-	 * public void agregarNuevo(Bus bus) {
-	 * 
-	 * if (encontrarBus(bus.getPlaca()) == null) { buses.add(bus); } }
-	 */
 
 	/**
 	 * Encuentra un bus y lo elimina del arreglo.
@@ -111,18 +122,11 @@ public class BusesRT {
 	public boolean eliminarBus(String placa) {
 		Bus estado = busesHashMap.remove(placa);
 		if (estado != null) {
+			registros.remove(placa);
 			return true;
 		}
 		return false;
 	}
-
-	/*
-	 * public boolean eliminarBus(String placa) { Iterator<Bus> i =
-	 * buses.iterator(); Bus temp; while (i.hasNext()) { temp = i.next(); if
-	 * (placa.equals(temp.getPlaca())) { i.remove(); return true; } } return
-	 * false; }
-	 */
-
 
 
 }

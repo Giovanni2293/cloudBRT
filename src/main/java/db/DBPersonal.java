@@ -31,7 +31,7 @@ public class DBPersonal {
 
 	}
 
-	public DBObject consultarMDB(String Collection, BasicDBObject clave) {
+	public synchronized DBObject consultarMDB(String Collection, BasicDBObject clave) {
 
 		DBCursor encontrar;
 		// Si no existe la base de datos la crea
