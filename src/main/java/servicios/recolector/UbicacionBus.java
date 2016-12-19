@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.ws.rs.Consumes;
@@ -35,12 +36,13 @@ public class UbicacionBus {
 	private Despacho despacho;
 	private String placa;
 	private static BusesRT BRT;
+	private static Bus bus;
 
 	@Path("/buses")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response recibirBus(InputStream incomingData) {
+	public synchronized Response recibirBus(InputStream incomingData) {
 		String tde;
 		Coordenadas coor;
 		JsonObject entrada;
@@ -93,7 +95,6 @@ public class UbicacionBus {
 	}
 
 	private void asignarCoorABus(JsonObject entrada, Coordenadas coor) {
-		Bus bus;
 		bus = BRT.encontrarBus(entrada.getString("Placa"));
 		if (bus != null) {
 			// El bus existe
@@ -102,18 +103,17 @@ public class UbicacionBus {
 		}
 	}
 
-	/*private void horaReal() {
+	private void horaReal() {
 		despacho = Despacho.getDespacho();
 		
 		
 			if (despacho.encontarXBus(placa)!=null) {
 				Itinerario i = despacho.encontarXBus(placa).get(0);
-			for (int x = 0; x < BusesRT.getBusesRT().getBuses().size(); x++) {
-				i.AddObserver(BusesRT.getBusesRT().getBuses().get(x));
-			}
-			i.encontrar();
+				i.AddObserver(bus);
+				i.encontrar();
 		} else {
 			System.out.println("No hay itinerarios cargados");
 		}
-	}*/
+	}
+	
 }

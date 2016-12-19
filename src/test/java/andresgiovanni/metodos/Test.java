@@ -60,7 +60,7 @@ public class Test {
 		 * TItinerario.crearItinerario("I2T3", "1098755547", "ZOE101", "T3-2");
 		 * TItinerario.crearItinerario("I4T3", "1098755547", "ZOE101", "T3-4");
 		 */
-		
+		Despacho.getDespacho().mostrarItinerarios();
 		// TItinerario.iniciarItinerario("I1T3", "23:24:38");
 		/*TItinerario.modificarTerminado("I3T3",false);
 		ArrayList<Itinerario> dito = Despacho.getDespacho().encontarXBus("ZOE101");

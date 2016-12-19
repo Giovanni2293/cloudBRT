@@ -14,7 +14,7 @@ public class TColectorBus {
 
 	private static DBColector mongo;
 	private static String fecha;
-	private final static int maxEntradas = 1000; // Tamano de la ventana de ingreso a la base de datos
+	private final static int maxEntradas = 500; // Tamano de la ventana de ingreso a la base de datos
 	private static final String nombreColeccion = "HistoBuses";
 	private static AtomicInteger incremento = new AtomicInteger(0); // Numero incremental atomico iniciado desde cero
 
@@ -80,10 +80,13 @@ public class TColectorBus {
 		{
 			mongo = new DBColector();
 			BasicDBObject nuevaData = new BasicDBObject();
-			//System.out.println(placas.get(x)+"//atributos ");
 			BasicDBObject dataARemplazar = new BasicDBObject("Bus", placas.get(x)); // Consulta con cada placa
 			DBObject consulta = mongo.consultarMDB(nombreColeccion, dataARemplazar);
 			ArrayList<BasicDBObject> arregloAnterior = (ArrayList<BasicDBObject>) consulta.get(Fecha.getFechaClass().getYMD());
+			if (arregloAnterior == null) {
+				arregloAnterior = new ArrayList<>();
+				consulta.put(Fecha.getFechaClass().getYMD(), arregloAnterior);
+			}
 			ArrayList<BasicDBObject> atributos = BusesRT.getBusesRT().getRegistros().get(placas.get(x));
 		
 				for (int y = 0; y<atributos.size();y++)
@@ -92,7 +95,6 @@ public class TColectorBus {
 				
 						arregloAnterior.add(atributos.get(y)); // Se agrega el registro al arreglo viejo
 				
-				//System.out.println(atributos.get(y)+"	");
 				}
 				
 		
