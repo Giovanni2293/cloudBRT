@@ -42,7 +42,7 @@ public class UbicacionBus {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public synchronized Response recibirBus(InputStream incomingData) {
+	public Response recibirBus(InputStream incomingData) {
 		String tde;
 		Coordenadas coor;
 		JsonObject entrada;
@@ -94,7 +94,7 @@ public class UbicacionBus {
 		return Response.status(200).entity(null).build();
 	}
 
-	private void asignarCoorABus(JsonObject entrada, Coordenadas coor) {
+	private synchronized void asignarCoorABus(JsonObject entrada, Coordenadas coor) {
 		bus = BRT.encontrarBus(entrada.getString("Placa"));
 		if (bus != null) {
 			// El bus existe
@@ -103,7 +103,7 @@ public class UbicacionBus {
 		}
 	}
 
-	private void horaReal() {
+	private synchronized void horaReal() {
 		despacho = Despacho.getDespacho();
 		
 		
@@ -112,7 +112,7 @@ public class UbicacionBus {
 				i.AddObserver(bus);
 				i.encontrar();
 		} else {
-			System.out.println("No hay itinerarios cargados");
+			//System.out.println("No hay itinerarios cargados");
 		}
 	}
 	

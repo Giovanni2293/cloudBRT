@@ -2,6 +2,7 @@ package core;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
@@ -21,6 +22,9 @@ import utilidad.FormatearDatos;
 public class Despacho {
 
 	private static Despacho d = null;
+	private HashMap<String,Itinerario> itinerarioXPlaca;
+	private HashMap<String,Itinerario> itinerarioXRuta;
+	private HashMap<String,Itinerario> itinerarioXRecorrido;
 	private ArrayList<Itinerario> itinerarios;
 	private final String coleccion = "Itinerario";
 
@@ -80,7 +84,7 @@ public class Despacho {
 	 * 
 	 * @return
 	 */
-	public ArrayList<Itinerario> encontarXBus(String Placa) {
+	public synchronized ArrayList<Itinerario> encontarXBus(String Placa) {
 		Placa = Placa.toUpperCase();
 		Refrescar();
 		Iterator<Itinerario> i = itinerarios.iterator();
@@ -98,7 +102,7 @@ public class Despacho {
 		if (salida.size() == 0) {
 			return null;
 		} else {
-			return ordenarItinerarios(salida);
+			return salida;
 		}
 	}
 

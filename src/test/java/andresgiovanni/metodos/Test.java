@@ -2,6 +2,7 @@ package andresgiovanni.metodos;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import javax.json.Json;
@@ -16,7 +17,9 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.util.JSON;
 
+import core.Bus;
 import core.BusesRT;
+import core.Conductor;
 import core.ConductoresRT;
 import core.Despacho;
 import core.Fecha;
@@ -60,7 +63,8 @@ public class Test {
 		 * TItinerario.crearItinerario("I2T3", "1098755547", "ZOE101", "T3-2");
 		 * TItinerario.crearItinerario("I4T3", "1098755547", "ZOE101", "T3-4");
 		 */
-		Despacho.getDespacho().mostrarItinerarios();
+		
+		
 		// TItinerario.iniciarItinerario("I1T3", "23:24:38");
 		/*TItinerario.modificarTerminado("I3T3",false);
 		ArrayList<Itinerario> dito = Despacho.getDespacho().encontarXBus("ZOE101");

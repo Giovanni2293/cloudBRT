@@ -147,7 +147,7 @@ public class Itinerario implements Subject {
 		System.out.println(horarioReal.toString());
 	}
 
-	public void refrescarItinerario() {
+	public synchronized void refrescarItinerario() {
 		BasicDBObject itinerarioDB = new BasicDBObject("Clave", clave);
 		DBGeneralBRT mongo = new DBGeneralBRT();
 		DBObject itineario = mongo.consultarMDB("Itinerario", itinerarioDB);

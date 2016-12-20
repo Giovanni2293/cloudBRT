@@ -42,7 +42,7 @@ public class TItinerario {
 		return false;
 	}
 	
-public static boolean modificarProximaParada(String clave, int proximaParada) {
+public synchronized static boolean modificarProximaParada(String clave, int proximaParada) {
 		
 		DBObject consultaItinerario;
 		BasicDBObject data,nuevaData,dataAReemplazar;
@@ -113,7 +113,7 @@ public static boolean modificarTerminado(String clave, boolean estado) {
 		return false;
 	}
 	
-public static boolean marcarHora(String clave, LinkedHashMap<String, String> horarioReal) {
+public synchronized static boolean marcarHora(String clave, LinkedHashMap<String, String> horarioReal) {
 		
 		DBObject consultaItinerario;
 		BasicDBObject data,nuevaData,dataAReemplazar;

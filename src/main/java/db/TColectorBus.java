@@ -14,7 +14,7 @@ public class TColectorBus {
 
 	private static DBColector mongo;
 	private static String fecha;
-	private final static int maxEntradas = 500; // Tamano de la ventana de ingreso a la base de datos
+	private final static int maxEntradas = 1000; // Tamano de la ventana de ingreso a la base de datos
 	private static final String nombreColeccion = "HistoBuses";
 	private static AtomicInteger incremento = new AtomicInteger(0); // Numero incremental atomico iniciado desde cero
 
