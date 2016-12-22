@@ -57,16 +57,17 @@ public class Test {
 		// System.out.println(Despacho.getDespacho().getItinerarios().size());
 		// Despacho.getDespacho().Refrescar();
 		// TRecorrido.crearRecorridoAutomatico("P8-1","P8","00:00:00");
-		/*
-		 * TItinerario.crearItinerario("I1T3", "1098755547", "ZOE101", "T3-1");
-		 * TItinerario.crearItinerario("I3T3", "1098755547", "ZOE101", "T3-3");
-		 * TItinerario.crearItinerario("I2T3", "1098755547", "ZOE101", "T3-2");
-		 * TItinerario.crearItinerario("I4T3", "1098755547", "ZOE101", "T3-4");
-		 */
+		
+		  TItinerario.crearItinerario("I1T3", "1098755547", "XDB725", "T3-2");
+		  TItinerario.crearItinerario("I3T3", "1098755548", "XB536A", "T3-2");
+		  TItinerario.crearItinerario("I2T3", "1098755549", "ZOE101", "T3-2");
+		  TItinerario.crearItinerario("I4T3", "1098755550", "AMB123", "T3-2");
+		 
 		
 		
 		// TItinerario.iniciarItinerario("I1T3", "23:24:38");
-		/*TItinerario.modificarTerminado("I3T3",false);
+		//TItinerario.modificarTerminado("I2T3",true);
+		/*
 		ArrayList<Itinerario> dito = Despacho.getDespacho().encontarXBus("ZOE101");
 		if (dito != null) {
 			for (Itinerario temp : dito) {

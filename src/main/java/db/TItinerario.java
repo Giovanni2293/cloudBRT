@@ -1,9 +1,12 @@
 package db;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+
+import core.Despacho;
 
 public class TItinerario {
 
@@ -28,7 +31,7 @@ public class TItinerario {
 					data.append("Bus", bus );
 					data.append("Recorrido",recorrido);
 					data.append("HoraSalidaReal", "");
-					data.append("ProximaParada", 0);
+					data.append("ProximaParada",1);
 					data.append("Terminado", true);
 					data.append("HorarioReal", horarioReal);
 					
@@ -76,6 +79,18 @@ public static boolean modificarTerminado(String clave, boolean estado) {
 		
 		if(consultaItinerario != null){
 			nuevaData = new BasicDBObject("Terminado", estado);
+			if (estado == true) // Runtime
+			{
+				//en caso de que terminen
+				System.out.println("Termino: "+clave);
+				Despacho.getDespacho().removerDeMapas(clave);
+			}
+			else
+			{
+				//en caso de que inicie
+				System.out.println("Inicio: "+clave);
+				Despacho.getDespacho().agregarItinerario(clave); // agrega el itinerario a los mapas cuando inicia
+			}
 			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
 			mongo.cerrarConexion();			
 			return true;
@@ -92,19 +107,24 @@ public static boolean modificarTerminado(String clave, boolean estado) {
 		BasicDBObject data,nuevaData,dataAReemplazar;
 		clave = clave.toUpperCase();
 		horarioReal = new LinkedHashMap<>();
+		LinkedHashMap<String,String> antLink;
 		mongo = new DBGeneralBRT();
 		data = new BasicDBObject("Clave", clave);
 		dataAReemplazar = new BasicDBObject("Clave", clave);
 		consultaItinerario = mongo.consultarMDB(nombreColeccion, data);
 		
-		
 		if(consultaItinerario != null){
+			BasicDBObject dataDeRecorrido = new BasicDBObject("Clave",consultaItinerario.get("Recorrido"));
+			DBObject consultar1Parada = mongo.consultarMDB("Recorrido",dataDeRecorrido);
+			antLink = (LinkedHashMap<String, String>) consultar1Parada.get("Horario");
+			ArrayList<String> arregloAntLink= new ArrayList<>(antLink.keySet());
+			horarioReal.put(arregloAntLink.get(0),horaSalidaReal);
 			nuevaData = new BasicDBObject("HoraSalidaReal", horaSalidaReal);
 			nuevaData.append("HorarioReal",horarioReal);
 			mongo.actualizarMDB(nombreColeccion, nuevaData, dataAReemplazar);
-			mongo.cerrarConexion();			
+			mongo.cerrarConexion();	
 			modificarTerminado(clave, false);
-			modificarProximaParada(clave, 0);
+			modificarProximaParada(clave, 1);
 			return true;
 		}else{
 			System.out.println("Error: No se encontro el itinerario: " + clave + "  en la base de datos");
@@ -139,6 +159,7 @@ public static boolean eliminarItinerario(String clave) {
 
 	
 	BasicDBObject data;
+	modificarTerminado(clave,true);
 	clave = clave.toUpperCase();
 	mongo = new DBGeneralBRT();
 	data = new BasicDBObject("Clave", clave);

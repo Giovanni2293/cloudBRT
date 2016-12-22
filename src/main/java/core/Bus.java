@@ -18,6 +18,7 @@ public class Bus implements Observer{
 	private boolean estado;
 	private Coordenadas coor;
 	private BusDB busDB;
+	private int proximaParada;
 	//Objetos de json
 	private BasicDBObject JsonDatos;
 
@@ -30,6 +31,7 @@ public class Bus implements Observer{
 		this.capacidad=0;
 		this.estado=false;
 		busDB = new BusDB(placa);
+		proximaParada = 1;
 		actualizarBusDesdeBD();
 	}
 	
@@ -42,6 +44,7 @@ public class Bus implements Observer{
 		this.capacidad=0;
 		this.estado=false;
 		busDB = new BusDB(placa);
+		proximaParada = 1;
 		actualizarBusDesdeBD();
 	}
 	
@@ -118,6 +121,17 @@ public class Bus implements Observer{
 	public void setCoor(Coordenadas coor)
 	{
 		this.coor=coor;
+	}
+	
+	
+
+	public int getProximaParada() {
+		return proximaParada;
+	}
+	
+	
+	public void setProximaParada(int proximaParada) {
+		this.proximaParada = proximaParada;
 	}
 
 	@Override

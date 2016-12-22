@@ -47,13 +47,16 @@ public class UbicacionBus {
 		Coordenadas coor;
 		JsonObject entrada;
 		BasicDBObject salida;
+		int proximaParada;
 		BufferedWriter buffer;
+		
 		JsonReader jsonReader = Json.createReader(incomingData);
 		entrada = jsonReader.readObject();
-
 		placa = entrada.getString("Placa");
 		placa = placa.toUpperCase();
 		tde = entrada.getString("Tde");
+		
+		
 		JsonObject coordenada = entrada.getJsonObject("Coordenada");
 		coor = new Coordenadas(Double.parseDouble(coordenada.getString("Latitud")),
 				Double.parseDouble(coordenada.getString("Longitud")));
@@ -61,15 +64,23 @@ public class UbicacionBus {
 		// Inicia asignacion de coordenada a bus del parque automotor runtime
 		asignarCoorABus(entrada, coor);
 		// Termina la asignacion de coordenada a bus del parque automotor
+		
 		// runtime
 
+		bus.setProximaParada(entrada.getInt("ProximaParada"));
+		
 		salida = new BasicDBObject("Tde", tde).append("Tdr", Fecha.getFechaClass().getFecha()).append("Coordenada",
 				new BasicDBObject("Latitud", coor.getLatitud()).append("Longitiud", coor.getLongitud()));
 
 		TColectorBus.regDiarioBuses(salida, placa); // Se debe iniciar el parque automotor antes para llevar el registro
 		//
-		//horaReal();
-		return Response.status(200).entity(entrada.toString()).build();
+		horaReal();
+		
+		proximaParada = bus.getProximaParada();
+		BasicDBObject respuesta = new BasicDBObject();
+		respuesta.append("ProximaParada",proximaParada);
+		
+		return Response.status(200).entity(respuesta.toString()).build();
 
 	}
 	
@@ -91,9 +102,26 @@ public class UbicacionBus {
 	public Response initParqueAutomotor()
 	{
 		BRT = BusesRT.getBusesRT();
+		Despacho.getDespacho();
 		return Response.status(200).entity(null).build();
 	}
 
+	
+
+	/**
+	 * Este servicio es solo para pruebas
+	 * @param iniciar
+	 * @return
+	 */
+	@Path("terminado/{iniciar}")
+	@GET
+	@Produces("application/json")
+	public Response test(@PathParam("iniciar") boolean iniciar)
+	{
+		TItinerario.modificarTerminado("I2T3",iniciar);
+		return Response.status(200).entity(null).build();
+	}
+	
 	private synchronized void asignarCoorABus(JsonObject entrada, Coordenadas coor) {
 		bus = BRT.encontrarBus(entrada.getString("Placa"));
 		if (bus != null) {
@@ -102,13 +130,15 @@ public class UbicacionBus {
 			bus.setCoor(coor);
 		}
 	}
+	
+	
 
 	private synchronized void horaReal() {
 		despacho = Despacho.getDespacho();
 		
 		
 			if (despacho.encontarXBus(placa)!=null) {
-				Itinerario i = despacho.encontarXBus(placa).get(0);
+				Itinerario i = despacho.encontarXBus(placa);
 				i.AddObserver(bus);
 				i.encontrar();
 		} else {

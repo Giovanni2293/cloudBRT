@@ -27,7 +27,7 @@ public class Itinerario implements Subject {
 
 	public Itinerario(String clave) {
 		this.clave = clave;
-		refrescarItinerario();
+		crearItinerario();
 	}
 
 	public String getId() {
@@ -44,6 +44,8 @@ public class Itinerario implements Subject {
 		return recorridoDesignado.getObjetoPadadaPorIndice(temp);
 	}
 	
+
+	
 	public Parada getParadaSiguiente()
 	{
 		return recorridoDesignado.getObjetoPadadaPorIndice(index);
@@ -54,6 +56,7 @@ public class Itinerario implements Subject {
 		 Parada anterior,siguiente;
 		 double distParcial,distTotal;
 		 double porcentaje;
+		 //TItinerario.marcarHora(clave, horarioReal);
 		 int temp = index-1;
 		 anterior = recorridoDesignado.getObjetoPadadaPorIndice(temp);
 		 siguiente=recorridoDesignado.getObjetoPadadaPorIndice(index);
@@ -90,17 +93,47 @@ public class Itinerario implements Subject {
 	public int getIndex() {
 		return index;
 	}
+	
+	public void resetIndex()
+	{
+		index = 0;
+	}
 
-	public void encontrar() {
+	public synchronized void encontrar() {
 
-		refrescarItinerario();
+		
+		System.out.println("Cantidad de paradas: "+ cantParadas);
+		System.out.println("Indice: "+index);
+		
 		if (cantParadas > index) {
+
 			Parada p = recorridoDesignado.getRuta().getParadas().get(index);
 			boolean resultado = p.estaDentro(busDesignado.getCoor());
+			int updtIndex = busDesignado.getProximaParada();
+			System.out.println("Este es el indice anterior: "+updtIndex);
+			
+			if (index != updtIndex) 
+			{
+				index = updtIndex;
+			}
+			
+			double porcentaje = getAvancePorcentual();
+			
+			if (porcentaje>100)
+			{
+				index++;
+				busDesignado.setProximaParada(index);
+				TItinerario.modificarProximaParada(this.getId(), index);
+			}
+			
+			
+			
 			if (resultado == true) {
 				actualizarHorarioReal(p);
 				NotifyObservers();
 				index++;
+				busDesignado.setProximaParada(index);
+				System.out.println("Este es el indice siguiente: "+busDesignado.getProximaParada());
 				TItinerario.modificarProximaParada(this.getId(), index);
 			}
 			else
@@ -110,7 +143,7 @@ public class Itinerario implements Subject {
 		} else {
 			terminado = true;
 			TItinerario.modificarTerminado(this.getId(), true);
-			Despacho.getDespacho().Refrescar();
+			//Despacho.getDespacho().Refrescar();
 			System.out.println("se ha terminado este itinerario");
 		}
 	}
@@ -147,7 +180,7 @@ public class Itinerario implements Subject {
 		System.out.println(horarioReal.toString());
 	}
 
-	public synchronized void refrescarItinerario() {
+	public synchronized void crearItinerario() {
 		BasicDBObject itinerarioDB = new BasicDBObject("Clave", clave);
 		DBGeneralBRT mongo = new DBGeneralBRT();
 		DBObject itineario = mongo.consultarMDB("Itinerario", itinerarioDB);
@@ -158,6 +191,7 @@ public class Itinerario implements Subject {
 		conductorDesignado = ConductoresRT.getConductoresRT().encontrarConductor((String) itineario.get("Conductor"));
 		terminado = (boolean) itineario.get("Terminado");
 		index = (int) itineario.get("ProximaParada");
+		System.out.println("INDICE: " +index);
 		cantParadas = recorridoDesignado.getRuta().getParadas().size();
 		observers = new ArrayList<>();
 		mongo.cerrarConexion();

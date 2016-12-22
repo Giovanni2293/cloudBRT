@@ -645,6 +645,29 @@ Tareas Pendientes:
 	Realizar control para evitar que se elimine una ruta si esta pertenece a un recorrido.
 	Realizar un control para cerrar itinerarios por falta de iniciacion.
 	Realizar un control para que una vez iniciado un itinerario no puede ser reinicado hasta que termine.
+
+####[21/12/2016]:[22:00]
+
+* Se optimizo la busqueda del parque automotor mediante la creacion de la misma en un hashmap y no en un arreglo.
+* Se refactorizo el registro a la base de datos. Ahora se hace registro a la base de datos cada cierta cantidad de entradas.
+* Se refactorizo el punto de vista de la carga de los itinerarios y su finalizacion. Ahora un itinerario en false indica que inicio y en true que termino
+* Ahora no se hace refresh desde la base de datos en el itinerario si no que solo se lleva una copia del indice en cada bus para tolerancia a fallos y se 
+  añade funcionalidad para corregirse en caso de que falle.
+* Se refactorizo el despacho. Ahora contiene un mapa en vez de una coleccion para hacer las operaciones con los itinerarios.
+* Se acorto la url para la busqueda de la ubicacion de un bus de un itinerario.
+* Ahora las operaciones se hacen en paralelo en RT como en base de datos para evitar el exceso de consultas a DB.
+
+Clases que se modificaron:
+
+	
+	Bus
+	Despacho
+	Itinerario
+	TColectorBus
+	TItinerario
+	Monitoreo
+	UbicacionBus
+	
 		
 	
 	

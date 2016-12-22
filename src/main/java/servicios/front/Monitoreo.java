@@ -369,15 +369,14 @@ public class Monitoreo {
 		return Response.status(200).entity(bso.toString()).build();
 	}
 
-	@Path("itinerario/consultar/bus/{placaBus}")
+	@Path("itinerario/porcentaje/{placaBus}")
 	@GET
 	@Produces("application/json")
 	public Response posBusItinerario(@PathParam("placaBus") String placaBus) {
 		placaBus = placaBus.toUpperCase();
 		BasicDBObject dbo = new BasicDBObject();
-		ArrayList<Itinerario> t = Despacho.getDespacho().encontarXBus(placaBus);
-		if (t != null) {
-			Itinerario i = t.get(0);
+		Itinerario i = Despacho.getDespacho().encontarXBus(placaBus);
+		if (i != null) {
 			dbo.append("clave", i.getId());
 			dbo.append("avancePorcentaje", i.getAvancePorcentual());
 			dbo.append("paradaSiguiente", i.getParadaSiguiente().getJsonParada());
