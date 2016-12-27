@@ -37,6 +37,7 @@ public class UbicacionBus {
 	private String placa;
 	private static BusesRT BRT;
 	private static Bus bus;
+	private boolean estado;
 
 	@Path("/buses")
 	@POST
@@ -78,7 +79,7 @@ public class UbicacionBus {
 		
 		proximaParada = bus.getProximaParada();
 		BasicDBObject respuesta = new BasicDBObject();
-		respuesta.append("ProximaParada",proximaParada);
+		respuesta.append("ProximaParada",proximaParada).append("Terminado", estado);
 		
 		return Response.status(200).entity(respuesta.toString()).build();
 
@@ -141,6 +142,8 @@ public class UbicacionBus {
 				Itinerario i = despacho.encontarXBus(placa);
 				i.AddObserver(bus);
 				i.encontrar();
+				estado= i.getTerminado();
+				
 		} else {
 			//System.out.println("No hay itinerarios cargados");
 		}
