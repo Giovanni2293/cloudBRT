@@ -8,6 +8,7 @@ import com.mongodb.BasicDBObject;
 import db.BusDB;
 import interfaces.Observer;
 import interfaces.Subject;
+import utilidad.FormatearDatos;
 import utilidad.MensajeError;
 
 public class Bus implements Observer{
@@ -21,6 +22,7 @@ public class Bus implements Observer{
 	private int proximaParada;
 	//Objetos de json
 	private BasicDBObject JsonDatos;
+	private static double velMed = FormatearDatos.kmxhTomxs(35);
 
 	public Bus(String placa , Coordenadas coor){
 		
@@ -139,6 +141,16 @@ public class Bus implements Observer{
 		// TODO Auto-generated method stub
 		System.out.println("El bus de placa:"+placa);
 	}
+
+	public static double getVelMed() {
+		return velMed;
+	}
+
+	public static void setVelMed(double velMed) {
+		Bus.velMed = velMed;
+	}
+	
+	
 
 
 

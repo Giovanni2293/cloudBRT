@@ -83,6 +83,10 @@ public class Recorrido {
 	public Ruta getRuta() {
 		return ruta;
 	}
+
+	public LinkedHashMap<String, String> getHorario() {
+		return horario;
+	}
 	
 	
 

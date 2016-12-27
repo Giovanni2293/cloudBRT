@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
+import core.Bus;
 import core.Coordenadas;
 import utilidad.FormatearDatos;
 import utilidad.GeoMatematicas;
@@ -17,11 +18,8 @@ public class TRecorrido {
 	private static final String colleccionRuta = "Ruta";
 	private static String horaInicial;
 	private static String horaFinal;
-
-	private static double velMed = FormatearDatos.kmxhTomxs(35); // Metros por
-																	// segundo
-																	// parametro
-																	// en kmxh
+	private static double velMed = Bus.getVelMed(); // MetrosPorSegundo
+																	
 
 	public static boolean crearRecorridoAutomatico(String clave, String ruta, String horaDePartida) {
 

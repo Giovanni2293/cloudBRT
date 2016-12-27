@@ -667,6 +667,24 @@ Clases que se modificaron:
 	TItinerario
 	Monitoreo
 	UbicacionBus
+
+
+####[27/12/2016]:[14:00]
+
+* Se agrego un nuevo metodo que sirve para calcular cuantos minutos teoricamente llevaria un bus hasta un punto de su recorrido 
+  y el servicio que devuelve lo que se tarda a las paradas y el tiempo hasta un punto. Estos tiempos son teoricos calculados.
+  en base a una velocidad modificable.
+* Se asigno a la clase Bus una variable estatica VelMed que permite asignar una velocidad Teorica a los buses.
+
+Clases que se modificaron.
+
+	Monitoreo
+	Bus
+	Itinerario
+	Recorrido
+	TRecorrido
+	FormatearDatos
+	GeoMatematicas
 	
 		
 	

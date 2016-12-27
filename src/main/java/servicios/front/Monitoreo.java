@@ -2,6 +2,7 @@ package servicios.front;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -25,6 +26,7 @@ import core.Despacho;
 import core.Itinerario;
 import db.DBGeneralBRT;
 import db.TItinerario;
+import utilidad.GeoMatematicas;
 import utilidad.MensajeError;
 
 @Path("monitoreo")
@@ -388,6 +390,35 @@ public class Monitoreo {
 			return Response.status(404).entity(dbo.toString()).build();
 		}
 		return Response.status(200).entity(dbo.toString()).build();
+	}
+	
+	/**
+	 * Este servicio devuelve el tiempo que se espera que le tome al bus ir hasta cada parada y el tiempo teorico que 
+	 * lleva en el recorrido
+	 * @param claveItinerario
+	 * @return
+	 */
+	@Path("itinerario/tiempos/{claveItinerario}")
+	@GET
+	@Produces("application/json")
+	public Response tiemposBusItinerario(@PathParam("claveItinerario") String claveItinerario)
+	{
+		Itinerario i = Despacho.getDespacho().encontrarItinerarioxID(claveItinerario);
+		BasicDBObject dbo = new BasicDBObject();
+		if (i != null) {
+			LinkedHashMap<String,String> horario= i.getRecorridoDesignado().getHorario();
+			String avanceBus = GeoMatematicas.avanceBus(i.getParadaAnterior(), horario, i.getBusDesignado());
+			dbo.append("horario",horario);
+			dbo.append("avanceBus",avanceBus);
+		}
+		else
+		{
+			dbo.append("Error","No se encontro un itinerario asociado al bus");
+			return Response.status(404).entity(dbo.toString()).build();
+		}
+		
+		return Response.status(200).entity(dbo.toString()).build();
+		
 	}
 
 }

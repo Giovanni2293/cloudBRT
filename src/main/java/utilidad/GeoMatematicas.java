@@ -1,7 +1,10 @@
 package utilidad;
 import java.lang.Math;
+import java.util.LinkedHashMap;
 
+import core.Bus;
 import core.Coordenadas;
+import core.Parada;
 
 
 public  class GeoMatematicas {
@@ -77,6 +80,19 @@ public  class GeoMatematicas {
 		distancia = radioTierra * va2;
 		distancia=distancia*1000;
 		return distancia;
+		
+	}
+	
+	public static String avanceBus(Parada anterior,LinkedHashMap<String,String> horario,Bus bus)
+	{
+		String tTParada = horario.get(anterior.getClave()); // Tiempo hasta la parada anterior
+		double distHastaBus = calcDistancia(anterior.getCoordenada(), bus.getCoor());
+		double velMediaBus = Bus.getVelMed();
+		double tTBus = hallarTiempo(distHastaBus,velMediaBus); // Tiempo transcurrido desde la parada anterior hasta el bus
+		double tTParadaSegundos = FormatearDatos.removerFormatoDeTiempo(tTParada);
+		double tTTotal = tTParadaSegundos+tTBus; // Tiempo transcurrido desde el inicio hasta el bus
+		String tTTotalFormateado = FormatearDatos.formatoDeTiempo(tTTotal);
+		return tTTotalFormateado;
 		
 	}
 	

@@ -56,7 +56,6 @@ public class Itinerario implements Subject {
 		 Parada anterior,siguiente;
 		 double distParcial,distTotal;
 		 double porcentaje;
-		 //TItinerario.marcarHora(clave, horarioReal);
 		 int temp = index-1;
 		 anterior = recorridoDesignado.getObjetoPadadaPorIndice(temp);
 		 siguiente=recorridoDesignado.getObjetoPadadaPorIndice(index);
