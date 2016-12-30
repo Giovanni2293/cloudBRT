@@ -540,7 +540,6 @@ public class Admin {
 	public Response eliminarItinerario(@PathParam("clave") String clave) {
 		boolean progreso;
 		
-		//BusesRT.getBusesRT().eliminarBus(placaBus); // Elimina el bus en RT
 		TItinerario.modificarTerminado(clave, true);
 		progreso = TItinerario.eliminarItinerario(clave);
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();

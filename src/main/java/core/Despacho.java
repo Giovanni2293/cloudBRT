@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
+import com.google.common.collect.HashMultimap;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -24,6 +25,7 @@ public class Despacho {
 	private static Despacho d = null;
 	private LinkedHashMap<String,Itinerario> itinerariosXPlaca;
 	private LinkedHashMap<String,Itinerario> itinerariosXId;
+	private HashMultimap<String,Itinerario> itinerariosXRuta;
 	private final String coleccion = "Itinerario";
 
 	private Despacho() {
@@ -37,12 +39,16 @@ public class Despacho {
 		DBGeneralBRT conexion = new DBGeneralBRT();
 		itinerariosXId = new LinkedHashMap<>();
 		itinerariosXPlaca = new LinkedHashMap<>();
+		itinerariosXRuta = HashMultimap.create();
 		DBCollection collection = conexion.consultarColeccion(coleccion);
 		DBCursor cursor = collection.find();
 		while (cursor.hasNext()) {
 			BasicDBObject obj = (BasicDBObject) cursor.next();
 			Itinerario i = new Itinerario((String) obj.get("Clave"));
 			if (i.getTerminado() == false) {
+				String ruta;
+				ruta=i.getRecorridoDesignado().getRuta().getNombre();
+				itinerariosXRuta.put(ruta,i);
 				itinerariosXPlaca.put(i.getBusDesignado().getPlaca(),i);
 				itinerariosXId.put((String) obj.get("Clave"),i);
 			}
@@ -63,12 +69,16 @@ public class Despacho {
 		Itinerario t = itinerariosXId.remove(clave);
 		System.out.println(t.getId());
 		itinerariosXPlaca.remove(t.getBusDesignado().getPlaca());
+		itinerariosXRuta.remove(t.getRecorridoDesignado().getRuta().getNombre(),t);
 	}
+	
+	
 
 	public void agregarItinerario(String clave) {
 		Itinerario nuevo = new Itinerario(clave);
 		itinerariosXPlaca.put(nuevo.getBusDesignado().getPlaca(),nuevo);
 		itinerariosXId.put(nuevo.getId(),nuevo);
+		itinerariosXRuta.put(nuevo.getRecorridoDesignado().getRuta().getNombre(),nuevo);
 		System.out.println("XPLACA"+itinerariosXPlaca);
 	}
 
@@ -96,7 +106,8 @@ public class Despacho {
 	 * @return
 	 */
 	public ArrayList<Itinerario> encontarXRuta(String ruta) {
-		return null;
+			return new ArrayList<>(itinerariosXRuta.get(ruta));
+		
 	}
 
 	public ArrayList<Itinerario> encontarXRecorrido(String recorrido) {

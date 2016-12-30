@@ -332,8 +332,7 @@ public class Monitoreo {
 		return Response.status(200).entity(itinerarios.toString()).build();
 	}
 
-	
-	//NO DEVUELVE LOS ERRORES
+	// NO DEVUELVE LOS ERRORES
 	@Path("itinerario/consultar/{claveItinerario}")
 	@GET
 	@Produces("application/json")
@@ -383,42 +382,69 @@ public class Monitoreo {
 			dbo.append("avancePorcentaje", i.getAvancePorcentual());
 			dbo.append("paradaSiguiente", i.getParadaSiguiente().getJsonParada());
 			dbo.append("paradaAnterior", i.getParadaAnterior().getJsonParada());
-		}
-		else
-		{
-			dbo.append("Error","No se encontro un itinerario asociado al bus");
+		} else {
+			dbo.append("Error", "No se encontro un itinerario asociado al bus");
 			return Response.status(404).entity(dbo.toString()).build();
 		}
 		return Response.status(200).entity(dbo.toString()).build();
 	}
-	
+
 	/**
-	 * Este servicio devuelve el tiempo que se espera que le tome al bus ir hasta cada parada y el tiempo teorico que 
-	 * lleva en el recorrido
+	 * Este servicio devuelve el tiempo que se espera que le tome al bus ir
+	 * hasta cada parada y el tiempo teorico que lleva en el recorrido
+	 * 
 	 * @param claveItinerario
 	 * @return
 	 */
 	@Path("itinerario/tiempos/{claveItinerario}")
 	@GET
 	@Produces("application/json")
-	public Response tiemposBusItinerario(@PathParam("claveItinerario") String claveItinerario)
-	{
+	public Response tiemposBusItinerario(@PathParam("claveItinerario") String claveItinerario) {
 		Itinerario i = Despacho.getDespacho().encontrarItinerarioxID(claveItinerario);
 		BasicDBObject dbo = new BasicDBObject();
 		if (i != null) {
-			LinkedHashMap<String,String> horario= i.getRecorridoDesignado().getHorario();
+			LinkedHashMap<String, String> horario = i.getRecorridoDesignado().getHorario();
 			String avanceBus = GeoMatematicas.avanceBus(i.getParadaAnterior(), horario, i.getBusDesignado());
-			dbo.append("horario",horario);
-			dbo.append("avanceBus",avanceBus);
-		}
-		else
-		{
-			dbo.append("Error","No se encontro un itinerario asociado al bus");
+			dbo.append("horario", horario);
+			dbo.append("avanceBus", avanceBus);
+		} else {
+			dbo.append("Error", "No se encontro un itinerario asociado al bus");
 			return Response.status(404).entity(dbo.toString()).build();
 		}
-		
+
 		return Response.status(200).entity(dbo.toString()).build();
-		
+
+	}
+
+	/**
+	 * Este servicio devuelve el tiempo que se espera que le tome a los buses
+	 * que correspondan a la ruta en ir hasta cada parada y el tiempo teorico
+	 * que lleva en el recorrido
+	 * 
+	 * @param claveItinerario
+	 * @return
+	 */
+	@Path("itinerario/tiempos/ruta/{ruta}")
+	@GET
+	@Produces("application/json")
+	public Response tiemposBusRuta(@PathParam("ruta") String ruta) {
+		ArrayList<Itinerario> itinerarios = Despacho.getDespacho().encontarXRuta(ruta);
+		BasicDBObject dbo = new BasicDBObject();
+		BasicDBObject dboExterno = new BasicDBObject();
+		if (!itinerarios.isEmpty()) {//Si hay itinerarios relacionados con esa ruta
+			for (Itinerario temp : itinerarios) {
+				System.out.println(temp.getId());
+				LinkedHashMap<String, String> horario = temp.getRecorridoDesignado().getHorario();
+				String avanceBus = GeoMatematicas.avanceBus(temp.getParadaAnterior(), horario, temp.getBusDesignado());
+				dbo.append("horario", horario);
+				dbo.append("avanceBus", avanceBus);
+				dboExterno.append(temp.getId(),dbo);
+			}
+			return Response.status(200).entity(dboExterno.toString()).build();
+		}
+		dbo.append("Error", "No hay itinerarios en ejecucion asociados con esa ruta");
+		return Response.status(404).entity(dbo.toString()).build();
+
 	}
 
 }

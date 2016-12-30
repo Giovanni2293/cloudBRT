@@ -11,6 +11,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
+import com.google.common.collect.HashMultimap;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -57,12 +58,24 @@ public class Test {
 		// System.out.println(Despacho.getDespacho().getItinerarios().size());
 		// Despacho.getDespacho().Refrescar();
 		// TRecorrido.crearRecorridoAutomatico("P8-1","P8","00:00:00");
-		
+		/*
 		  TItinerario.crearItinerario("I1T3", "1098755547", "XDB725", "T3-2");
 		  TItinerario.crearItinerario("I3T3", "1098755548", "XB536A", "T3-2");
 		  TItinerario.crearItinerario("I2T3", "1098755549", "ZOE101", "T3-2");
 		  TItinerario.crearItinerario("I4T3", "1098755550", "AMB123", "T3-2");
-		 
+		 */
+		HashMultimap<String,String> test = HashMultimap.create();
+		test.put("p1", "A");
+		test.put("p1", "B");
+		test.put("p1", "C");
+		test.put("p2", "D");
+		test.put("p2", "E");
+		test.put("p2", "F");
+		ArrayList<String> s = new ArrayList<>(test.get("p2"));
+		for (String t : s)
+		{
+			System.out.println(t);
+		}
 		
 		
 		// TItinerario.iniciarItinerario("I1T3", "23:24:38");

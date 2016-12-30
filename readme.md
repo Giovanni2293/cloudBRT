@@ -685,6 +685,25 @@ Clases que se modificaron.
 	TRecorrido
 	FormatearDatos
 	GeoMatematicas
+
+####[29/12/2016]:[23:15]
+
+* Se añade una nueva dependencia llamada guava de google que permite trabajar con Multihashmap
+* Se crea un nuevo mapa en Despacho conocido como MultiHashMap. Esto es para poder relacionar
+  varios valores con una misma clave.
+* Se crea un nuevo servicio que mediante la ruta regresa los tiempos teoricos de cada bus por todos
+  los itinerarios.
+
+Clases que se modificaron:
+
+	Despacho
+	Admin
+	Monitoreo
+	Pom.xml
+	documentacion.xlsx
+
+
+
 	
 		
 	
