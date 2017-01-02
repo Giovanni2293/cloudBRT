@@ -4,7 +4,9 @@ import java.util.LinkedHashMap;
 
 import core.Bus;
 import core.Coordenadas;
+import core.Fecha;
 import core.Parada;
+import core.Recorrido;
 
 
 public  class GeoMatematicas {
@@ -83,17 +85,33 @@ public  class GeoMatematicas {
 		
 	}
 	
-	public static String avanceBus(Parada anterior,LinkedHashMap<String,String> horario,Bus bus)
+	public static String avanceBusTeorico(Recorrido r,Bus bus)
 	{
-		String tTParada = horario.get(anterior.getClave()); // Tiempo hasta la parada anterior
-		double distHastaBus = calcDistancia(anterior.getCoordenada(), bus.getCoor());
+		String horaPartida = r.getHoraPartida();// Hora en la parada anterior
+		String horaActual = Fecha.getFechaClass().gethora();
+		String duracion = duracion(horaActual,horaPartida);
+		return duracion;
+		/*double distHastaBus = calcDistancia(anterior.getCoordenada(), bus.getCoor());
 		double velMediaBus = Bus.getVelMed();
 		double tTBus = hallarTiempo(distHastaBus,velMediaBus); // Tiempo transcurrido desde la parada anterior hasta el bus
 		double tTParadaSegundos = FormatearDatos.removerFormatoDeTiempo(tTParada);
 		double tTTotal = tTParadaSegundos+tTBus; // Tiempo transcurrido desde el inicio hasta el bus
 		String tTTotalFormateado = FormatearDatos.formatoDeTiempo(tTTotal);
-		return tTTotalFormateado;
+		return tTTotalFormateado;*/
 		
+		
+		
+	}
+	
+	public static String duracion(String horaActual,String horaAnterior)
+	{
+		double horaActualS,horaAnteriorS,duracionS;
+		String duracion;
+		horaActualS = FormatearDatos.removerFormatoDeTiempo(horaActual);
+		horaAnteriorS = FormatearDatos.removerFormatoDeTiempo(horaAnterior);
+		duracionS = horaActualS-horaAnteriorS;
+		duracion = FormatearDatos.formatoDeTiempo(duracionS);
+		return duracion;
 	}
 	
 	/**

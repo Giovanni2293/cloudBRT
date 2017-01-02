@@ -98,6 +98,14 @@ private static final double factorDeConversionKmhToMs=0.277778;
 
 	}
 	
+	public static String sumarAHora(String hora,String duracion)
+	{
+		double horaPartidaSegundos=removerFormatoDeTiempo(hora);
+		double duracionSegundos = removerFormatoDeTiempo(duracion);
+		double suma = horaPartidaSegundos+duracionSegundos;
+		String horaFinalizacion = formatoDeTiempo(suma);
+		return horaFinalizacion;
+	}
 	
 	
 	/*public static void quicksort(double A[], int izq, int der) {

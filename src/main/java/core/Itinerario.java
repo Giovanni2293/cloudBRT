@@ -68,7 +68,8 @@ public class Itinerario implements Subject {
 	  }
 	 
 	
-	
+	 
+
 
 	public void actualizarHorarioReal(Parada p) {
 		BasicDBObject itinerarioDB = new BasicDBObject("Clave", clave);

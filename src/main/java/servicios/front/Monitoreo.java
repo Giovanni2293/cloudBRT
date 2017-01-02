@@ -26,6 +26,7 @@ import core.Despacho;
 import core.Itinerario;
 import db.DBGeneralBRT;
 import db.TItinerario;
+import utilidad.FormatearDatos;
 import utilidad.GeoMatematicas;
 import utilidad.MensajeError;
 
@@ -404,9 +405,13 @@ public class Monitoreo {
 		BasicDBObject dbo = new BasicDBObject();
 		if (i != null) {
 			LinkedHashMap<String, String> horario = i.getRecorridoDesignado().getHorario();
-			String avanceBus = GeoMatematicas.avanceBus(i.getParadaAnterior(), horario, i.getBusDesignado());
+			String avanceBus = GeoMatematicas.avanceBusTeorico(i.getRecorridoDesignado(),i.getBusDesignado());
+			dbo.append("IdReocrrido",i.getRecorridoDesignado().getClaveRecorrido());
+			dbo.append("HoraSalidaEstimada",i.getRecorridoDesignado().getHoraPartida());
+			dbo.append("HoraLlegadaEstimada",i.getRecorridoDesignado().getHoraFinalizacion());
+			dbo.append("TiempoEstimadoDeRecorrido",GeoMatematicas.duracion(i.getRecorridoDesignado().getHoraFinalizacion(),i.getRecorridoDesignado().getHoraPartida()));
 			dbo.append("horario", horario);
-			dbo.append("avanceBus", avanceBus);
+			dbo.append("ProgresoDeBus", avanceBus);
 		} else {
 			dbo.append("Error", "No se encontro un itinerario asociado al bus");
 			return Response.status(404).entity(dbo.toString()).build();
@@ -435,9 +440,13 @@ public class Monitoreo {
 			for (Itinerario temp : itinerarios) {
 				System.out.println(temp.getId());
 				LinkedHashMap<String, String> horario = temp.getRecorridoDesignado().getHorario();
-				String avanceBus = GeoMatematicas.avanceBus(temp.getParadaAnterior(), horario, temp.getBusDesignado());
+				String avanceBus = GeoMatematicas.avanceBusTeorico(temp.getRecorridoDesignado(),temp.getBusDesignado());
+				dbo.append("IdReocrrido",temp.getRecorridoDesignado().getClaveRecorrido());
+				dbo.append("HoraSalidaEstimada",temp.getRecorridoDesignado().getHoraPartida());
+				dbo.append("HoraLlegadaEstimada",temp.getRecorridoDesignado().getHoraFinalizacion());
+				dbo.append("TiempoEstimadoDeRecorrido",GeoMatematicas.duracion(temp.getRecorridoDesignado().getHoraFinalizacion(),temp.getRecorridoDesignado().getHoraPartida()));
 				dbo.append("horario", horario);
-				dbo.append("avanceBus", avanceBus);
+				dbo.append("ProgresoDeBus", avanceBus);
 				dboExterno.append(temp.getId(),dbo);
 			}
 			return Response.status(200).entity(dboExterno.toString()).build();

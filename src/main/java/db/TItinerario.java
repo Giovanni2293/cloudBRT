@@ -14,7 +14,7 @@ public class TItinerario {
 	private static final String nombreColeccion = "Itinerario";
 	private static LinkedHashMap<String, String> horarioReal;
 
-	public static boolean crearItinerario(String clave, String conductor, String bus, String recorrido) {
+	public static boolean crearItinerario(String clave, String conductor, String bus, String recorrido,String horaSalidaEstimada) {
 
 		DBObject consultaItinerario;
 		BasicDBObject data;
@@ -30,10 +30,12 @@ public class TItinerario {
 					data.append("Conductor", conductor);
 					data.append("Bus", bus );
 					data.append("Recorrido",recorrido);
+					data.append("HoraSalidaEstimada",horaSalidaEstimada);
 					data.append("HoraSalidaReal", "");
 					data.append("ProximaParada",1);
 					data.append("Terminado", true);
 					data.append("HorarioReal", horarioReal);
+					
 					
 					mongo.insertarMDB(nombreColeccion, data);
 					return true;

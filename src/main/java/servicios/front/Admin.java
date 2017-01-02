@@ -561,7 +561,7 @@ public class Admin {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response crearItinerario (InputStream incomingData) {
 		JsonObject entrada;
-		String clave, conductor, bus, recorrido ;
+		String clave, conductor, bus, recorrido,horaSalidaEstimada ;
 		boolean progreso;
 		JsonReader jsonReader = Json.createReader(incomingData);
 		entrada = jsonReader.readObject();
@@ -571,8 +571,9 @@ public class Admin {
 		conductor = entrada.getString("Conductor");
 		bus = entrada.getString("Placa");
 		recorrido = entrada.getString("Recorrido");
+		horaSalidaEstimada = entrada.getString("HoraSalidaEstimada");
 
-		progreso = TItinerario.crearItinerario(clave, conductor, bus, recorrido); //Modifica en DB
+		progreso = TItinerario.crearItinerario(clave, conductor, bus, recorrido,horaSalidaEstimada); //Modifica en DB
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 

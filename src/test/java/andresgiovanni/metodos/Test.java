@@ -38,6 +38,7 @@ import db.TParada;
 import db.TRecorrido;
 import db.TRuta;
 import utilidad.FormatearDatos;
+import utilidad.GeoMatematicas;
 
 /**
  * Esta es una clase que utilizaremos para probar el codigo antes de utilizarlo
@@ -64,7 +65,7 @@ public class Test {
 		  TItinerario.crearItinerario("I2T3", "1098755549", "ZOE101", "T3-2");
 		  TItinerario.crearItinerario("I4T3", "1098755550", "AMB123", "T3-2");
 		 */
-		HashMultimap<String,String> test = HashMultimap.create();
+		/*HashMultimap<String,String> test = HashMultimap.create();
 		test.put("p1", "A");
 		test.put("p1", "B");
 		test.put("p1", "C");
@@ -75,7 +76,9 @@ public class Test {
 		for (String t : s)
 		{
 			System.out.println(t);
-		}
+		}*/
+		
+		System.out.println(GeoMatematicas.duracion("15:20:10","15:00:00"));
 		
 		
 		// TItinerario.iniciarItinerario("I1T3", "23:24:38");
