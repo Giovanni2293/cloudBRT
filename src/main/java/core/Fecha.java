@@ -6,6 +6,7 @@
 package core;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -50,6 +51,21 @@ public class Fecha {
 	
 	public String gethora(){
 		return hora;
+	}
+	
+	public long convtHoraToMlls(String fecha,String hora)
+	{
+		String date = fecha+" "+hora;
+		long ms = 0;
+	     SimpleDateFormat f = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		try {
+			Date d = f.parse(date);
+			ms = d.getTime();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ms;
 	}
 	
 	public static Fecha getFechaClass(){

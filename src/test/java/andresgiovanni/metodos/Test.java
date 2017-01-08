@@ -77,8 +77,10 @@ public class Test {
 		{
 			System.out.println(t);
 		}*/
-		
-		System.out.println(GeoMatematicas.duracion("15:20:10","15:00:00"));
+		long A = Fecha.getFechaClass().convtHoraToMlls("2017/01/08","00:00:00");
+		long B = Fecha.getFechaClass().convtHoraToMlls("2017/01/08","00:15:12");
+		long C = B-A;
+		System.out.println(C);
 		
 		
 		// TItinerario.iniciarItinerario("I1T3", "23:24:38");

@@ -91,6 +91,7 @@ public  class GeoMatematicas {
 		String horaActual = Fecha.getFechaClass().gethora();
 		String duracion = duracion(horaActual,horaPartida);
 		return duracion;
+		
 		/*double distHastaBus = calcDistancia(anterior.getCoordenada(), bus.getCoor());
 		double velMediaBus = Bus.getVelMed();
 		double tTBus = hallarTiempo(distHastaBus,velMediaBus); // Tiempo transcurrido desde la parada anterior hasta el bus
