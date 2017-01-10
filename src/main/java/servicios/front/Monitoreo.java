@@ -410,7 +410,7 @@ public class Monitoreo {
 	public Response tiemposBusRuta(@PathParam("ruta") String ruta) {
 		ArrayList<Itinerario> itinerarios = Despacho.getDespacho().encontarXRuta(ruta);
 		BasicDBObject dboExterno = new BasicDBObject();
-		dboExterno.append("Hora",UbicacionBus.getHoraDelSistema());
+		dboExterno.append("hora",UbicacionBus.getHoraDelSistema());
 		ArrayList<BasicDBObject> entradas = new ArrayList<>();
 		if (!itinerarios.isEmpty()) {//Si hay itinerarios relacionados con esa ruta
 			for (Itinerario temp : itinerarios) {
