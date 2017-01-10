@@ -702,6 +702,35 @@ Clases que se modificaron:
 	Pom.xml
 	documentacion.xlsx
 
+####[09/01/2017]:[23:42]
+
+* Se añadio un traductor que convierte de Fechas a tiempos en ms
+* Se añadio un atributo nuevo al itinerario llamado fecha que es util para calcular el tiempo en ms
+* Se agrego un nuevo campo al bus llamado Operador. Contiene el operador del bus.
+* Se modifico el servicio de consultar buses a partir de la ruta.
+* Se refactorizo el metodo que permite calcular Duraciones para que devuelva en segundos y a su vez el de avancebus.
+
+Clases que se modificaron:
+
+	Bus
+	Itinerario
+	BusDB
+	TBus
+	TItinerario
+	Admin
+	Monitoreo
+	UbicacionBus
+	Geomatematicas
+
+
+
+
+
+
+
+
+
+
 
 
 	

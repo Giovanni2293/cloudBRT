@@ -85,11 +85,11 @@ public  class GeoMatematicas {
 		
 	}
 	
-	public static String avanceBusTeorico(Recorrido r,Bus bus)
+	public static double avanceBusTeorico(Recorrido r,Bus bus)
 	{
 		String horaPartida = r.getHoraPartida();// Hora en la parada anterior
 		String horaActual = Fecha.getFechaClass().gethora();
-		String duracion = duracion(horaActual,horaPartida);
+		double duracion = duracion(horaActual,horaPartida);
 		return duracion;
 		
 		/*double distHastaBus = calcDistancia(anterior.getCoordenada(), bus.getCoor());
@@ -104,15 +104,13 @@ public  class GeoMatematicas {
 		
 	}
 	
-	public static String duracion(String horaActual,String horaAnterior)
+	public static double duracion(String horaActual,String horaAnterior)
 	{
 		double horaActualS,horaAnteriorS,duracionS;
-		String duracion;
 		horaActualS = FormatearDatos.removerFormatoDeTiempo(horaActual);
 		horaAnteriorS = FormatearDatos.removerFormatoDeTiempo(horaAnterior);
 		duracionS = horaActualS-horaAnteriorS;
-		duracion = FormatearDatos.formatoDeTiempo(duracionS);
-		return duracion;
+		return duracionS;
 	}
 	
 	/**

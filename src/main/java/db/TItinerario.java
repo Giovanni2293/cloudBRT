@@ -7,6 +7,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 import core.Despacho;
+import core.Fecha;
 
 public class TItinerario {
 
@@ -17,6 +18,7 @@ public class TItinerario {
 	public static boolean crearItinerario(String clave, String conductor, String bus, String recorrido,String horaSalidaEstimada) {
 
 		DBObject consultaItinerario;
+		String fecha;
 		BasicDBObject data;
 		clave = clave.toUpperCase();
 		bus = bus.toUpperCase();
@@ -26,7 +28,7 @@ public class TItinerario {
 		data = new BasicDBObject("Clave", clave);
 		consultaItinerario = mongo.consultarMDB(nombreColeccion, data);
 		if (consultaItinerario == null) {
-						
+					fecha = Fecha.getFechaClass().getYMD();
 					data.append("Conductor", conductor);
 					data.append("Bus", bus );
 					data.append("Recorrido",recorrido);
@@ -35,6 +37,7 @@ public class TItinerario {
 					data.append("ProximaParada",1);
 					data.append("Terminado", true);
 					data.append("HorarioReal", horarioReal);
+					data.append("Fecha",fecha);
 					
 					
 					mongo.insertarMDB(nombreColeccion, data);

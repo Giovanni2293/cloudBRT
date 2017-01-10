@@ -11,6 +11,7 @@ public class BusDB {
 	private int capacidad;
 	private String tipoBus;
 	private boolean estado;
+	private String operador;
 
 	private String nombreColeccion;
 	private DBGeneralBRT mongo;
@@ -34,6 +35,7 @@ public class BusDB {
 			capacidad = (int) datos.get("Capacidad");
 			tipoBus = (String) datos.get("TipoBus");
 			estado = (boolean) datos.get("Estado");
+			operador = (String) datos.get("Operador");
 			
 			
 				TColectorBus.crearHistoBus(placa);
@@ -62,5 +64,11 @@ public class BusDB {
 	public boolean isEstado() {
 		return estado;
 	}
+
+	public String getOperador() {
+		return operador;
+	}
+	
+	
 
 }

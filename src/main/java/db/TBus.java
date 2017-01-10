@@ -8,8 +8,9 @@ public class TBus {
 	private static DBGeneralBRT mongo;
 	private static final String nombreColeccion = "Bus";
 
-	public static boolean crearBus(String Placa, int Capacidad, String TipoBus, boolean Estado) {
+	public static boolean crearBus(String Placa, int Capacidad, String TipoBus, boolean Estado, String operador) {
 		Placa = Placa.toUpperCase();
+		operador = operador.toUpperCase();
 		if (Placa.length() != 6) {
 			System.out.println(
 					"Error: El nombre de la placa debe ser de 6 Letras o Numeros." + "Digite una placa valida");
@@ -23,7 +24,7 @@ public class TBus {
 		if (consulta == null) {
 
 			data = new BasicDBObject("Placa", Placa).append("Capacidad", Capacidad).append("TipoBus", TipoBus)
-					.append("Estado", Estado);
+					.append("Estado", Estado).append("Operador",operador);
 			mongo.insertarMDB(nombreColeccion, data);
 			mongo.cerrarConexion();
 			return true;

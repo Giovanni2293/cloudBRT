@@ -23,6 +23,7 @@ public class Itinerario implements Subject {
 	private ArrayList<Observer> observers;
 	private String horaSalidaReal;
 	private int index;
+	private String fecha;
 	private boolean terminado;
 
 	public Itinerario(String clave) {
@@ -189,12 +190,19 @@ public class Itinerario implements Subject {
 		busDesignado = BusesRT.getBusesRT().encontrarBus((String) itineario.get("Bus"));
 		recorridoDesignado = RecorridosRT.getRecorridosRT().encontrarRecorrido((String) itineario.get("Recorrido"));
 		conductorDesignado = ConductoresRT.getConductoresRT().encontrarConductor((String) itineario.get("Conductor"));
+		fecha = (String)itineario.get("Fecha");
 		terminado = (boolean) itineario.get("Terminado");
 		index = (int) itineario.get("ProximaParada");
 		System.out.println("INDICE: " +index);
 		cantParadas = recorridoDesignado.getRuta().getParadas().size();
 		observers = new ArrayList<>();
 		mongo.cerrarConexion();
+	}
+	
+	
+
+	public String getFecha() {
+		return fecha;
 	}
 
 	@Override

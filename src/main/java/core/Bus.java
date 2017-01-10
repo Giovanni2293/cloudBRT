@@ -20,6 +20,7 @@ public class Bus implements Observer{
 	private Coordenadas coor;
 	private BusDB busDB;
 	private int proximaParada;
+	private String operador;
 	//Objetos de json
 	private BasicDBObject JsonDatos;
 	private static double velMed = FormatearDatos.kmxhTomxs(35);
@@ -57,6 +58,7 @@ public class Bus implements Observer{
 			this.tipoBus=busDB.getTipoBus();
 			this.capacidad=busDB.getCapacidad();
 			this.estado=busDB.isEstado();
+			this.operador=busDB.getOperador();
 		}
 	}
 	
@@ -79,6 +81,7 @@ public class Bus implements Observer{
 		JsonDatos.append("capacidad",capacidad);
 		JsonDatos.append("tipoBus",tipoBus);
 		JsonDatos.append("estado",estado);
+		JsonDatos.append("Operador",operador);
 		
 	}
 	
@@ -134,6 +137,11 @@ public class Bus implements Observer{
 	
 	public void setProximaParada(int proximaParada) {
 		this.proximaParada = proximaParada;
+	}
+	
+
+	public String getOperador() {
+		return operador;
 	}
 
 	@Override

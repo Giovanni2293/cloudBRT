@@ -90,7 +90,7 @@ public class Admin {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response crearBus(InputStream incomingData) {
 		JsonObject entrada;
-		String placa, tipoBus;
+		String placa, tipoBus,operador;
 		int capacidad;
 		boolean estado, progreso;
 		JsonReader jsonReader = Json.createReader(incomingData);
@@ -100,8 +100,9 @@ public class Admin {
 		capacidad = entrada.getInt("Capacidad");
 		tipoBus = entrada.getString("TipoBus");
 		estado = Boolean.parseBoolean(entrada.getString("Estado"));
+		operador = entrada.getString("Operador");
 
-		progreso = TBus.crearBus(placa, capacidad, tipoBus, estado); //Modifica en DB
+		progreso = TBus.crearBus(placa, capacidad, tipoBus, estado,operador); //Modifica en DB
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		System.out.println("Placa:" + placa + " Capacidad:" + capacidad + " TipoBus:" + tipoBus + " Estado:" + estado);
 		BusesRT.getBusesRT().agregarNuevo(new Bus(placa)); // Agrega un nuevo bus al RT

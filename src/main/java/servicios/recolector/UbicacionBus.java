@@ -37,6 +37,7 @@ public class UbicacionBus {
 	private String placa;
 	private static BusesRT BRT;
 	private static Bus bus;
+	private static long horaDelSistema;
 	private boolean estado;
 
 	@Path("/buses")
@@ -80,6 +81,7 @@ public class UbicacionBus {
 		proximaParada = bus.getProximaParada();
 		BasicDBObject respuesta = new BasicDBObject();
 		respuesta.append("ProximaParada",proximaParada).append("Terminado", estado);
+		horaDelSistema = System.currentTimeMillis();
 		
 		return Response.status(200).entity(respuesta.toString()).build();
 
@@ -148,5 +150,11 @@ public class UbicacionBus {
 			//System.out.println("No hay itinerarios cargados");
 		}
 	}
+
+	public static long getHoraDelSistema() {
+		return horaDelSistema;
+	}
+	
+	
 	
 }

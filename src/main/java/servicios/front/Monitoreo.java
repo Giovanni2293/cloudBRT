@@ -23,9 +23,11 @@ import com.sun.jersey.server.impl.BuildId;
 
 import core.BusesRT;
 import core.Despacho;
+import core.Fecha;
 import core.Itinerario;
 import db.DBGeneralBRT;
 import db.TItinerario;
+import servicios.recolector.UbicacionBus;
 import utilidad.FormatearDatos;
 import utilidad.GeoMatematicas;
 import utilidad.MensajeError;
@@ -63,6 +65,7 @@ public class Monitoreo {
 			bso.append("Capacidad", obj.get("Capacidad"));
 			bso.append("TipoBus", obj.get("TipoBus"));
 			bso.append("Estado", obj.get("Estado"));
+			bso.append("Operador",obj.get("Operador"));
 			bso.append("Coordenada",
 					BusesRT.getBusesRT().encontrarBus(obj.getString("Placa")).getJsonBus().get("coordenada"));
 			buses.add(bso);
@@ -95,6 +98,7 @@ public class Monitoreo {
 			dbo.append("Capacidad", json.get("Capacidad"));
 			dbo.append("TipoBus", json.get("TipoBus"));
 			dbo.append("Estado", json.get("Estado"));
+			dbo.append("Operador",json.get("Operador"));
 			dbo.append("Coordenada", BusesRT.getBusesRT().encontrarBus(placaBus).getJsonBus().get("coordenada"));
 			JsonReader jsonReader = Json.createReader(new StringReader(dbo.toString()));
 			respuesta = jsonReader.readObject();
@@ -390,36 +394,7 @@ public class Monitoreo {
 		return Response.status(200).entity(dbo.toString()).build();
 	}
 
-	/**
-	 * Este servicio devuelve el tiempo que se espera que le tome al bus ir
-	 * hasta cada parada y el tiempo teorico que lleva en el recorrido
-	 * 
-	 * @param claveItinerario
-	 * @return
-	 */
-	@Path("itinerario/tiempos/{claveItinerario}")
-	@GET
-	@Produces("application/json")
-	public Response tiemposBusItinerario(@PathParam("claveItinerario") String claveItinerario) {
-		Itinerario i = Despacho.getDespacho().encontrarItinerarioxID(claveItinerario);
-		BasicDBObject dbo = new BasicDBObject();
-		if (i != null) {
-			LinkedHashMap<String, String> horario = i.getRecorridoDesignado().getHorario();
-			String avanceBus = GeoMatematicas.avanceBusTeorico(i.getRecorridoDesignado(),i.getBusDesignado());
-			dbo.append("IdReocrrido",i.getRecorridoDesignado().getClaveRecorrido());
-			dbo.append("HoraSalidaEstimada",i.getRecorridoDesignado().getHoraPartida());
-			dbo.append("HoraLlegadaEstimada",i.getRecorridoDesignado().getHoraFinalizacion());
-			dbo.append("TiempoEstimadoDeRecorrido",GeoMatematicas.duracion(i.getRecorridoDesignado().getHoraFinalizacion(),i.getRecorridoDesignado().getHoraPartida()));
-			dbo.append("horario", horario);
-			dbo.append("ProgresoDeBus", avanceBus);
-		} else {
-			dbo.append("Error", "No se encontro un itinerario asociado al bus");
-			return Response.status(404).entity(dbo.toString()).build();
-		}
-
-		return Response.status(200).entity(dbo.toString()).build();
-
-	}
+	
 
 	/**
 	 * Este servicio devuelve el tiempo que se espera que le tome a los buses
@@ -434,25 +409,30 @@ public class Monitoreo {
 	@Produces("application/json")
 	public Response tiemposBusRuta(@PathParam("ruta") String ruta) {
 		ArrayList<Itinerario> itinerarios = Despacho.getDespacho().encontarXRuta(ruta);
-		BasicDBObject dbo = new BasicDBObject();
 		BasicDBObject dboExterno = new BasicDBObject();
+		dboExterno.append("Hora",UbicacionBus.getHoraDelSistema());
+		ArrayList<BasicDBObject> entradas = new ArrayList<>();
 		if (!itinerarios.isEmpty()) {//Si hay itinerarios relacionados con esa ruta
 			for (Itinerario temp : itinerarios) {
 				System.out.println(temp.getId());
 				LinkedHashMap<String, String> horario = temp.getRecorridoDesignado().getHorario();
-				String avanceBus = GeoMatematicas.avanceBusTeorico(temp.getRecorridoDesignado(),temp.getBusDesignado());
-				dbo.append("IdReocrrido",temp.getRecorridoDesignado().getClaveRecorrido());
-				dbo.append("HoraSalidaEstimada",temp.getRecorridoDesignado().getHoraPartida());
-				dbo.append("HoraLlegadaEstimada",temp.getRecorridoDesignado().getHoraFinalizacion());
-				dbo.append("TiempoEstimadoDeRecorrido",GeoMatematicas.duracion(temp.getRecorridoDesignado().getHoraFinalizacion(),temp.getRecorridoDesignado().getHoraPartida()));
-				dbo.append("horario", horario);
-				dbo.append("ProgresoDeBus", avanceBus);
-				dboExterno.append(temp.getId(),dbo);
+				double avanceBus = GeoMatematicas.avanceBusTeorico(temp.getRecorridoDesignado(),temp.getBusDesignado());
+				double tiempoEntreEstaciones = GeoMatematicas.duracion(horario.get(temp.getParadaSiguiente().getClave()),horario.get(temp.getParadaAnterior().getClave()));
+				BasicDBObject dbo = new BasicDBObject();
+				dbo.append("id",temp.getBusDesignado().getOperador()+"/"+temp.getBusDesignado().getPlaca());
+				dbo.append("idRecorrido",temp.getRecorridoDesignado().getClaveRecorrido());
+				dbo.append("horaSaliDete",Fecha.getFechaClass().convtHoraToMlls(temp.getFecha(),temp.getRecorridoDesignado().getHoraPartida()));
+				dbo.append("horaSaliReal",Fecha.getFechaClass().convtHoraToMlls(temp.getFecha(),temp.getHoraSalidaReal()));
+				dbo.append("tiemAcumDete",avanceBus);
+				dbo.append("tiempEstaDete",tiempoEntreEstaciones);
+				dbo.append("porcAvan",((temp.getIndex()-1)*100)+temp.getAvancePorcentual());
+				entradas.add(dbo);
 			}
+			dboExterno.append("Buses",entradas);
 			return Response.status(200).entity(dboExterno.toString()).build();
 		}
-		dbo.append("Error", "No hay itinerarios en ejecucion asociados con esa ruta");
-		return Response.status(404).entity(dbo.toString()).build();
+		dboExterno.append("Error", "No hay itinerarios en ejecucion asociados con esa ruta");
+		return Response.status(404).entity(dboExterno.toString()).build();
 
 	}
 
