@@ -1,6 +1,7 @@
 package servicios.front;
 
 import java.io.StringReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -22,6 +23,7 @@ import com.mongodb.MongoWaitQueueFullException;
 import com.sun.jersey.server.impl.BuildId;
 
 import core.BusesRT;
+import core.Coordenadas;
 import core.Despacho;
 import core.Fecha;
 import core.Itinerario;
@@ -248,6 +250,28 @@ public class Monitoreo {
 			respuesta = MensajeError.noEncontroElElemento("ruta", nombreRuta);
 		}
 		return Response.status(200).entity(respuesta.toString()).build();
+	}
+	@Path("rutas/consultar/buses/{ruta}")
+	@GET
+	@Produces("application/json")
+	public Response busxRuta(@PathParam("ruta") String nombreRuta) {
+		nombreRuta = nombreRuta.toUpperCase();
+		ArrayList<Itinerario> itinerarios;
+		itinerarios = Despacho.getDespacho().encontarXRuta(nombreRuta);
+		BasicDBObject bso = new BasicDBObject();
+		ArrayList<BasicDBObject> buses = new ArrayList<>();
+		for(Itinerario i : itinerarios){
+			bso.append("Placa", i.getBusDesignado().getPlaca());
+			bso.append("Capacidad", i.getBusDesignado().getCapacidad());
+			bso.append("TipoBus", i.getBusDesignado().getTipoBus());
+			bso.append("Estado", i.getBusDesignado().getEstado());
+			bso.append("Operador", i.getBusDesignado().getOperador());
+			
+			bso.append("Coordenada", i.getBusDesignado().getJsonBus().get("coordenada"));
+			buses.add(bso);
+		}
+		
+		return Response.status(200).entity(buses.toString()).build();
 	}
 
 	///////

@@ -16,6 +16,10 @@ public class Bus implements Observer{
 	private String placa;
 	private int capacidad;
 	private String tipoBus;
+	public String getTipoBus() {
+		return tipoBus;
+	}
+
 	private boolean estado;
 	private Coordenadas coor;
 	private BusDB busDB;
@@ -38,6 +42,10 @@ public class Bus implements Observer{
 		actualizarBusDesdeBD();
 	}
 	
+	public int getCapacidad() {
+		return capacidad;
+	}
+
 	public Bus(String placa)
 	{
 		//Constructor de buses runtime.
