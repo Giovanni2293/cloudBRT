@@ -632,8 +632,11 @@ Clases que se modificaron.
 
 	Fecha
 	RecorridosRT
-	BusTR	ConductoresRT
-	TColectorBus	TItinerario	TRecorrido
+	BusTR
+	ConductoresRT
+	TColectorBus
+	TItinerario
+	TRecorrido
 	Admin
 	UbicacionBuss
 
@@ -721,6 +724,15 @@ Clases que se modificaron:
 	Monitoreo
 	UbicacionBus
 	Geomatematicas
+	
+####[10/01/2017]:[19:09]
+
+* Se implemento un nuevo servicio que permite conocer los buses que le pertenecen a una ruta determinada segun el parametro idicado
+
+Clases que se modificaron:
+
+	Monitoreo
+	
 
 
 
