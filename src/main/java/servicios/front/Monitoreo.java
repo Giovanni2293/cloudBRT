@@ -68,7 +68,7 @@ public class Monitoreo {
 			bso.append("Capacidad", obj.get("Capacidad"));
 			bso.append("TipoBus", obj.get("TipoBus"));
 			bso.append("Estado", obj.get("Estado"));
-			bso.append("Operador",obj.get("Operador"));
+			bso.append("Operador", obj.get("Operador"));
 			bso.append("Coordenada",
 					BusesRT.getBusesRT().encontrarBus(obj.getString("Placa")).getJsonBus().get("coordenada"));
 			buses.add(bso);
@@ -101,14 +101,16 @@ public class Monitoreo {
 			dbo.append("Capacidad", json.get("Capacidad"));
 			dbo.append("TipoBus", json.get("TipoBus"));
 			dbo.append("Estado", json.get("Estado"));
-			dbo.append("Operador",json.get("Operador"));
+			dbo.append("Operador", json.get("Operador"));
 			dbo.append("Coordenada", BusesRT.getBusesRT().encontrarBus(placaBus).getJsonBus().get("coordenada"));
 			JsonReader jsonReader = Json.createReader(new StringReader(dbo.toString()));
 			respuesta = jsonReader.readObject();
+			return Response.status(200).entity(respuesta.toString()).build();
 		} else {
 			respuesta = MensajeError.noEncontroElElemento("bus", placaBus);
+			return Response.status(404).entity(respuesta.toString()).build();
 		}
-		return Response.status(200).entity(respuesta.toString()).build();
+
 	}
 
 	///////
@@ -165,10 +167,11 @@ public class Monitoreo {
 			dbo.append("Coordenada", json.get("Coordenada"));
 			JsonReader jsonReader = Json.createReader(new StringReader(dbo.toString()));
 			respuesta = jsonReader.readObject();
+			return Response.status(200).entity(respuesta.toString()).build();
 		} else {
 			respuesta = MensajeError.noEncontroElElemento("parada", claveParada);
+			return Response.status(404).entity(respuesta.toString()).build();
 		}
-		return Response.status(200).entity(respuesta.toString()).build();
 	}
 
 	///////
@@ -247,13 +250,20 @@ public class Monitoreo {
 
 			JsonReader jsonReader = Json.createReader(new StringReader(bso.toString()));
 			respuesta = jsonReader.readObject();
+			return Response.status(200).entity(respuesta.toString()).build();
 		} else {
 			respuesta = MensajeError.noEncontroElElemento("ruta", nombreRuta);
+			return Response.status(404).entity(respuesta.toString()).build();
 		}
-		return Response.status(200).entity(respuesta.toString()).build();
 	}
-	
-	
+
+	/**
+	 * Servicio que permite consultar que buses se encuentran efectuando una
+	 * ruta dada
+	 * 
+	 * @param nombreRuta
+	 * @return
+	 */
 	@Path("/rutas/{ruta}/buses")
 	@GET
 	@Produces("application/json")
@@ -261,20 +271,25 @@ public class Monitoreo {
 		nombreRuta = nombreRuta.toUpperCase();
 		ArrayList<Itinerario> itinerarios;
 		itinerarios = Despacho.getDespacho().encontarXRuta(nombreRuta);
-		BasicDBObject bso = new BasicDBObject();
-		ArrayList<BasicDBObject> buses = new ArrayList<>();
-		for(Itinerario i : itinerarios){
-			bso.append("Placa", i.getBusDesignado().getPlaca());
-			bso.append("Capacidad", i.getBusDesignado().getCapacidad());
-			bso.append("TipoBus", i.getBusDesignado().getTipoBus());
-			bso.append("Estado", i.getBusDesignado().getEstado());
-			bso.append("Operador", i.getBusDesignado().getOperador());
-			
-			bso.append("Coordenada", i.getBusDesignado().getJsonBus().get("coordenada"));
-			buses.add(bso);
+		if (itinerarios != null) {
+			BasicDBObject bso = new BasicDBObject();
+			ArrayList<BasicDBObject> buses = new ArrayList<>();
+			for (Itinerario i : itinerarios) {
+				bso.append("Placa", i.getBusDesignado().getPlaca());
+				bso.append("Capacidad", i.getBusDesignado().getCapacidad());
+				bso.append("TipoBus", i.getBusDesignado().getTipoBus());
+				bso.append("Estado", i.getBusDesignado().getEstado());
+				bso.append("Operador", i.getBusDesignado().getOperador());
+
+				bso.append("Coordenada", i.getBusDesignado().getJsonBus().get("coordenada"));
+				buses.add(bso);
+			}
+			return Response.status(200).entity(buses.toString()).build();
+		} else {
+			respuesta = MensajeError.noEncontroElElemento("ruta", nombreRuta);
+			return Response.status(404).entity(respuesta.toString()).build();
 		}
 		
-		return Response.status(200).entity(buses.toString()).build();
 	}
 
 	///////
@@ -319,10 +334,11 @@ public class Monitoreo {
 			dbo.append("Horario", json.get("Horario"));
 			JsonReader jsonReader = Json.createReader(new StringReader(dbo.toString()));
 			respuesta = jsonReader.readObject();
+			return Response.status(200).entity(respuesta.toString()).build();
 		} else {
 			respuesta = MensajeError.noEncontroElElemento("Recorrido", claveRecorrido);
+			return Response.status(404).entity(respuesta.toString()).build();
 		}
-		return Response.status(200).entity(respuesta.toString()).build();
 	}
 
 	///////
@@ -421,8 +437,6 @@ public class Monitoreo {
 		return Response.status(200).entity(dbo.toString()).build();
 	}
 
-	
-
 	/**
 	 * Este servicio devuelve el tiempo que se espera que le tome a los buses
 	 * que correspondan a la ruta en ir hasta cada parada y el tiempo teorico
@@ -437,36 +451,41 @@ public class Monitoreo {
 	public Response tiemposBusRuta(@PathParam("ruta") String ruta) {
 		ArrayList<Itinerario> itinerarios = Despacho.getDespacho().encontarXRuta(ruta);
 		BasicDBObject dboExterno = new BasicDBObject();
-		dboExterno.append("hora",UbicacionBus.getHoraDelSistema());
+		dboExterno.append("hora", UbicacionBus.getHoraDelSistema());
 		ArrayList<BasicDBObject> entradas = new ArrayList<>();
-		if (!itinerarios.isEmpty()) {//Si hay itinerarios relacionados con esa ruta
+		if (!itinerarios.isEmpty()) {// Si hay itinerarios relacionados con esa
+										// ruta
 			for (Itinerario temp : itinerarios) {
 				System.out.println(temp.getId());
 				LinkedHashMap<String, String> horario = temp.getRecorridoDesignado().getHorario();
-				double avanceBus = GeoMatematicas.avanceBusTeorico(temp.getRecorridoDesignado(),temp.getBusDesignado());
-				double tiempoEntreEstaciones = GeoMatematicas.duracion(horario.get(temp.getParadaSiguiente().getClave()),horario.get(temp.getParadaAnterior().getClave()));
+				double avanceBus = GeoMatematicas.avanceBusTeorico(temp.getRecorridoDesignado(),
+						temp.getBusDesignado());
+				double tiempoEntreEstaciones = GeoMatematicas.duracion(
+						horario.get(temp.getParadaSiguiente().getClave()),
+						horario.get(temp.getParadaAnterior().getClave()));
 				BasicDBObject dbo = new BasicDBObject();
-				dbo.append("id",temp.getBusDesignado().getOperador()+"/"+temp.getBusDesignado().getPlaca());
-				dbo.append("idRecorrido",temp.getRecorridoDesignado().getClaveRecorrido());
-				dbo.append("horaSaliDete",Fecha.getFechaClass().convtHoraToMlls(temp.getFecha(),temp.getRecorridoDesignado().getHoraPartida()));
-				dbo.append("horaSaliReal",Fecha.getFechaClass().convtHoraToMlls(temp.getFecha(),temp.getHoraSalidaReal()));
-				dbo.append("tiemAcumDete",avanceBus);
-				dbo.append("tiempEstaDete",tiempoEntreEstaciones);
-				dbo.append("porcAvan",((temp.getIndex()-1)*100)+temp.getAvancePorcentual());
+				dbo.append("id", temp.getBusDesignado().getOperador() + "/" + temp.getBusDesignado().getPlaca());
+				dbo.append("idRecorrido", temp.getRecorridoDesignado().getClaveRecorrido());
+				dbo.append("horaSaliDete", Fecha.getFechaClass().convtHoraToMlls(temp.getFecha(),
+						temp.getRecorridoDesignado().getHoraPartida()));
+				dbo.append("horaSaliReal",
+						Fecha.getFechaClass().convtHoraToMlls(temp.getFecha(), temp.getHoraSalidaReal()));
+				dbo.append("tiemAcumDete", avanceBus);
+				dbo.append("tiempEstaDete", tiempoEntreEstaciones);
+				dbo.append("porcAvan", ((temp.getIndex() - 1) * 100) + temp.getAvancePorcentual());
 				entradas.add(dbo);
 			}
-			dboExterno.append("Buses",entradas);
+			dboExterno.append("Buses", entradas);
 			return Response.status(200).entity(dboExterno.toString()).build();
 		}
 		dboExterno.append("Error", "No hay itinerarios en ejecucion asociados con esa ruta");
 		return Response.status(404).entity(dboExterno.toString()).build();
 
 	}
-	////////////////////////////////CONDUCTORES///////////////////////////////////
+
+	//////////////////////////////// CONDUCTORES///////////////////////////////////
 	/**
-	 * Servicio que permitira obtener todas las Paradas que se encuentren
-	 * almacenadas en la base de datos en un arreglo incluido dentro de un
-	 * objeto de tipo Json
+	 * Servicio que permite obtener todos los conductores del sistema
 	 * 
 	 * @return Response respuesta del servicio
 	 */
@@ -482,12 +501,12 @@ public class Monitoreo {
 			BasicDBObject obj = (BasicDBObject) cursor.next();
 			BasicDBObject dbo = new BasicDBObject();
 			dbo.append("Cedula", obj.get("Cedula"));
-			dbo.append("Primer Nombre",obj.get("Primer Nombre"));
-			dbo.append("Segundo Nombre",obj.get("Segundo Nombre"));
-			dbo.append("Primer Apellido",obj.get("Primer Apellido"));
-			dbo.append("Segundo Apellido",obj.get("Segundo Apellido"));
-			dbo.append("Numero de Licencia",obj.get("Numero de Licencia"));
-			dbo.append("Grupo Sanguineo",obj.get("Grupo Sanguineo"));
+			dbo.append("Primer Nombre", obj.get("Primer Nombre"));
+			dbo.append("Segundo Nombre", obj.get("Segundo Nombre"));
+			dbo.append("Primer Apellido", obj.get("Primer Apellido"));
+			dbo.append("Segundo Apellido", obj.get("Segundo Apellido"));
+			dbo.append("Numero de Licencia", obj.get("Numero de Licencia"));
+			dbo.append("Grupo Sanguineo", obj.get("Grupo Sanguineo"));
 			paradas.add(dbo);
 		}
 
@@ -495,8 +514,7 @@ public class Monitoreo {
 	}
 
 	/**
-	 * Servicio que permitira obtener una parada en especifico almacenada en la
-	 * base de datos en un objeto de tipo Json
+	 * Servicio que permite obtener un conductor dada su cedula
 	 * 
 	 * @return Response respuesta del servicio
 	 */
@@ -511,20 +529,19 @@ public class Monitoreo {
 		if (json != null) {
 			dbo.getString("Cedula", claveConductor);
 			dbo.append("Cedula", json.get("Cedula"));
-			dbo.append("Primer Nombre",json.get("Primer Nombre"));
-			dbo.append("Segundo Nombre",json.get("Segundo Nombre"));
-			dbo.append("Primer Apellido",json.get("Primer Apellido"));
-			dbo.append("Segundo Apellido",json.get("Segundo Apellido"));
-			dbo.append("Numero de Licencia",json.get("Numero de Licencia"));
-			dbo.append("Grupo Sanguineo",json.get("Grupo Sanguineo"));
+			dbo.append("Primer Nombre", json.get("Primer Nombre"));
+			dbo.append("Segundo Nombre", json.get("Segundo Nombre"));
+			dbo.append("Primer Apellido", json.get("Primer Apellido"));
+			dbo.append("Segundo Apellido", json.get("Segundo Apellido"));
+			dbo.append("Numero de Licencia", json.get("Numero de Licencia"));
+			dbo.append("Grupo Sanguineo", json.get("Grupo Sanguineo"));
 
-			
 			JsonReader jsonReader = Json.createReader(new StringReader(dbo.toString()));
 			respuesta = jsonReader.readObject();
 		} else {
-			
+
 			respuesta = MensajeError.noEncontroElElemento("Conductor", claveConductor);
-			 return Response.status(404).entity(respuesta.toString()).build();
+			return Response.status(404).entity(respuesta.toString()).build();
 		}
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
