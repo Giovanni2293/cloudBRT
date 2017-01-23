@@ -28,6 +28,7 @@ import core.Despacho;
 import core.Fecha;
 import core.Itinerario;
 import db.DBGeneralBRT;
+import db.DBPersonal;
 import db.TItinerario;
 import servicios.recolector.UbicacionBus;
 import utilidad.FormatearDatos;
@@ -460,6 +461,72 @@ public class Monitoreo {
 		dboExterno.append("Error", "No hay itinerarios en ejecucion asociados con esa ruta");
 		return Response.status(404).entity(dboExterno.toString()).build();
 
+	}
+	////////////////////////////////CONDUCTORES///////////////////////////////////
+	/**
+	 * Servicio que permitira obtener todas las Paradas que se encuentren
+	 * almacenadas en la base de datos en un arreglo incluido dentro de un
+	 * objeto de tipo Json
+	 * 
+	 * @return Response respuesta del servicio
+	 */
+	@Path("/conductores")
+	@GET
+	@Produces("application/json")
+	public Response obtenerConductores() {
+		DBPersonal conexion = new DBPersonal();
+		DBCollection collection = conexion.consultarColeccion("Conductores");
+		DBCursor cursor = collection.find();
+		ArrayList<BasicDBObject> paradas = new ArrayList<>();
+		while (cursor.hasNext()) {
+			BasicDBObject obj = (BasicDBObject) cursor.next();
+			BasicDBObject dbo = new BasicDBObject();
+			dbo.append("Cedula", obj.get("Cedula"));
+			dbo.append("Primer Nombre",obj.get("Primer Nombre"));
+			dbo.append("Segundo Nombre",obj.get("Segundo Nombre"));
+			dbo.append("Primer Apellido",obj.get("Primer Apellido"));
+			dbo.append("Segundo Apellido",obj.get("Segundo Apellido"));
+			dbo.append("Numero de Licencia",obj.get("Numero de Licencia"));
+			dbo.append("Grupo Sanguineo",obj.get("Grupo Sanguineo"));
+			paradas.add(dbo);
+		}
+
+		return Response.status(200).entity(paradas.toString()).build();
+	}
+
+	/**
+	 * Servicio que permitira obtener una parada en especifico almacenada en la
+	 * base de datos en un objeto de tipo Json
+	 * 
+	 * @return Response respuesta del servicio
+	 */
+	@Path("/conductores/{claveConductor}")
+	@GET
+	@Produces("application/json")
+	public Response obtenerConductor(@PathParam("claveConductor") String claveConductor) {
+		DBPersonal conexion = new DBPersonal();
+		DBObject json = null;
+		BasicDBObject dbo = new BasicDBObject();
+		json = conexion.consultarMDB("Conductores", new BasicDBObject("Cedula", claveConductor));
+		if (json != null) {
+			dbo.getString("Cedula", claveConductor);
+			dbo.append("Cedula", json.get("Cedula"));
+			dbo.append("Primer Nombre",json.get("Primer Nombre"));
+			dbo.append("Segundo Nombre",json.get("Segundo Nombre"));
+			dbo.append("Primer Apellido",json.get("Primer Apellido"));
+			dbo.append("Segundo Apellido",json.get("Segundo Apellido"));
+			dbo.append("Numero de Licencia",json.get("Numero de Licencia"));
+			dbo.append("Grupo Sanguineo",json.get("Grupo Sanguineo"));
+
+			
+			JsonReader jsonReader = Json.createReader(new StringReader(dbo.toString()));
+			respuesta = jsonReader.readObject();
+		} else {
+			
+			respuesta = MensajeError.noEncontroElElemento("Conductor", claveConductor);
+			 return Response.status(404).entity(respuesta.toString()).build();
+		}
+		return Response.status(200).entity(respuesta.toString()).build();
 	}
 
 }
