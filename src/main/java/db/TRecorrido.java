@@ -149,6 +149,7 @@ public class TRecorrido {
 		boolean elimino = mongo.eliminarMDB(nombreColeccion, data);
 		if (elimino == true) {
 			System.out.println("Se ha eliminado el recorrido " + clave);
+			return true;
 		} else {
 			System.out.println(
 					"No se ha podido eliminar el recorrido " + clave + " Por que  no existe en la base de datos ");

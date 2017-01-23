@@ -6,6 +6,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -26,11 +27,13 @@ import db.TParada;
 import db.TRecorrido;
 import db.TRuta;
 import utilidad.Diccionario;
+import interfaces.PATCH;
 
-@Path("admin")
+@Path("/admin")
 public class Admin {
 
 	private JsonObject respuesta;
+	private final String root = "http://localhost:8080/cloudBRT/api/";
 
 	///////
 	/////////////////////////////////////// BUSES/////////////////////////////////////////////
@@ -45,16 +48,26 @@ public class Admin {
 	 * @param placaBus
 	 * @return {@link Boolean}
 	 */
-	@Path("buses/eliminar/{placaBus}")
-	@GET
+	@Path("/buses/{placaBus}")
+	@DELETE
 	@Produces("application/json")
 	public Response eliminarBuses(@PathParam("placaBus") String placaBus) {
 		boolean progreso;
 		
 		BusesRT.getBusesRT().eliminarBus(placaBus); // Elimina el bus en RT
 		progreso = TBus.eliminarBus(placaBus);
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
+		
+		respuesta = Json.createObjectBuilder().add("Eliminado", progreso).build();
+		
+		if(progreso == true)
+		{
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
+		
 	}
 
 	/**
@@ -66,14 +79,22 @@ public class Admin {
 	 * @param estado
 	 * @return {@link Boolean}
 	 */
-	@Path("buses/modificar/{placaBus},{estado}")
-	@GET
+	@Path("/buses/{placaBus},{estado}")
+	@PATCH
 	@Produces("application/json")
 	public Response modificarEstado(@PathParam("placaBus") String placaBus, @PathParam("estado") boolean estado) {
 		BusesRT.getBusesRT().modificarEstado(placaBus, estado); // Modifica el estado del bus en RT
 		boolean progreso = TBus.modificarEstado(placaBus, estado);//Modifica en DB
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
+		respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("Recurso",root+"monitoreo/buses/"+placaBus).build();
+		
+		if (progreso == true)
+		{
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
 	}
 
 	// POST
@@ -84,7 +105,7 @@ public class Admin {
 	 * @param incomingData
 	 * @return {@link Response}
 	 */
-	@Path("buses/crear")
+	@Path("/buses")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -103,10 +124,10 @@ public class Admin {
 		operador = entrada.getString("Operador");
 
 		progreso = TBus.crearBus(placa, capacidad, tipoBus, estado,operador); //Modifica en DB
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+		respuesta = Json.createObjectBuilder().add("Creado", progreso).add("Recurso",root+"monitoreo/buses/"+placa).build();
 		System.out.println("Placa:" + placa + " Capacidad:" + capacidad + " TipoBus:" + tipoBus + " Estado:" + estado);
 		BusesRT.getBusesRT().agregarNuevo(new Bus(placa)); // Agrega un nuevo bus al RT
-		return Response.status(200).entity(respuesta.toString()).build();
+		return Response.status(201).entity(respuesta.toString()).build();
 
 	}
 
@@ -123,15 +144,23 @@ public class Admin {
 	 * @param clave
 	 * @return {@link Boolean}
 	 */
-	@Path("paradas/eliminar/{clave}")
-	@GET
+	@Path("/paradas/{clave}")
+	@DELETE
 	@Produces("application/json")
 	public Response eliminarParada(@PathParam("clave") String clave) {
 		boolean progreso;
 		progreso = TParada.eliminarParada(clave);
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+	
+		respuesta = Json.createObjectBuilder().add("Eliminado", progreso).build();
 		
-		return Response.status(200).entity(respuesta.toString()).build();
+		if (progreso == true)
+		{
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
 	}
 
 	// POST
@@ -143,7 +172,7 @@ public class Admin {
 	 * @param incomingData
 	 * @return {@link Response}
 	 */
-	@Path("paradas/crear")
+	@Path("/paradas")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -165,10 +194,10 @@ public class Admin {
 		slongitud = coordenada.getString("Longitud");
 		c1 = new Coordenadas(Double.parseDouble(slatitud), Double.parseDouble(slongitud));
 		progreso = TParada.crearParada(clave, nombre, c1.getLatitud(), c1.getLongitud());
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+		respuesta = Json.createObjectBuilder().add("Creado", progreso).add("Recurso",root+"monitoreo/paradas/"+clave).build();
 		System.out.println("Clave:" + clave + " Nombre:" + nombre + " Latitud:" + c1.getLatitud() + " Longitud:"
 				+ c1.getLongitud());
-		return Response.status(200).entity(respuesta.toString()).build();
+		return Response.status(201).entity(respuesta.toString()).build();
 
 	}
 
@@ -186,14 +215,23 @@ public class Admin {
 	 * @param nombre
 	 * @return
 	 */
-	@Path("rutas/remover/paradas/{nombre}")
-	@GET
+	@Path("/rutas/{nombre}/paradas")
+	@DELETE
 	@Produces("application/json")
 	public Response eliminarParadasDeRuta(@PathParam("nombre") String nombre) {
 		boolean progreso;
 		progreso = TRuta.eliminarParadas(nombre);
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
+		
+		if (progreso==true)
+		{
+			respuesta = Json.createObjectBuilder().add("ParadasEliminadas", progreso).add("Recurso",root+"monitoreo/rutas/"+nombre).build();
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("ParadasEliminadas", progreso).add("Recurso","No encontrado").build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
 	}
 
 	/**
@@ -203,33 +241,25 @@ public class Admin {
 	 * @param posicion
 	 * @return {@link Response}
 	 */
-	@Path("rutas/remover/paradas/{nombreRuta},{posicion}")
-	@GET
+	@Path("/rutas/{nombreRuta}/paradas/{posicion}")
+	@DELETE
 	@Produces("application/json")
 	public Response eliminarParadaEspecificaDeRuta(@PathParam("nombreRuta") String nombreRuta,
 			@PathParam("posicion") int posicion) {
 		boolean progreso;
 		progreso = TRuta.removerParadaDeRuta(nombreRuta, posicion);
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
+		if (progreso==true)
+		{
+			respuesta = Json.createObjectBuilder().add("ParadaEliminada", progreso).add("Recurso",root+"monitoreo/rutas/"+nombreRuta).build();
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("ParadaEliminada", progreso).add("Recurso","No encontrado").build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
 	}
-
-	/**
-	 * Elimina una ruta por completo
-	 * 
-	 * @param nombreRuta
-	 * @return {@link Response}
-	 */
-	@Path("rutas/eliminar/{nombreRuta}")
-	@GET
-	@Produces("application/json")
-	public Response eliminarRuta(@PathParam("nombreRuta") String nombreRuta) {
-		boolean progreso;
-		progreso = TRuta.eliminarRuta(nombreRuta);
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
-	}
-
+	
 	/**
 	 * Agrega una parada al final de una ruta especificada en la url.
 	 * 
@@ -237,16 +267,53 @@ public class Admin {
 	 * @param clave
 	 * @return {@link Response}
 	 */
-	@Path("rutas/agregar/paradas/{nombreRuta},{clave}")
-	@GET
+	@Path("/rutas/{nombreRuta}/paradas/{clave}")
+	@PATCH
 	@Produces("application/json")
 	public Response agregarParadasAlFinal(@PathParam("nombreRuta") String nombreRuta,
 			@PathParam("clave") String clave) {
 		boolean progreso;
 		progreso = TRuta.anadirAFinalDeRuta(nombreRuta, clave);
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
+		
+		
+		if (progreso==true)
+		{
+			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("RecursoParada",root+"monitoreo/paradas/"+clave).add("RecursoRuta",root+"monitoreo/rutas/"+nombreRuta).build();
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("Recursos","No encontrado").build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
 	}
+
+
+	/**
+	 * Elimina una ruta por completo
+	 * 
+	 * @param nombreRuta
+	 * @return {@link Response}
+	 */
+	@Path("/rutas/{nombreRuta}")
+	@DELETE
+	@Produces("application/json")
+	public Response eliminarRuta(@PathParam("nombreRuta") String nombreRuta) {
+		boolean progreso;
+		progreso = TRuta.eliminarRuta(nombreRuta);
+		respuesta = Json.createObjectBuilder().add("Elimino", progreso).build();
+		
+		if(progreso == true)
+		{
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
+		
+	}
+
 
 	/**
 	 * Crea una nueva ruta sin paradas, con los parametros categoria y
@@ -255,49 +322,56 @@ public class Admin {
 	 * @param nombreRuta
 	 * @return {@link Response}
 	 */
-	@Path("rutas/crear/{nombreRuta}")
-	@GET
+	@Path("/rutas")
+	@POST
 	@Produces("application/json")
-	public Response crearRuta(@PathParam("nombreRuta") String nombreRuta) {
+	public Response crearRuta(InputStream incomingData) {
 		boolean progreso;
 		String categoria = "";
 		String descripcion = "";
-		progreso = TRuta.crearRuta(nombreRuta, categoria, descripcion);
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
+		
+		JsonReader jsonReader = Json.createReader(incomingData);
+		JsonObject entrada = jsonReader.readObject();
+		
+		progreso = TRuta.crearRuta(entrada.getString("NombreRuta"), categoria, descripcion);
+		
+		
+			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("Recurso",root+"monitoreo/rutas/"+entrada.getString("NombreRuta")).build();
+			return Response.status(201).entity(respuesta.toString()).build();
+		
 	}
 
 	// POST
 
 	/**
-	 * Agrega una parada a una ruta dada su posicion. Los datos se obtienen de
+	 * Agrega una parada a una ruta dada su posicion sin reemplazar la que existe. Los datos se obtienen de
 	 * un json recibido por POST
 	 * 
 	 * @param incomingData
 	 * @return {@link Response}
 	 */
-	@Path("rutas/agregar/paradas")
-	@POST
+	@Path("/rutas/{NombreRuta}/paradas/{ClaveParada}/posicion/{PosicionParada}/SR")
+	@PATCH
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response anadirXPosicionARuta(InputStream incomingData) {
-		JsonObject entrada;
-		String nombreRuta, clave;
-		int posicion;
-
+	public Response anadirXPosicionARuta(@PathParam("NombreRuta") String nombreRuta,@PathParam("ClaveParada") String claveParada,@PathParam("PosicionParada") int posicionParada) {
+		
 		boolean progreso;
 
-		JsonReader jsonReader = Json.createReader(incomingData);
-		entrada = jsonReader.readObject();
 
-		nombreRuta = entrada.getString("NombreRuta");
-		clave = entrada.getString("ClaveParada");
-		posicion = Integer.parseInt(entrada.getString("PosicionParada"));
-
-		progreso = TRuta.anadirXPosicionARuta(nombreRuta, clave, posicion);
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		System.out.println("Clave:" + clave + " Nombre:" + nombreRuta + " Posicion:" + posicion);
-		return Response.status(200).entity(respuesta.toString()).build();
+		progreso = TRuta.anadirXPosicionARuta(nombreRuta, claveParada, posicionParada);
+		System.out.println("Clave:" + claveParada + " Nombre:" + nombreRuta + " Posicion:" + posicionParada);
+		
+		if (progreso==true)
+		{
+			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("RecursoRuta",root+"monitoreo/rutas/"+nombreRuta).add("RecursoParada",root+"monitoreo/paradas/"+claveParada).build();
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("Recursos","No encontrados").build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
 
 	}
 
@@ -307,28 +381,28 @@ public class Admin {
 	 * @param incomingData
 	 * @return {@link Response}
 	 */
-	@Path("rutas/reemplazar/paradas")
-	@POST
+	@Path("/rutas/{NombreRuta}/paradas/{ClaveParada}/posicion/{PosicionParada}/CR")
+	@PATCH
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response remplazarParada(InputStream incomingData) {
-		JsonObject entrada;
-		String nombreRuta, clave;
-		int posicion;
+	public Response remplazarParada(@PathParam("NombreRuta") String nombreRuta,@PathParam("ClaveParada") String claveParada,@PathParam("PosicionParada") int posicionParada) {
+	
 
 		boolean progreso;
 
-		JsonReader jsonReader = Json.createReader(incomingData);
-		entrada = jsonReader.readObject();
-
-		nombreRuta = entrada.getString("NombreRuta");
-		clave = entrada.getString("ClaveParada");
-		posicion = Integer.parseInt(entrada.getString("PosicionParada"));
-
-		progreso = TRuta.reemplazarParadaDeRuta(nombreRuta, clave, posicion);
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		System.out.println("Clave:" + clave + " Nombre:" + nombreRuta + " Posicion:" + posicion);
-		return Response.status(200).entity(respuesta.toString()).build();
+		progreso = TRuta.reemplazarParadaDeRuta(nombreRuta, claveParada, posicionParada);
+		System.out.println("Clave:" + claveParada + " Nombre:" + nombreRuta + " Posicion:" + posicionParada);
+		
+		if(progreso==true)
+		{
+			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("RecursoRuta",root+"monitoreo/rutas/"+nombreRuta).add("RecursoParada",root+"monitoreo/paradas/"+claveParada).build();
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("Recursos","No encontrados").build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
 
 	}
 
@@ -338,8 +412,8 @@ public class Admin {
 	 * @param incomingData
 	 * @return {@link Response}
 	 */
-	@Path("rutas/modificar/datos")
-	@POST
+	@Path("/rutas/datos")
+	@PATCH
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response modificarCaracteristica(InputStream incomingData) {
@@ -350,9 +424,18 @@ public class Admin {
 		entrada = jsonReader.readObject();
 		progreso = TRuta.modificarDatoRuta(entrada.getString("Ruta"), entrada.getString("Atributo"),
 				entrada.getString("Datos"));
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
-
+		
+		
+		if (progreso==true)
+		{
+			respuesta = Json.createObjectBuilder().add("Modifico", progreso).add("RecursoRuta",root+"monitoreo/rutas/"+entrada.getString("Ruta")).build();
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("Modifico", progreso).add("RecursoRuta","No encontrado").build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
 	}
 
 	///////
@@ -361,29 +444,38 @@ public class Admin {
 	//GET
 	
 		/**
-		 * Servicio que permite eliminar un itinerario en especifico utilizando su clave y
+		 * Servicio que permite eliminar un recorrido en especifico utilizando su clave y
 		 * devuelve como resultado si fue satisfactoria o no la tarea
 		 * 
 		 * @param clave
 		 * @return {@link Boolean}
 		 */
-		@Path("recorrido/eliminar/{clave}")
-		@GET
+		@Path("/recorridos/{clave}")
+		@DELETE
 		@Produces("application/json")
 		public Response eliminarRecorrido(@PathParam("clave") String clave) {
 			boolean progreso;
 			
 			RecorridosRT.getRecorridosRT().eliminarRecorrido(clave); // Elimina el bus en RT
 			progreso = TRecorrido.eliminarRecorrido(clave);
-			respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-			return Response.status(200).entity(respuesta.toString()).build();
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).build();
+			
+			if(progreso==true)
+			{
+				return Response.status(200).entity(respuesta.toString()).build();
+			}
+			else
+			{
+				return Response.status(404).entity(respuesta.toString()).build();
+			}
+			
 		}
 
 		
 
 	// POST
 
-	@Path("recorridos/crear")
+	@Path("/recorridos")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -398,34 +490,56 @@ public class Admin {
 		ruta = entrada.getString("Ruta");
 		horaDePartida = entrada.getString("HoraDePartida");
 		progreso = TRecorrido.crearRecorridoAutomatico(clave, ruta, horaDePartida);//Modifica en DB
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		
 		RecorridosRT.getRecorridosRT().agregarRecorrido(clave); // Crea un recorrido en RT
 		
-		return Response.status(200).entity(respuesta.toString()).build();
+		if (progreso==true)
+		{
+			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoRecorrido",root+"monitoreo/recorridos/"+clave).build();
+			return Response.status(201).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
+		
 
 	}
 
-	@Path("recorridos/editar")
-	@POST
+	/**
+	 * Modifica el recorrido indicado en la URI
+	 * @param incomingData
+	 * @return
+	 */
+	@Path("/recorridos/{clave}")
+	@PATCH
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response editarRecorrido(InputStream incomingData) {
+	public Response editarRecorrido(@PathParam("clave") String clave,InputStream incomingData) {
 		JsonObject entrada;
-		String clave, parada, horaAnterior, horaNueva;
+		String parada, horaAnterior, horaNueva;
 		boolean progreso;
 		JsonReader jsonReader = Json.createReader(incomingData);
 		entrada = jsonReader.readObject();
 
-		clave = entrada.getString("Clave");
 		parada = entrada.getString("Parada");
 		horaAnterior = entrada.getString("HoraAnterior");
 		horaNueva = entrada.getString("HoraNueva");
 		RecorridosRT.getRecorridosRT().editarHoraRecorridoRT(clave, parada, horaAnterior, horaNueva); /*Edita la hora de un punto de
 		un recorrido en RT*/
 		progreso = TRecorrido.editarHoraRecorrido(clave, parada, horaAnterior, horaNueva);//Modifica en DB
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
+		if (progreso==true)
+		{
+			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoRecorrido",root+"monitoreo/recorridos/"+clave).build();
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoRecorrido","No encontrado").build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
+
 
 	}
 
@@ -435,16 +549,23 @@ public class Admin {
 
 	// GET
 
-	@Path("conductores/eliminar/{cedula}")
-	@GET
+	@Path("/conductores/{cedula}")
+	@DELETE
 	@Produces("application/json")
 	public Response eliminarConductor(@PathParam("cedula") String cedula) {
 		boolean progreso;
 		ConductoresRT.getConductoresRT().eliminarConductor(cedula); // Elimina un conductor en RT
 		progreso = TConductor.eliminarConductor(cedula);//Modifica en DB
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
-
+		respuesta = Json.createObjectBuilder().add("Eliminado", progreso).build();
+		if (progreso==true)
+		{
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
+		
 	}
 
 	// POST
@@ -455,7 +576,7 @@ public class Admin {
 	 * @param incomingData
 	 * @return {@link Response}
 	 */
-	@Path("conductores/crear")
+	@Path("/conductores")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -480,27 +601,36 @@ public class Admin {
 
 		progreso = TConductor.crearConductor(cedula, primerNombre, segundoNombre, primerApellido, segundoApellido,
 				licencia, tipoSangre); //Modifica en DB
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		ConductoresRT.getConductoresRT().agregarConductor(cedula);// Agrega un conductor al RT
-		return Response.status(200).entity(respuesta.toString()).build();
+		
+		if(progreso==true)
+		{
+			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoConductor","No implementado su servicio de consulta aun").build();
+			return Response.status(201).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoConductor","No implementado su servicio de consulta aun").build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
+		
 
 	}
 
 	/**
-	 * Modifica uno de los parametros del conductor segun se indique en el json
+	 * Modifica uno de los parametros indicado mediante la url del conductor segun se indique en el json
 	 * 
 	 * @param incomingData
 	 * @return {@link Response}
 	 */
-	@Path("conductores/modificarDato")
-	@POST
+	@Path("/conductores/{Dato}")
+	@PATCH
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response modificarDato(InputStream incomingData) {
+	public Response modificarDato(@PathParam("Dato") String dato,InputStream incomingData) {
 		JsonObject entrada;
 
 		String cedula;
-		String dato;
 		String nuevoValor;
 
 		boolean progreso;
@@ -508,7 +638,6 @@ public class Admin {
 		entrada = jsonReader.readObject();
 
 		cedula = entrada.getString("Cedula");
-		dato = entrada.getString("Dato");
 		nuevoValor = entrada.getString("NuevoValor");
 
 		String datoMapeado =Diccionario.atributoConduc(dato);
@@ -516,8 +645,17 @@ public class Admin {
 		ConductoresRT.getConductoresRT().modificarConductor(cedula,datoMapeado, nuevoValor);//Modifica RT
 		
 		progreso = TConductor.modificarDatoConductor(cedula, datoMapeado, nuevoValor);//Modifica la DB
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
+		
+		if (progreso == true)
+		{
+			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoConductor","No implementado su servicio de consulta aun").build();
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoConductor","No implementado su servicio de consulta aun").build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
 
 	}
 	
@@ -535,16 +673,25 @@ public class Admin {
 	 * @param clave
 	 * @return {@link Boolean}
 	 */
-	@Path("itinerario/eliminar/{clave}")
-	@GET
+	@Path("/itinerario/{clave}")
+	@DELETE
 	@Produces("application/json")
 	public Response eliminarItinerario(@PathParam("clave") String clave) {
 		boolean progreso;
 		
 		TItinerario.modificarTerminado(clave, true);
 		progreso = TItinerario.eliminarItinerario(clave);
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
+		
+		if (progreso==true)
+		{
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoItinerarios",root+"monitoreo/itinerarios").build();
+			return Response.status(200).entity(respuesta.toString()).build();
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoItinerarios","No encontrado").build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
 	}
 
 	
@@ -556,7 +703,7 @@ public class Admin {
 	 * @param incomingData
 	 * @return {@link Response}
 	 */
-	@Path("itinerario/crear")
+	@Path("/itinerario")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -576,7 +723,18 @@ public class Admin {
 
 		progreso = TItinerario.crearItinerario(clave, conductor, bus, recorrido,horaSalidaEstimada); //Modifica en DB
 		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
+		
+		if (progreso==true)
+		{
+			respuesta = Json.createObjectBuilder().add("Encontrado", progreso).add("RecursoItinerarios",root+"monitoreo/itinerarios/"+clave).build();
+			return Response.status(201).entity(respuesta.toString()).build();
+			
+		}
+		else
+		{
+			respuesta = Json.createObjectBuilder().add("Encontrado", progreso).add("RecursoItinerarios","Ya Existe o Mal ingreso de datos").build();
+			return Response.status(404).entity(respuesta.toString()).build();
+		}
 
 	}
 

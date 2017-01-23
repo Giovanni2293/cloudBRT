@@ -78,7 +78,7 @@ public class TConductor {
 
 			return true;
 		} else {
-			System.out.println("Error: El conductor con cedula: " + cedula + " ya existe en la base de datos");
+			System.out.println("Error: El conductor con cedula: " + cedula + " no existe en la base de datos");
 
 			return false;
 		}

@@ -30,7 +30,7 @@ import com.mongodb.DBObject;
 
 import javax.json.*;
 
-@Path("colector")
+@Path("/colector")
 public class UbicacionBus {
 
 	private Despacho despacho;

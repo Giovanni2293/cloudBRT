@@ -34,7 +34,7 @@ import utilidad.FormatearDatos;
 import utilidad.GeoMatematicas;
 import utilidad.MensajeError;
 
-@Path("monitoreo")
+@Path("/monitoreo")
 public class Monitoreo {
 
 	private JsonObject respuesta;
@@ -52,7 +52,7 @@ public class Monitoreo {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("buses/consultar")
+	@Path("/buses")
 	@GET
 	@Produces("application/json")
 	public Response obtenerBuses() {
@@ -82,7 +82,7 @@ public class Monitoreo {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("buses/consultar/{placaBus}")
+	@Path("/buses/{placaBus}")
 	@GET
 	@Produces("application/json")
 	public Response obtenerBus(@PathParam("placaBus") String placaBus) {
@@ -123,7 +123,7 @@ public class Monitoreo {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("paradas/consultar")
+	@Path("/paradas")
 	@GET
 	@Produces("application/json")
 	public Response obtenerParadas() {
@@ -149,7 +149,7 @@ public class Monitoreo {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("paradas/consultar/{claveParada}")
+	@Path("/paradas/{claveParada}")
 	@GET
 	@Produces("application/json")
 	public Response obtenerParada(@PathParam("claveParada") String claveParada) {
@@ -183,7 +183,7 @@ public class Monitoreo {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("rutas/consultar")
+	@Path("/rutas")
 	@GET
 	@Produces("application/json")
 	public Response obtenerRutas() {
@@ -219,7 +219,7 @@ public class Monitoreo {
 	 * 
 	 * @return Response respuesta del servicio
 	 */
-	@Path("rutas/consultar/{nombreRuta}")
+	@Path("/rutas/{nombreRuta}")
 	@GET
 	@Produces("application/json")
 	public Response obtenerRuta(@PathParam("nombreRuta") String nombreRuta) {
@@ -251,7 +251,9 @@ public class Monitoreo {
 		}
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
-	@Path("rutas/consultar/buses/{ruta}")
+	
+	
+	@Path("/rutas/{ruta}/buses")
 	@GET
 	@Produces("application/json")
 	public Response busxRuta(@PathParam("ruta") String nombreRuta) {
@@ -280,7 +282,7 @@ public class Monitoreo {
 
 	// GET
 
-	@Path("recorridos/consultar")
+	@Path("/recorridos")
 	@GET
 	@Produces("application/json")
 	public Response obtenerRecorridos() {
@@ -300,7 +302,7 @@ public class Monitoreo {
 		return Response.status(200).entity(recorridos.toString()).build();
 	}
 
-	@Path("recorridos/consultar/{claveRecorrido}")
+	@Path("/recorridos/{claveRecorrido}")
 	@GET
 	@Produces("application/json")
 	public Response obtenerRecorrido(@PathParam("claveRecorrido") String claveRecorrido) {
@@ -327,7 +329,7 @@ public class Monitoreo {
 	/////// /////////////////////////////////////////////
 	///////
 
-	@Path("itinerario/consultar")
+	@Path("/itinerarios")
 	@GET
 	@Produces("application/json")
 	public Response obtenerItinerarios() {
@@ -362,7 +364,7 @@ public class Monitoreo {
 	}
 
 	// NO DEVUELVE LOS ERRORES
-	@Path("itinerario/consultar/{claveItinerario}")
+	@Path("/itinerarios/{claveItinerario}")
 	@GET
 	@Produces("application/json")
 	public Response obtenerItinerario(@PathParam("claveItinerario") String claveItinerario) {
@@ -399,7 +401,7 @@ public class Monitoreo {
 		return Response.status(200).entity(bso.toString()).build();
 	}
 
-	@Path("itinerario/porcentaje/{placaBus}")
+	@Path("itinerarios/porcentaje/{placaBus}")
 	@GET
 	@Produces("application/json")
 	public Response posBusItinerario(@PathParam("placaBus") String placaBus) {
@@ -428,7 +430,7 @@ public class Monitoreo {
 	 * @param claveItinerario
 	 * @return
 	 */
-	@Path("itinerario/tiempos/ruta/{ruta}")
+	@Path("itinerarios/tiempo/rutas/{ruta}")
 	@GET
 	@Produces("application/json")
 	public Response tiemposBusRuta(@PathParam("ruta") String ruta) {
