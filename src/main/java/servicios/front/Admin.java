@@ -681,7 +681,7 @@ public class Admin {
 	 * @param clave
 	 * @return {@link Boolean}
 	 */
-	@Path("/itinerario/{clave}")
+	@Path("/itinerarios/{clave}")
 	@DELETE
 	@Produces("application/json")
 	public Response eliminarItinerario(@PathParam("clave") String clave) {
@@ -711,7 +711,7 @@ public class Admin {
 	 * @param incomingData
 	 * @return {@link Response}
 	 */
-	@Path("/itinerario")
+	@Path("/itinerarios")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
