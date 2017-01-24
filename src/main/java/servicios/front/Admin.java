@@ -57,14 +57,16 @@ public class Admin {
 		BusesRT.getBusesRT().eliminarBus(placaBus); // Elimina el bus en RT
 		progreso = TBus.eliminarBus(placaBus);
 		
-		respuesta = Json.createObjectBuilder().add("Eliminado", progreso).build();
+		
 		
 		if(progreso == true)
 		{
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoBus",root+"monitoreo/buses").build();
 			return Response.status(200).entity(respuesta.toString()).build();
 		}
 		else
 		{
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoBus",root+"monitoreo/buses").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 		
@@ -85,14 +87,15 @@ public class Admin {
 	public Response modificarEstado(@PathParam("placaBus") String placaBus, @PathParam("estado") boolean estado) {
 		BusesRT.getBusesRT().modificarEstado(placaBus, estado); // Modifica el estado del bus en RT
 		boolean progreso = TBus.modificarEstado(placaBus, estado);//Modifica en DB
-		respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("Recurso",root+"monitoreo/buses/"+placaBus).build();
 		
 		if (progreso == true)
 		{
+			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoBus",root+"monitoreo/buses/"+placaBus).build();
 			return Response.status(200).entity(respuesta.toString()).build();
 		}
 		else
 		{
+			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoBus",root+"monitoreo/buses").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 	}
@@ -124,7 +127,7 @@ public class Admin {
 		operador = entrada.getString("Operador");
 
 		progreso = TBus.crearBus(placa, capacidad, tipoBus, estado,operador); //Modifica en DB
-		respuesta = Json.createObjectBuilder().add("Creado", progreso).add("Recurso",root+"monitoreo/buses/"+placa).build();
+		respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoBus",root+"monitoreo/buses/"+placa).build();
 		System.out.println("Placa:" + placa + " Capacidad:" + capacidad + " TipoBus:" + tipoBus + " Estado:" + estado);
 		BusesRT.getBusesRT().agregarNuevo(new Bus(placa)); // Agrega un nuevo bus al RT
 		return Response.status(201).entity(respuesta.toString()).build();
@@ -151,14 +154,15 @@ public class Admin {
 		boolean progreso;
 		progreso = TParada.eliminarParada(clave);
 	
-		respuesta = Json.createObjectBuilder().add("Eliminado", progreso).build();
 		
 		if (progreso == true)
 		{
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoParada",root+"monitoreo/paradas").build();
 			return Response.status(200).entity(respuesta.toString()).build();
 		}
 		else
 		{
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoParada",root+"monitoreo/buses").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 	}
@@ -194,7 +198,7 @@ public class Admin {
 		slongitud = coordenada.getString("Longitud");
 		c1 = new Coordenadas(Double.parseDouble(slatitud), Double.parseDouble(slongitud));
 		progreso = TParada.crearParada(clave, nombre, c1.getLatitud(), c1.getLongitud());
-		respuesta = Json.createObjectBuilder().add("Creado", progreso).add("Recurso",root+"monitoreo/paradas/"+clave).build();
+		respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoParada",root+"monitoreo/paradas/"+clave).build();
 		System.out.println("Clave:" + clave + " Nombre:" + nombre + " Latitud:" + c1.getLatitud() + " Longitud:"
 				+ c1.getLongitud());
 		return Response.status(201).entity(respuesta.toString()).build();
@@ -224,12 +228,12 @@ public class Admin {
 		
 		if (progreso==true)
 		{
-			respuesta = Json.createObjectBuilder().add("ParadasEliminadas", progreso).add("Recurso",root+"monitoreo/rutas/"+nombre).build();
+			respuesta = Json.createObjectBuilder().add("ParadasEliminadas", progreso).add("RecursoRuta",root+"monitoreo/rutas/"+nombre).build();
 			return Response.status(200).entity(respuesta.toString()).build();
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("ParadasEliminadas", progreso).add("Recurso","No encontrado").build();
+			respuesta = Json.createObjectBuilder().add("ParadasEliminadas", progreso).add("RecursoRuta",root+"monitoreo/rutas").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 	}
@@ -250,12 +254,12 @@ public class Admin {
 		progreso = TRuta.removerParadaDeRuta(nombreRuta, posicion);
 		if (progreso==true)
 		{
-			respuesta = Json.createObjectBuilder().add("ParadaEliminada", progreso).add("Recurso",root+"monitoreo/rutas/"+nombreRuta).build();
+			respuesta = Json.createObjectBuilder().add("ParadaEliminada", progreso).add("RecursoRuta",root+"monitoreo/rutas/"+nombreRuta).build();
 			return Response.status(200).entity(respuesta.toString()).build();
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("ParadaEliminada", progreso).add("Recurso","No encontrado").build();
+			respuesta = Json.createObjectBuilder().add("ParadaEliminada", progreso).add("RecursoRuta",root+"monitoreo/rutas").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 	}
@@ -283,7 +287,7 @@ public class Admin {
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("Recursos","No encontrado").build();
+			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("RecursoParada",root+"monitoreo/paradas").add("RecursoRuta",root+"monitoreo/rutas").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 	}
@@ -301,14 +305,15 @@ public class Admin {
 	public Response eliminarRuta(@PathParam("nombreRuta") String nombreRuta) {
 		boolean progreso;
 		progreso = TRuta.eliminarRuta(nombreRuta);
-		respuesta = Json.createObjectBuilder().add("Elimino", progreso).build();
 		
 		if(progreso == true)
 		{
+			respuesta = Json.createObjectBuilder().add("Elimino", progreso).add("RecursoParada",root+"monitoreo/paradas").build();
 			return Response.status(200).entity(respuesta.toString()).build();
 		}
 		else
 		{
+			respuesta = Json.createObjectBuilder().add("Elimino", progreso).add("RecursoParada",root+"monitoreo/paradas").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 		
@@ -336,7 +341,7 @@ public class Admin {
 		progreso = TRuta.crearRuta(entrada.getString("NombreRuta"), categoria, descripcion);
 		
 		
-			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("Recurso",root+"monitoreo/rutas/"+entrada.getString("NombreRuta")).build();
+			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoRuta",root+"monitoreo/rutas/"+entrada.getString("NombreRuta")).build();
 			return Response.status(201).entity(respuesta.toString()).build();
 		
 	}
@@ -369,7 +374,7 @@ public class Admin {
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("Recursos","No encontrados").build();
+			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("RecursoRuta",root+"monitoreo/rutas").add("RecursoParada",root+"monitoreo/paradas").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 
@@ -400,7 +405,7 @@ public class Admin {
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("Recursos","No encontrados").build();
+			respuesta = Json.createObjectBuilder().add("Agrego", progreso).add("RecursoRuta",root+"monitoreo/rutas").add("RecursoParada",root+"monitoreo/paradas").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 
@@ -433,7 +438,7 @@ public class Admin {
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Modifico", progreso).add("RecursoRuta","No encontrado").build();
+			respuesta = Json.createObjectBuilder().add("Modifico", progreso).add("RecursoRuta",root+"monitoreo/rutas").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 	}
@@ -458,14 +463,16 @@ public class Admin {
 			
 			RecorridosRT.getRecorridosRT().eliminarRecorrido(clave); // Elimina el bus en RT
 			progreso = TRecorrido.eliminarRecorrido(clave);
-			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).build();
+			
 			
 			if(progreso==true)
 			{
+				respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoRecorrido",root+"monitoreo/recorridos").build();
 				return Response.status(200).entity(respuesta.toString()).build();
 			}
 			else
 			{
+				respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoRecorrido",root+"monitoreo/recorridos").build();
 				return Response.status(404).entity(respuesta.toString()).build();
 			}
 			
@@ -500,7 +507,7 @@ public class Admin {
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
+			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoRecorrido",root+"monitoreo/recorridos").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 		
@@ -536,7 +543,7 @@ public class Admin {
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoRecorrido","No encontrado").build();
+			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoRecorrido",root+"monitoreo/recorridos").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 
@@ -556,13 +563,14 @@ public class Admin {
 		boolean progreso;
 		ConductoresRT.getConductoresRT().eliminarConductor(cedula); // Elimina un conductor en RT
 		progreso = TConductor.eliminarConductor(cedula);//Modifica en DB
-		respuesta = Json.createObjectBuilder().add("Eliminado", progreso).build();
 		if (progreso==true)
 		{
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoConductor",root+"monitoreo/conductores").build();
 			return Response.status(200).entity(respuesta.toString()).build();
 		}
 		else
 		{
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoConductor",root+"monitoreo/conductores").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 		
@@ -605,12 +613,12 @@ public class Admin {
 		
 		if(progreso==true)
 		{
-			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoConductor","No implementado su servicio de consulta aun").build();
+			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoConductor",root+"monitoreo/conductores/"+cedula).build();
 			return Response.status(201).entity(respuesta.toString()).build();
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoConductor","No implementado su servicio de consulta aun").build();
+			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoConductor",root+"monitoreo/conductores").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 		
@@ -648,12 +656,12 @@ public class Admin {
 		
 		if (progreso == true)
 		{
-			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoConductor","No implementado su servicio de consulta aun").build();
+			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoConductor",root+"monitoreo/conductores/"+cedula).build();
 			return Response.status(200).entity(respuesta.toString()).build();
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoConductor","No implementado su servicio de consulta aun").build();
+			respuesta = Json.createObjectBuilder().add("Modificado", progreso).add("RecursoConductor",root+"monitoreo/conductores").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 
@@ -689,7 +697,7 @@ public class Admin {
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoItinerarios","No encontrado").build();
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoItinerarios",root+"monitoreo/itinerarios").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 	}
@@ -732,7 +740,7 @@ public class Admin {
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Encontrado", progreso).add("RecursoItinerarios","Ya Existe o Mal ingreso de datos").build();
+			respuesta = Json.createObjectBuilder().add("Encontrado", progreso).add("RecursoItinerarios",root+"monitoreo/itinerarios").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 
