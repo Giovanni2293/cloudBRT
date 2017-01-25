@@ -687,17 +687,16 @@ public class Admin {
 	public Response eliminarItinerario(@PathParam("clave") String clave) {
 		boolean progreso;
 		
-		TItinerario.modificarTerminado(clave, true);
 		progreso = TItinerario.eliminarItinerario(clave);
 		
 		if (progreso==true)
 		{
-			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoItinerarios",root+"monitoreo/itinerarios").build();
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoItinerario",root+"monitoreo/itinerarios").build();
 			return Response.status(200).entity(respuesta.toString()).build();
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoItinerarios",root+"monitoreo/itinerarios").build();
+			respuesta = Json.createObjectBuilder().add("Eliminado", progreso).add("RecursoItinerario",root+"monitoreo/itinerarios").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 	}
@@ -730,17 +729,16 @@ public class Admin {
 		horaSalidaEstimada = entrada.getString("HoraSalidaEstimada");
 
 		progreso = TItinerario.crearItinerario(clave, conductor, bus, recorrido,horaSalidaEstimada); //Modifica en DB
-		respuesta = Json.createObjectBuilder().add("Encontrado", progreso).build();
 		
 		if (progreso==true)
 		{
-			respuesta = Json.createObjectBuilder().add("Encontrado", progreso).add("RecursoItinerarios",root+"monitoreo/itinerarios/"+clave).build();
+			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoItinerario",root+"monitoreo/itinerarios/"+clave).build();
 			return Response.status(201).entity(respuesta.toString()).build();
 			
 		}
 		else
 		{
-			respuesta = Json.createObjectBuilder().add("Encontrado", progreso).add("RecursoItinerarios",root+"monitoreo/itinerarios").build();
+			respuesta = Json.createObjectBuilder().add("Creado", progreso).add("RecursoItinerario",root+"monitoreo/itinerarios").build();
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 

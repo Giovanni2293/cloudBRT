@@ -66,8 +66,10 @@ public class Despacho {
 	
 	public void removerDeMapas(String clave)
 	{
-		Itinerario t = itinerariosXId.remove(clave);
-		System.out.println(t.getId());
+		System.out.println("Clave: "+clave);
+		Itinerario t = encontrarItinerarioxID(clave);
+		mostrarItinerarios();
+		itinerariosXId.remove(clave);
 		itinerariosXPlaca.remove(t.getBusDesignado().getPlaca());
 		itinerariosXRuta.remove(t.getRecorridoDesignado().getRuta().getNombre(),t);
 	}
@@ -141,5 +143,6 @@ public class Despacho {
 	 * Metodo de pruebas
 	 */
 	public void mostrarItinerarios() {
+		System.out.println(itinerariosXId.toString());
 	}
 }
