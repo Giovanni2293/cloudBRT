@@ -87,44 +87,8 @@ public class UbicacionBus {
 
 	}
 	
-	@Path("itinerario/iniciar/{clave}")
-	@GET
-	@Produces("application/json")
-	public Response crearRuta(@PathParam("clave") String clave) {
-		boolean progreso;
-		JsonObject respuesta;
-		Fecha.getFechaClass().gethora();
-		progreso = TItinerario.iniciarItinerario(clave, Fecha.getFechaClass().gethora());
-		respuesta = Json.createObjectBuilder().add("Iniciado", progreso).build();
-		return Response.status(200).entity(respuesta.toString()).build();
-	}
-	
-	@Path("parqueAutomotor/iniciar")
-	@GET
-	@Produces("application/json")
-	public Response initParqueAutomotor()
-	{
-		BRT = BusesRT.getBusesRT();
-		Despacho.getDespacho();
-		return Response.status(200).entity(null).build();
-	}
-
 	
 
-	/**
-	 * Este servicio es solo para pruebas
-	 * @param iniciar
-	 * @return
-	 */
-	@Path("terminado/{iniciar}")
-	@GET
-	@Produces("application/json")
-	public Response test(@PathParam("iniciar") boolean iniciar)
-	{
-		TItinerario.modificarTerminado("I2T3",iniciar);
-		return Response.status(200).entity(null).build();
-	}
-	
 	private synchronized void asignarCoorABus(JsonObject entrada, Coordenadas coor) {
 		bus = BRT.encontrarBus(entrada.getString("Placa"));
 		if (bus != null) {

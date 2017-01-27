@@ -19,6 +19,7 @@ import core.Bus;
 import core.BusesRT;
 import core.ConductoresRT;
 import core.Coordenadas;
+import core.Fecha;
 import core.RecorridosRT;
 import db.TBus;
 import db.TConductor;
@@ -742,6 +743,18 @@ public class Admin {
 			return Response.status(404).entity(respuesta.toString()).build();
 		}
 
+	}
+	
+	@Path("itinerario/iniciar/{clave}")
+	@GET
+	@Produces("application/json")
+	public Response crearRuta(@PathParam("clave") String clave) {
+		boolean progreso;
+		JsonObject respuesta;
+		Fecha.getFechaClass().gethora();
+		progreso = TItinerario.iniciarItinerario(clave, Fecha.getFechaClass().gethora());
+		respuesta = Json.createObjectBuilder().add("Iniciado", progreso).build();
+		return Response.status(200).entity(respuesta.toString()).build();
 	}
 
 }
