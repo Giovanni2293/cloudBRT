@@ -29,6 +29,7 @@ import core.Fecha;
 import core.Itinerario;
 import db.DBGeneralBRT;
 import db.DBPersonal;
+import db.TColectorBus;
 import db.TItinerario;
 import servicios.recolector.UbicacionBus;
 import utilidad.FormatearDatos;
@@ -545,8 +546,23 @@ public class Monitoreo {
 		}
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
-	
-	
+	///////////////////////////////////////Sistema/////////////////////////////////
+	/**
+	 * Este servicio funciona para vizualizar cada cuantas peticiones 
+	 * se insertara en la base de datos. cada vez que se reinicie el servidor
+	 * su valor por defecto es 2500. 
+	 */
+	@Path("/maxentradas")
+	@GET
+	@Produces("application/json")
+	public Response getMaxEntradas(){
+		
+		int ventana = TColectorBus.getMaxEntradas();
+		BasicDBObject respuesta = new BasicDBObject();
+		respuesta.append("Cantidad Maxima de entradas", ventana);
+		return Response.status(200).entity(respuesta.toString()).build();
+		
+	}
 	
 
 }

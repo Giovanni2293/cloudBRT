@@ -9,11 +9,14 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.mongodb.BasicDBObject;
 
 import core.Bus;
 import core.BusesRT;
@@ -22,6 +25,7 @@ import core.Coordenadas;
 import core.Fecha;
 import core.RecorridosRT;
 import db.TBus;
+import db.TColectorBus;
 import db.TConductor;
 import db.TItinerario;
 import db.TParada;
@@ -756,5 +760,18 @@ public class Admin {
 		respuesta = Json.createObjectBuilder().add("Iniciado", progreso).build();
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
-
+ //////////////////////////////////////////////////sistema/////////////////////////////////////////////
+	@Path("/maxentradas/{Dato}")
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response modificarMaxEntradas(@PathParam("Dato") int ventana){
+		
+		TColectorBus.setMaxEntradas(ventana);
+		int modificada = TColectorBus.getMaxEntradas();
+		BasicDBObject respuesta = new BasicDBObject();
+		respuesta.append("se modifico maxima entrada a:", modificada);
+		return Response.status(200).entity(respuesta.toString()).build();
+	}
+	
 }
