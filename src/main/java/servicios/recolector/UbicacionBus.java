@@ -35,7 +35,6 @@ public class UbicacionBus {
 
 	private Despacho despacho;
 	private String placa;
-	private static BusesRT BRT;
 	private static Bus bus;
 	private static long horaDelSistema;
 	private boolean estado;
@@ -90,7 +89,7 @@ public class UbicacionBus {
 	
 
 	private synchronized void asignarCoorABus(JsonObject entrada, Coordenadas coor) {
-		bus = BRT.encontrarBus(entrada.getString("Placa"));
+		bus = BusesRT.getBusesRT().encontrarBus(entrada.getString("Placa"));
 		if (bus != null) {
 			// El bus existe
 
@@ -106,7 +105,10 @@ public class UbicacionBus {
 		
 			if (despacho.encontarXBus(placa)!=null) {
 				Itinerario i = despacho.encontarXBus(placa);
-				i.AddObserver(bus);
+				if (i.estaVacio())
+				{
+					i.AddObserver(bus);
+				}
 				i.encontrar();
 				estado= i.getTerminado();
 				

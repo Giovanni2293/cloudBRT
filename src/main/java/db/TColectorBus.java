@@ -75,6 +75,8 @@ public class TColectorBus {
 		if (Nentradas % maxEntradas == 0) {
 			// Aca se hace la insercion a la base de datos
 			insertarADB();
+		
+			
 
 		}
 		return true;
@@ -96,7 +98,6 @@ public class TColectorBus {
 				consulta.put(Fecha.getFechaClass().getYMD(), arregloAnterior);
 			}
 			ArrayList<BasicDBObject> atributos = BusesRT.getBusesRT().getRegistros().get(placas.get(x));
-		
 				for (int y = 0; y<atributos.size();y++)
 				{
 					
@@ -105,10 +106,11 @@ public class TColectorBus {
 				
 				}
 				
-		
+			BusesRT.getBusesRT().getRegistros().replace(placas.get(x),new ArrayList<BasicDBObject>());
 			nuevaData.append(Fecha.getFechaClass().getYMD(),arregloAnterior);
 			mongo.actualizarMDB(nombreColeccion,nuevaData, dataARemplazar);
 			BusesRT.getBusesRT().getRegistros().replace(placas.get(x),new ArrayList<>());
+			arregloAnterior = new ArrayList<>();
 			mongo.cerrarConexion();
 		}
 	

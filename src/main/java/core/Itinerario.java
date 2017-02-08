@@ -222,5 +222,17 @@ public class Itinerario implements Subject {
 		// TODO Auto-generated method stub
 		busDesignado.Update();
 	}
+	
+	public boolean estaVacio()
+	{
+		if (observers.size()==0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
 }

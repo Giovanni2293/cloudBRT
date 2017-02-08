@@ -32,12 +32,7 @@ import javax.json.*;
 @Path("/arranque")
 public class Arranque {
 
-	private Despacho despacho;
-	private String placa;
-	private static BusesRT BRT;
-	private static Bus bus;
-	private static long horaDelSistema;
-	private boolean estado;
+	
 
 		
 	
@@ -46,7 +41,7 @@ public class Arranque {
 	@Produces("application/json")
 	public Response initParqueAutomotor()
 	{
-		BRT = BusesRT.getBusesRT();
+		BusesRT.getBusesRT();
 		Despacho.getDespacho();
 		return Response.status(200).entity(null).build();
 	}
