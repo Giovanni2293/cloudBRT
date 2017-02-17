@@ -22,6 +22,7 @@ import core.Bus;
 import core.BusesRT;
 import core.Conductor;
 import core.ConductoresRT;
+import core.Coordenadas;
 import core.Despacho;
 import core.Fecha;
 import core.Itinerario;
@@ -81,7 +82,9 @@ public class Test {
 		long B = Fecha.getFechaClass().convtHoraToMlls("2017/01/08","00:15:12");
 		long C = B-A;
 		System.out.println(C);*/
-		
+		Coordenadas a = new Coordenadas(7.105879,-73.130283);
+		Coordenadas b = new Coordenadas(7.110765,-73.129501);
+		System.out.println(GeoMatematicas.calcDistancia(a,b));
 		
 		// TItinerario.iniciarItinerario("I1T3", "23:24:38");
 		//TItinerario.modificarTerminado("I2T3",true);

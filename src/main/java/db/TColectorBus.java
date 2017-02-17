@@ -14,13 +14,14 @@ public class TColectorBus {
 
 	private static DBColector mongo;
 	private static String fecha;
-	private static int maxEntradas = 2500; // Tamano de la ventana de ingreso a la base de datos
+	private static int colaDePeticiones = 2500; // Tamano de la ventana de ingreso a la base de datos
+	
 	public static int getMaxEntradas() {
-		return maxEntradas;
+		return colaDePeticiones;
 	}
 
 	public static void setMaxEntradas(int maxEntradas) {
-		TColectorBus.maxEntradas = maxEntradas;
+		TColectorBus.colaDePeticiones = maxEntradas;
 	}
 
 	private static final String nombreColeccion = "HistoBuses";
@@ -72,7 +73,7 @@ public class TColectorBus {
 		int Nentradas = incremento.incrementAndGet(); // Incrementa y devuelve el numero atomico
 		System.out.println("Entrada nro: " + incremento);
 		BusesRT.getBusesRT().getRegistros().get(placa).add(data);
-		if (Nentradas % maxEntradas == 0) {
+		if (Nentradas % colaDePeticiones == 0) {
 			// Aca se hace la insercion a la base de datos
 			insertarADB();
 		

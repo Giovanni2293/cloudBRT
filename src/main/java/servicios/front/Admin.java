@@ -761,7 +761,7 @@ public class Admin {
 		return Response.status(200).entity(respuesta.toString()).build();
 	}
  //////////////////////////////////////////////////sistema/////////////////////////////////////////////
-	@Path("/maxentradas/{Dato}")
+	@Path("/coladepeticiones/{Dato}")
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
