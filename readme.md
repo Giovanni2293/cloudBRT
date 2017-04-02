@@ -1,6 +1,6 @@
-﻿#Anotaciones
+# Anotaciones
 
-####[28/07/2016]:[19:14]
+#### [28/07/2016]:[19:14]
 
 Hemos optado por cambiar el driver de la base de datos de mongodb de la versión 3.2.0 a la 2.14.0 razones:
 
@@ -8,7 +8,7 @@ Hemos optado por cambiar el driver de la base de datos de mongodb de la versión
 	
 	La versión 2.14 viene de la versión 2.11 y de esta se encuentra mayor información sobre su implementación que la 3.2.0.
 
-####[29/07/2016]:[0:11]
+#### [29/07/2016]:[0:11]
 
 * Hemos logrado conectar la base de datos con la clase del BRT Bus para consultar los detalles precisos del bus.
 
@@ -38,16 +38,16 @@ Hemos optado por cambiar el driver de la base de datos de mongodb de la versión
 ```
 Teniendo en cuenta que la placa debe existir en la base de datos para no lanzar una excepción.
 
-####RECORDATORIO: 
+#### RECORDATORIO: 
 
 	Cuando se haga un CLONE al repositorio, CAMBIAR el nombre WebServicesTest por rutasBuses
 
 
-####[30/07/2016]:[14:26]
+#### [30/07/2016]:[14:26]
 
 * Se añade un servicio post de prueba para Wilson testear la galileo.
 
-####[06/08/2016]:[11:00]
+#### [06/08/2016]:[11:00]
 
 * El bus ahora solo crea un objeto json si se lo piden y se modificó el método consultarMDB para que este devuelva un objeto DBOBject y no un apuntador. Esto con finalidad de facilitar el código y evitar confusiones con el método .next(), también para identificar cuando el objeto que quiere consultar no está en la base de datos.
 
@@ -63,7 +63,7 @@ Clases que se modificaron:
 	Bus
 	UbicacionBus
 
-####Tareas pendientes:
+#### Tareas pendientes:
 
 	Implementar la clase BusDB.
 	
@@ -74,7 +74,7 @@ Clases que se modificaron:
 
 
 
-####[06/08/2016]:[18:00]
+#### [06/08/2016]:[18:00]
 
 * Se creó la clase BusDB que es la encargada de obtener los valores de la base de datos del bus.
 
@@ -90,11 +90,11 @@ Clases que se modificaron:
 	UbicacionBus
 	MensajeError
 
-####Tareas Pendientes:
+#### Tareas Pendientes:
 
 	Implementar querys en BusDB
 
-####[23/08/2016]:[23:21]
+#### [23/08/2016]:[23:21]
 
 * Se implementó la funcionalidad para determinar si un bus se encuentra dentro o fuera de una estación (área circular), Para lograrlo se creó una clase de utilidad que contiene el radio de la circunferencia y calcula si el punto (bus) esta dentro o fuera de este radio.
 * Se creó un nuevo servicio que hace uso de la funcionalidad descrita anteriormente. El formato es:
@@ -113,12 +113,12 @@ Se crearon las siguientes Clases:
 	AreaEstacion (Clase de Utilidad)
 	Proximidad (Servicio)
 
-####[24/08/2016]:[15:56]
+#### [24/08/2016]:[15:56]
 
 * Se creó una documentación inicial en Excel acerca de todos los servicios implementados hasta el momento. Por el momento
 Se llevara en el Excel. Más adelante se creara una documentación con un framework.
 
-####[24/08/2016]:[19:11]
+#### [24/08/2016]:[19:11]
 
 * Se implementó un nuevo paquete clientes con una clase llamada cliente que permite crear un cliente que consume un servicio desde una url. Además se modificó el servicio Dbtest para probar el funcionamiento de esta clase.
 
@@ -130,19 +130,19 @@ Clases que se crearon:
 
 	HTTPClient ( Junto con su paquete Clientes)
 
-####[24/08/2016]:[19:47]
+#### [24/08/2016]:[19:47]
 
 * Se modificó el servicio que utiliza el cliente.
 
-####[25/08/2016]:[12:10]
+#### [25/08/2016]:[12:10]
 
 * Reestructuración del proyecto para seguir el estándar de maven.
 
-####[26/08/2016]:[14:20]
+#### [26/08/2016]:[14:20]
 
 * Se crea el directorio src/test/java para que se puedan hacer pruebas al código. Además se actualizo la documentación con las nuevas url.
 
-####AVISO
+#### AVISO
 
 	Angel, En este directorio es donde usted puede crear las clases para hacer pruebas.
 
@@ -155,21 +155,21 @@ Clases que se crearon:
 	Geomatematicas (Clase de Utilidad)
 	Insertar (BaseDeDatosMongoDB)
 
-####[31/08/2016]:[17:51]
+#### [31/08/2016]:[17:51]
 
-####Tareas Pendientes:
+#### Tareas Pendientes:
 
 	Crear un método que permita añadir paradas intermedias sobre rutas previamente creadas.
 
-####[01/09/2016]:[11:35]
+#### [01/09/2016]:[11:35]
 
 * Interacciones con la base de datos dentro de la clase Insertar.
 
-####[20/09/2016]:[16:15]
+#### [20/09/2016]:[16:15]
 
 * Corrección de un bug que impedía el acceso a los servicios de forma correcta. Esto se corrigió creando dentro de la carpeta WebContent archivos necesarios para la configuración de los servicios, gracias a una consulta de angel y la ayuda del profesor Gabriel.
 
-####[20/09/2016]:[19:23]
+#### [20/09/2016]:[19:23]
 
 * Se crearon métodos para insertar elementos en distintas posiciones o al final.
 
@@ -187,11 +187,11 @@ Clases que se modificaron:
 
 	Insertar
 	
-####Tareas Pendientes:
+#### Tareas Pendientes:
 
 	Implementar un metodo para listar los contenidos de la base de datos.	
 
-####[21/09/2016]:[15:10] 
+#### [21/09/2016]:[15:10] 
 
 * Se agregó el método eliminarParada.
 
@@ -208,7 +208,7 @@ Clases que se modificaron
 	Eliminar
 
 
-####[21/09/2016]:[19:33]
+#### [21/09/2016]:[19:33]
 
 * Se corrigió la documentación ahora la placa no lleva espacios.
 
@@ -237,7 +237,7 @@ Clases que se modificaron:
 	ConectarMongo
 	
 
-####[21/09/2016]:[20:44]
+#### [21/09/2016]:[20:44]
 
 * Se eliminaron las clases Eliminar e Insertar, debido a que sus metodos fueron llevados a las clases de transacciones.
 
@@ -262,14 +262,14 @@ Clases que se eliminaron:
 	Eliminar
 
 
-####Tareas Pendientes
+#### Tareas Pendientes
 
 	Crear servicios que retorne una Ruta, una Parada y Un Bus con toda su información estatica.
 	Crear servicios que retorne todas las Rutas, Paradas y Buses con la informacion estatica de cada uno de ellos.
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 
 
-####[21/09/2016]:[23:19]
+#### [21/09/2016]:[23:19]
 	
 * Se crearon dos nuevos directorios que contendran las clases de prueba de Angel, Andres y Giovanni.
 
@@ -279,17 +279,17 @@ Clases que se eliminaron:
 
 * se movio la clase ClasesDePruebaAca a src/test/java/Angel.
 
-####[22/09/2016]:[03:53]
+#### [22/09/2016]:[03:53]
 
 * Se crearon las clases GetServicioBus, GetServicioRuta, GetServicioParada y se implementaron los cascarones de los servicios de obtencion con y sin parametros encargados de recibir informacion desde la base de datos.
 
-####Tareas Pendientes
+#### Tareas Pendientes
 
 	Implementar los cascarones de los servicios para la obtencion de informacion tanto para bus, parada y ruta.
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 	Documentar los nuevos servicios que se implementen.
 	
-####[22/09/2016]:[18:42]
+#### [22/09/2016]:[18:42]
 
 * Se modificaron todas las url para que sus iniciales sean en minuscula.( ver documentacion.xlsx )
 * Se implemento el servicio http://localhost:8080/cloudBRT/api/rutas/consultar.
@@ -317,13 +317,13 @@ Clases que se Eliminaron:
 
 	Dbtest
 	
-####Tareas Pendientes
+#### Tareas Pendientes
 
 	Implementar los cascarones de los servicios para la obtencion de informacion tanto para bus y parada.
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 	Documentar los nuevos servicios que se implementen.
 
-####[22/09/2016]:[19:43]
+#### [22/09/2016]:[19:43]
 
 * Se implementaron los servicios que permiten listar todos los Buses(GetServicioBus) y todas las Paradas(GetServicioParada)
 
@@ -335,12 +335,12 @@ Clases que se Modificaron:
 	GetServicioParada
 	documentacion
 
-####Tareas Pendientes
+#### Tareas Pendientes
 
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 	Documentar los nuevos servicios que se implementen.
 	
-####[22/09/2016]:[02:40]
+#### [22/09/2016]:[02:40]
 
 * Se creo un nuevo metodo en MensajeError (noEncontroElElemento) que avisa cuando se produce un error al no encontrar un elemento generando un json de respuesta.
 
@@ -348,7 +348,7 @@ Clases que se Modificaron:
 
 * Se implementaron los servicios de consulta especificando mediante parametros en las 3 clases (Bus,Parada,Ruta)
 
-####Tareas Pendientes
+#### Tareas Pendientes
 
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 	
@@ -365,7 +365,7 @@ Clases que se Modificaron:
 	GetServicioRuta
 	MensajeError
 	
-####[26/09/2016]:[07:05]
+#### [26/09/2016]:[07:05]
 
 * Se cambiaron los nombres de los paquetes
 * Se omitio el error del charset y decidimos no utilizar caracteres especiales en lugar dejamos, Placa, Nombre y Clave como llaves para Bus, Ruta y Parada respectivamente,los cuales se usaran para identificarlos y no usaran caracteres epeciales.
@@ -408,14 +408,14 @@ Clases que se Modificaron:
 	GeoMatematicas
 	FormatearDatos
 	
-####Tareas Pendientes
+#### Tareas Pendientes
 
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 	Documentar los nuevos servicios que se implementen.
 	Modificar eliminar parada para que cuando se borre una parada tambien elimine la asignación a la rutas y de recorridos
 	Colocar una etiqueta de hora de recepcion de un json.
 	
-####[06/10/2016]:[23:31]
+#### [06/10/2016]:[23:31]
 
 * Se adiciono un control adicional en la clase parada que permite comprobar si ya existe una parada con el mismo nombre impidiendo su adicion en caso positivo.
 * En la clase TransaccionesRecorrido se creo un metodo que permite generar un recorrido con unas horas de forma automatica apoyandose en metodos asistentes como construirHorario (Genera un linkedhashmap de paradas y horas) y removerFormatoDeTiempo (convierte una hora dada en formato de string 24 horas ej: 03:00:20 a segundos contados a partir de 00:00:00)
@@ -430,14 +430,14 @@ Clases que se Modificaron:
 	TransaccionesRecorrido
 	FormatearDatos
 	
-####Tareas Pendientes
+#### Tareas Pendientes
 
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos.
 	Documentar los nuevos servicios que se implementen.
 	Modificar eliminar parada para que cuando se borre una parada tambien elimine la asignación a la rutas y de recorridos
 	Colocar una etiqueta de hora de recepcion de un json.
 	
-####[14/10/2016]:[17:19]
+#### [14/10/2016]:[17:19]
 
 * Se crearon las Api en las 6 clases tanto get como post para agregar, editar, eliminar y reemplazar valores de la base de datos.
 * Se actualizo la documentacion de la api con los servicios actuales
@@ -451,14 +451,14 @@ Clases que se Modificaron:
 	PostServicioRuta
 	PostServicioBus
 	
-####Tareas Pendientes
+#### Tareas Pendientes
 
 	Crear servicios para que usen los metodos que creamos para interactuar con la base de datos de recorrido.
 	Documentar los nuevos servicios que se implementen.
 	Modificar eliminar parada para que cuando se borre una parada tambien elimine la asignación a la rutas y de recorridos
 	Colocar una etiqueta de hora de recepcion de un json.
 
-####[17/10/2016]:[11:40]
+#### [17/10/2016]:[11:40]
 
 * Se adecuo la clase bus para que se encargue de contener informacion relevante al bus en tiempo de ejecucion
 * Se adecuo la clase conductor con metodos para poder crear un conductor y obtener sus atributos
@@ -496,11 +496,11 @@ Clases que se eliminaron:
 	Crear la clase despacho que contendra todos los itinerarios y el manejo de los mismos.
 
 
-####Dudas
+#### Dudas
 
 	¿Se implementara la logica de adelantos o atrasos?
 	
-####[17/10/2016]:[11:40]
+#### [17/10/2016]:[11:40]
 
 * Se refactorizo el sistema de recoleccion de datos historico. Ahora se almacena en la base de datos y no en un archivo de texto.
 * Se modifico la clase BusDB. Ahora tambien se encarga de crear un historico para cada bus en otra base de datos.
@@ -528,7 +528,7 @@ Clases que se crearon:
 	DBColector
 	Despacho
 
-####[1/11/2016]:[4:43]
+#### [1/11/2016]:[4:43]
 
 * Se implementaron unos cambios a peticion de antonio.
 * Se le han añadido los parametros categoria y descricion a las rutas.
@@ -543,7 +543,7 @@ Clases que se modificaron:
 	PostServicioRuta
 	Ruta
 
-####[1/11/2016]:[21:30]
+#### [1/11/2016]:[21:30]
 
 * Se hizo refactor a las URI de los servicios. Consultar la documentacion en el excel.
 
@@ -559,7 +559,7 @@ Clases que se modificaron:
 	PostServicioRecorrido
 
 
-####[3/11/2016]:[22:33]
+#### [3/11/2016]:[22:33]
 
 * Se refactorizo el metodo para actualizar en la base de datos. Ya no se utiliza UpdateMulti puesto que puede modificar multiples valores si se repite la clave.
 * Reduccion de codigo en la clase TBus
@@ -588,12 +588,12 @@ Clases que se modificaron:
 
 	Se movieron las clases de probar algunos metodos por servicios a src/test/java/andres.giovanni
 
-Tareas Pendientes:
+#### Tareas Pendientes:
 
 	Ver como agregar mas directorios de codigo a la compilacion.
 	Metodo para eliminar recorrido.
 	
-####[15/11/2016]:[22:15]
+#### [15/11/2016]:[22:15]
 	
 * Refactor de nombre de la clase ParqueAutomotor. Ahora todas las clases que coleccionen todos los objetos de un tipo se llaman
  TipoRT donde RT significa RunTime (Ej. BusesRT)
@@ -615,7 +615,7 @@ Clases que se modificaron.
 	Itinerario
 	UbicacionBus
 	
-####[30/11/2016]:[17:49]
+#### [30/11/2016]:[17:49]
 	
 * Se creo una clase de utilidad llamada diccionario, esta contiene hasmaps para llevar el control de parametros a modificar.
 * Se hicieron modificaciones generales a las clases RT, para que actualicen sus datos cuando hallan cambios en la db.
@@ -640,7 +640,7 @@ Clases que se modificaron.
 	Admin
 	UbicacionBuss
 
-Tareas Pendientes:
+#### Tareas Pendientes:
 
 	Realizar controles para evitar la creación de itinerarios cuano no existe un bus, un conductor o un recorrido.
 	Realizar controles para evitar que se elimien buses, conductores y recorridos cuando pertenecen a un itinerario.
@@ -649,7 +649,7 @@ Tareas Pendientes:
 	Realizar un control para cerrar itinerarios por falta de iniciacion.
 	Realizar un control para que una vez iniciado un itinerario no puede ser reinicado hasta que termine.
 
-####[21/12/2016]:[22:00]
+#### [21/12/2016]:[22:00]
 
 * Se optimizo la busqueda del parque automotor mediante la creacion de la misma en un hashmap y no en un arreglo.
 * Se refactorizo el registro a la base de datos. Ahora se hace registro a la base de datos cada cierta cantidad de entradas.
@@ -672,7 +672,7 @@ Clases que se modificaron:
 	UbicacionBus
 
 
-####[27/12/2016]:[14:00]
+#### [27/12/2016]:[14:00]
 
 * Se agrego un nuevo metodo que sirve para calcular cuantos minutos teoricamente llevaria un bus hasta un punto de su recorrido 
   y el servicio que devuelve lo que se tarda a las paradas y el tiempo hasta un punto. Estos tiempos son teoricos calculados.
@@ -689,7 +689,7 @@ Clases que se modificaron.
 	FormatearDatos
 	GeoMatematicas
 
-####[29/12/2016]:[23:15]
+#### [29/12/2016]:[23:15]
 
 * Se añade una nueva dependencia llamada guava de google que permite trabajar con Multihashmap
 * Se crea un nuevo mapa en Despacho conocido como MultiHashMap. Esto es para poder relacionar
@@ -705,7 +705,7 @@ Clases que se modificaron:
 	Pom.xml
 	documentacion.xlsx
 
-####[09/01/2017]:[23:42]
+#### [09/01/2017]:[23:42]
 
 * Se añadio un traductor que convierte de Fechas a tiempos en ms
 * Se añadio un atributo nuevo al itinerario llamado fecha que es util para calcular el tiempo en ms
@@ -725,7 +725,7 @@ Clases que se modificaron:
 	UbicacionBus
 	Geomatematicas
 	
-####[10/01/2017]:[19:09]
+#### [10/01/2017]:[19:09]
 
 * Se implemento un nuevo servicio que permite conocer los buses que le pertenecen a una ruta determinada segun el parametro idicado
 
